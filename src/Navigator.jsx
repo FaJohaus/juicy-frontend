@@ -1,17 +1,30 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Outlet } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import Dashboard from "./pages/Dashboard";
+import Visuals from "./pages/Visuals";
+import Automation from "./pages/Automation";
+import Settings from "./pages/Settings";
 
-import Dashboard from "./Pages/Dashboard";
-import Visuals from "./Pages/Visuals";
-import Automation from "./Pages/Automation";
-import Settings from "./Pages/Settings";
+const WithNavbar = () => (
+    <>
+        <Navbar />
+        <Outlet />
+    </>
+);
 
 const Navigator = () => (
     <Routes>
-        <Route path="/" element={<Dashboard />} />
-        <Route path="/visuals" element={<Visuals />} />
-        <Route path="/automation" element={<Automation />} />
-        <Route path="/settings" element={<Settings />} />
+        {/* ROUTES WITH NAVBAR */}
+        <Route element={<WithNavbar />}>
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/visuals" element={<Visuals />} />
+            <Route path="/automation" element={<Automation />} />
+        </Route>
+        {/* ROUTES WITHOUT NAVBAR */}
+        <Route element={<Outlet />}>
+            <Route path="/settings" element={<Settings />} />
+        </Route>
     </Routes>
 );
 
