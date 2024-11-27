@@ -2,7 +2,7 @@ import React from "react";
 import { Routes, Route, Outlet } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Dashboard from "./pages/Dashboard";
-import Visuals from "./pages/Visuals";
+import Insights from "./pages/Insights";
 import Automation from "./pages/Automation";
 import Settings from "./pages/Settings";
 
@@ -18,7 +18,7 @@ const Navigator = () => (
         {/* ROUTES WITH NAVBAR */}
         <Route element={<WithNavbar />}>
             <Route path="/" element={<Dashboard />} />
-            <Route path="/visuals" element={<Visuals />} />
+            <Route path="/insights" element={<Insights />} />
             <Route path="/automation" element={<Automation />} />
         </Route>
         {/* ROUTES WITHOUT NAVBAR */}
