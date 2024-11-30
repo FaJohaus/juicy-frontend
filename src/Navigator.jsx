@@ -8,8 +8,9 @@ import Settings from "./pages/Settings";
 
 const WithNavbar = () => (
     <>
-        <Navbar />
-        <Outlet />
+        <Navbar>
+            <Outlet />
+        </Navbar>
     </>
 );
 
@@ -20,10 +21,11 @@ const Navigator = () => (
             <Route path="/" element={<Dashboard />} />
             <Route path="/insights" element={<Insights />} />
             <Route path="/automation" element={<Automation />} />
+            <Route path="/settings" element={<Settings />} />
         </Route>
         {/* ROUTES WITHOUT NAVBAR */}
         <Route element={<Outlet />}>
-            <Route path="/settings" element={<Settings />} />
+            <Route path="teapot" element={<div>I'm a teapot</div>} />
         </Route>
     </Routes>
 );

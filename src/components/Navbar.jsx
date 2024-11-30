@@ -1,49 +1,82 @@
-import { Flex, Spacer, Avatar, Button, Center, IconButton, Text } from "@chakra-ui/react";
+import { Flex, Spacer, Avatar, Button, Center, IconButton, Text, Menu, MenuButton, MenuList, MenuItem, MenuDivider, Box, position } from "@chakra-ui/react";
 import { ChevronDownIcon, SearchIcon, BellIcon, HamburgerIcon } from "@chakra-ui/icons";
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import pageTitles from '../assets/pageTitles.json'
+import Sidebar from "./Sidebar";
 
 const Navbar = ({ children }) => {
+    const navigate = useNavigate();
     const location = useLocation();
 
     const [pageTitle, setPageTitle] = useState("");
+    const [showSidebar, setShowsidebar] = useState(true);
 
     useEffect(() => {
         setPageTitle(pageTitles[location.pathname.substring(1)]); /* TBD: Just write a custom hook for this shit */
     }, [location.pathname]);
 
     return (
-        <>
-            <Flex h='55px' borderWidth='1px'>
-                {/* LEFT SIDE */}
-                <Center>
-                    <IconButton ml={2} icon={<HamburgerIcon boxSize={5} />} variant='ghost' rounded={100} />
-                    <Text fontSize='xl' ml={2} pt={1}>
-                        {pageTitle}
-                    </Text>
-                </Center>
-                <Spacer />
-                {/* RIGHT SIDE */}
-                <Center>
-                    <IconButton icon={<BellIcon boxSize={5} />} variant='ghost' rounded={100} />
-                    <IconButton icon={<SearchIcon boxSize={4} />} variant='ghost' rounded={100} />
-                    <Button
-                        rightIcon={<ChevronDownIcon />}
-                        variant='ghost'
-                        onClick={() => alert("Gotcha!")}
-                        w={20}
-                        rounded={100}
-                    >
-                        <Avatar
-                            src="https://i.pinimg.com/736x/ca/78/3f/ca783fbe94d559e23dc9b7dcc4065a42.jpg"
-                            boxSize={7}
+        <Flex>
+            <Sidebar collapsed={showSidebar} />
+            <div>
+                <Flex
+                    h='55px'
+                    borderWidth='1px'
+                    style={{ position: 'sticky', top: 0 }}
+                    backgroundColor="white"
+                >
+                    {/* LEFT SIDE */}
+                    <Center>
+                        <IconButton
+                            onClick={() => setShowsidebar(!showSidebar)}
+                            ml={2}
+                            icon={<HamburgerIcon boxSize={5} />}
+                            variant='ghost'
+                            rounded={100}
                         />
-                    </Button>
-                </Center>
-            </Flex>
-            {children}
-        </>
+                        <Text fontSize='xl' ml={2} pt={1}>
+                            {pageTitle}
+                        </Text>
+                    </Center>
+                    <Spacer />
+                    {/* RIGHT SIDE */}
+                    <Center>
+                        <IconButton icon={<BellIcon boxSize={5} />} variant='ghost' rounded={100} />
+                        <IconButton icon={<SearchIcon boxSize={4} />} variant='ghost' rounded={100} />
+                        <Menu gutter={7}>
+                            <MenuButton
+                                as={Button}
+                                rightIcon={<ChevronDownIcon />}
+                                variant='ghost'
+                                w={20}
+                                rounded={100}
+                            >
+                                <Avatar
+                                    src="https://i.pinimg.com/736x/ca/78/3f/ca783fbe94d559e23dc9b7dcc4065a42.jpg"
+                                    boxSize={7}
+                                />
+                            </MenuButton>
+                            <MenuList>
+                                <MenuItem>
+                                    Account
+                                </MenuItem>
+                                <MenuItem onClick={() => navigate('/settings')}>
+                                    Settings
+                                </MenuItem>
+                                <MenuDivider />
+                                <MenuItem textColor="red">
+                                    Log out
+                                </MenuItem>
+                            </MenuList>
+                        </Menu>
+                    </Center>
+                </Flex>
+                <Box p={2}>
+                    {children}
+                </Box>
+            </div>
+        </Flex>
     );
 }
 
