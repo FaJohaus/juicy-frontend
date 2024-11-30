@@ -15,7 +15,7 @@ const Sidebar = () => {
     /* This is very important business logic, please don't touch it */
     useEffect(() => {
         if (!collapsed) {
-            const colors = ["orange", "yellow", "green"].filter(i => i !== logoColor);
+            const colors = ["orange", "yellow", "lime"].filter(i => i !== logoColor);
 
             setLogoColor(Math.floor(Math.random() * 2) === 0 ? colors[0] : colors[1]);
         };
@@ -50,48 +50,62 @@ const Sidebar = () => {
                 <Center
                     height="55px"
                 >
-                    <IconButton
-                        onClick={() => setCollapsed(!collapsed)}
-                        icon={<HamburgerIcon boxSize={5} color="white" />}
-                        variant='ghost'
-                        colorScheme="whiteAlpha"
-                    />
+                    <Center height="55px" width="55px" position="absolute" left={0} >
+                        <IconButton
+                            onClick={() => setCollapsed(!collapsed)}
+                            icon={<HamburgerIcon boxSize={5} color="white" />}
+                            variant='ghost'
+                            colorScheme="whiteAlpha"
+                        />
+                    </Center>
                     {!collapsed ?
                         /* What a beautiful company logo, did we hire a fucking designer for that? */
-                        <Center width="150px">
-                            <Flex>
-                                <Icon as={PiOrangeSlice} boxSize={10} color={`${logoColor}.400`} />
-                                <Center><Text color={`${logoColor}.200`} fontSize='2xl' paddingLeft={1} marginTop={1} fontFamily="cursive">Juicy</Text></Center>
-                            </Flex>
-                        </Center> : <></>
+                        <Flex direction="row" width="100px">
+                            <Icon as={PiOrangeSlice} boxSize={10} color={`${logoColor}.400`} />
+                            <Center>
+                                <Text
+                                    color={`${logoColor}.200`}
+                                    fontSize='2xl'
+                                    paddingLeft={1}
+                                    marginTop={1}
+                                    fontFamily="cursive"
+                                >
+                                    Juicy
+                                </Text>
+                            </Center>
+                        </Flex> : <></>
                     }
                 </Center>
-                {items.map(i => (
-                    <Button
-                        key={i.title}
-                        variant='ghost'
-                        onClick={() => navigate(i.link)}
-                        colorScheme="whiteAlpha"
-                    >
-                        <Icon
-                            as={i.icon}
-                            boxSize={5}
-                            color="white"
-                        />
-                        {!collapsed ?
-                            <Text
+                {
+                    items.map(i => (
+                        <Button
+                            key={i.title}
+                            variant='ghost'
+                            onClick={() => navigate(i.link)}
+                            colorScheme="whiteAlpha"
+                            align="left"
+                            justifyContent="flex-start"
+                        >
+                            <Icon
+                                as={i.icon}
+                                boxSize={5}
                                 color="white"
-                                fontSize='md'
-                                marginTop={1}
-                                paddingLeft={1}
-                            >
-                                {i.title}
-                            </Text> : <></>
-                        }
-                    </Button>
-                ))}
+                            />
+                            {!collapsed ?
+                                <Text
+                                    color="white"
+                                    fontSize='md'
+                                    marginTop={1}
+                                    paddingLeft={1}
+                                >
+                                    {i.title}
+                                </Text> : <></>
+                            }
+                        </Button>
+                    ))
+                }
             </Flex>
-        </Box>
+        </Box >
     );
 };
 
