@@ -1,5 +1,5 @@
-import { Flex, Spacer, Avatar, Button, Center, IconButton, Text, Menu, MenuButton, MenuList, MenuItem, MenuDivider, Box, position } from "@chakra-ui/react";
-import { ChevronDownIcon, SearchIcon, BellIcon, HamburgerIcon } from "@chakra-ui/icons";
+import { Flex, Spacer, Avatar, Button, Center, IconButton, Text, Menu, MenuButton, MenuList, MenuItem, MenuDivider, Box } from "@chakra-ui/react";
+import { ChevronDownIcon, SearchIcon, BellIcon } from "@chakra-ui/icons";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import pageTitles from '../assets/pageTitles.json'
@@ -10,7 +10,6 @@ const Navbar = ({ children }) => {
     const location = useLocation();
 
     const [pageTitle, setPageTitle] = useState("");
-    const [showSidebar, setShowsidebar] = useState(true);
 
     useEffect(() => {
         setPageTitle(pageTitles[location.pathname.substring(1)]); /* TBD: Just write a custom hook for this shit */
@@ -18,7 +17,9 @@ const Navbar = ({ children }) => {
 
     return (
         <Flex>
-            <Sidebar collapsed={showSidebar} />
+            <div style={{ flexShrink: 0 }}>
+                <Sidebar />
+            </div>
             <div>
                 <Flex
                     h='55px'
@@ -28,13 +29,6 @@ const Navbar = ({ children }) => {
                 >
                     {/* LEFT SIDE */}
                     <Center>
-                        <IconButton
-                            onClick={() => setShowsidebar(!showSidebar)}
-                            ml={2}
-                            icon={<HamburgerIcon boxSize={5} />}
-                            variant='ghost'
-                            rounded={100}
-                        />
                         <Text fontSize='xl' ml={2} pt={1}>
                             {pageTitle}
                         </Text>
