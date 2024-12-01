@@ -2,25 +2,21 @@ import { Box, IconButton, Flex, Icon, Button, Text, Center } from "@chakra-ui/re
 import { HamburgerIcon, SettingsIcon } from "@chakra-ui/icons";
 import { useEffect, useState } from "react";
 import { FaHome, FaChartBar } from "react-icons/fa";
-import { PiOrangeSlice } from "react-icons/pi";
 import pageTitles from '../assets/pageTitles.json'
 import { useNavigate } from "react-router-dom";
+import JuciyLogo from "../widgets/JuciyLogo";
 
 const Sidebar = () => {
+    const logoColors = ["orange", "yellow", "lime"];
     const navigate = useNavigate();
 
     const [collapsed, setCollapsed] = useState(false);
-    const [logoColor, setLogoColor] = useState();
+    const [logoColor, setLogoColor] = useState(logoColors[Math.floor(Math.random() * 3)]);
 
     /* This is very important business logic, please don't touch it */
     useEffect(() => {
-        if (!collapsed) {
-            const colors = ["orange", "yellow", "lime"].filter(i => i !== logoColor);
-
-            setLogoColor(Math.floor(Math.random() * 2) === 0 ? colors[0] : colors[1]);
-        };
+        if (!collapsed) setLogoColor(logoColors.filter(i => i !== logoColor)[Math.floor(Math.random() * 2)]);
     }, [collapsed]);
-
 
     const items = [
         {
@@ -58,23 +54,7 @@ const Sidebar = () => {
                             colorScheme="whiteAlpha"
                         />
                     </Center>
-                    {!collapsed ?
-                        /* What a beautiful company logo, did we hire a fucking designer for that? */
-                        <Flex direction="row" width="100px">
-                            <Icon as={PiOrangeSlice} boxSize={10} color={`${logoColor}.400`} />
-                            <Center>
-                                <Text
-                                    color={`${logoColor}.200`}
-                                    fontSize='2xl'
-                                    paddingLeft={1}
-                                    marginTop={1}
-                                    fontFamily="cursive"
-                                >
-                                    Juicy
-                                </Text>
-                            </Center>
-                        </Flex> : <></>
-                    }
+                    {!collapsed ? <JuciyLogo color={logoColor} /> : <></>}
                 </Center>
                 {
                     items.map(i => (
