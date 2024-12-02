@@ -40,9 +40,11 @@ const Sidebar = () => {
         <Box
             width={collapsed ? "55px" : "230px"}
             minHeight="100vh"
+            height="100%"
             backgroundColor="gray.900"
+
         >
-            <Flex direction="column">
+            <Flex direction="column" position="sticky" top={0}>
                 <Center
                     height="55px"
                 >
@@ -77,6 +79,7 @@ const Sidebar = () => {
                                     fontSize='md'
                                     marginTop={1}
                                     paddingLeft={1}
+                                    fontWeight="normal"
                                 >
                                     {i.title}
                                 </Text> : <></>
