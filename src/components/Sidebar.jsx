@@ -1,7 +1,8 @@
 import { Box, IconButton, Flex, Icon, Button, Text, Center } from "@chakra-ui/react";
-import { HamburgerIcon, SettingsIcon } from "@chakra-ui/icons";
+import { HamburgerIcon } from "@chakra-ui/icons";
 import { useEffect, useState } from "react";
 import { FaHome, FaChartBar } from "react-icons/fa";
+import { VscServerProcess } from "react-icons/vsc";
 import pageTitles from '../assets/pageTitles.json'
 import { useNavigate } from "react-router-dom";
 import JuciyLogo from "../widgets/JuciyLogo";
@@ -32,7 +33,7 @@ const Sidebar = () => {
         {
             title: pageTitles["automation"],
             link: "/automation",
-            icon: SettingsIcon
+            icon: VscServerProcess
         }
     ]
 
@@ -42,7 +43,6 @@ const Sidebar = () => {
             minHeight="100vh"
             height="100%"
             backgroundColor="gray.900"
-
         >
             <Flex direction="column" position="sticky" top={0}>
                 <Center

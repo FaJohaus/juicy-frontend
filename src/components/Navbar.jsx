@@ -5,10 +5,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import pageTitles from '../assets/pageTitles.json'
 import Sidebar from "./Sidebar";
 
-/* TBD: 
-    1. Fix Navbar not taking full width if page doesn't 
-    2. Sidebar ending if content becomes scrollable    
-*/
 const Navbar = ({ children }) => {
     const navigate = useNavigate();
     const location = useLocation();
@@ -24,11 +20,12 @@ const Navbar = ({ children }) => {
             <div style={{ flexShrink: 0 }}>
                 <Sidebar />
             </div>
-            <div>
+            <div style={{ width: "100%" }}>
                 <Flex
                     h='55px'
                     borderWidth='1px'
-                    position="sticky" top={0}
+                    position="sticky"
+                    top={0}
                     backgroundColor="white"
                 >
                     {/* LEFT SIDE */}
