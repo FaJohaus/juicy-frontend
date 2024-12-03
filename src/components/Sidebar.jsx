@@ -1,8 +1,7 @@
-import { Box, IconButton, Flex, Icon, Button, Text, Center } from "@chakra-ui/react";
+import { Box, IconButton, Flex, Icon, Button, Text, Center, Tooltip } from "@chakra-ui/react";
 import { HamburgerIcon } from "@chakra-ui/icons";
 import { useEffect, useState } from "react";
-import { FaHome, FaChartBar } from "react-icons/fa";
-import { VscServerProcess } from "react-icons/vsc";
+import { VscHome, VscServerProcess, VscGraph } from "react-icons/vsc";
 import pageTitles from '../assets/pageTitles.json'
 import { useNavigate } from "react-router-dom";
 import JuciyLogo from "../widgets/JuciyLogo";
@@ -23,12 +22,12 @@ const Sidebar = () => {
         {
             title: pageTitles[""],
             link: "/",
-            icon: FaHome
+            icon: VscHome
         },
         {
             title: pageTitles["insights"],
             link: "/insights",
-            icon: FaChartBar
+            icon: VscGraph
         },
         {
             title: pageTitles["automation"],
@@ -39,7 +38,7 @@ const Sidebar = () => {
 
     return (
         <Box
-            width={collapsed ? "55px" : "230px"}
+            width={collapsed ? "55px" : "200px"}
             minHeight="100vh"
             height="100%"
             backgroundColor="gray.900"
@@ -60,31 +59,32 @@ const Sidebar = () => {
                 </Center>
                 {
                     items.map(i => (
-                        <Button
-                            key={i.title}
-                            variant='ghost'
-                            onClick={() => navigate(i.link)}
-                            colorScheme="whiteAlpha"
-                            align="left"
-                            justifyContent="flex-start"
-                        >
-                            <Icon
-                                as={i.icon}
-                                boxSize={5}
-                                color="white"
-                            />
-                            {!collapsed ?
-                                <Text
+                        <Tooltip key={i.title} isDisabled={!collapsed} label={i.title} placement="right">
+                            <Button
+                                variant='ghost'
+                                onClick={() => navigate(i.link)}
+                                colorScheme="whiteAlpha"
+                                align="left"
+                                justifyContent="flex-start"
+                            >
+                                <Icon
+                                    as={i.icon}
+                                    boxSize={5}
                                     color="white"
-                                    fontSize='md'
-                                    marginTop={1}
-                                    paddingLeft={1}
-                                    fontWeight="normal"
-                                >
-                                    {i.title}
-                                </Text> : <></>
-                            }
-                        </Button>
+                                />
+                                {!collapsed ?
+                                    <Text
+                                        color="white"
+                                        fontSize='md'
+                                        marginTop={1}
+                                        paddingLeft={1}
+                                        fontWeight="normal"
+                                    >
+                                        {i.title}
+                                    </Text> : <></>
+                                }
+                            </Button>
+                        </Tooltip>
                     ))
                 }
             </Flex>

@@ -1,14 +1,58 @@
+import { SimpleGrid, Flex, Spacer, Button, Icon, Text, ButtonGroup, Tooltip } from "@chakra-ui/react";
+import { VscFilter, VscEdit } from "react-icons/vsc";
+import PreviewTemplate from "../widgets/insight-previews/PreviewTemplate";
+import { IoMdCloseCircle } from "react-icons/io";
+
 const Dashboard = () => {
+    const exampleFilters = ["This Month", "Company A, Company C", "E-Mail, Phone Calls"];
+
     return (
-        <div>
-            Dashboard
-            <br />
-            <div>
-                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-                Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet,
-            </div>
-        </div>
-    )
+        <>
+            <Flex mb={2}>
+                {/* LEFT SIDE */}
+                <ButtonGroup size='sm' isAttached>
+                    <Button
+                        leftIcon={<Icon as={VscFilter} />}
+                        size="sm"
+                    >
+                        <Text fontWeight="normal">Filter</Text>
+                    </Button>
+                    {exampleFilters.map((f, i) => (
+                        <Tooltip key={i} label={f}>
+                            <Button
+                                leftIcon={<Icon as={IoMdCloseCircle} color="red.500" />}
+                                variant='outline'
+                            >
+                                <Text fontWeight="thin" fontSize='xs'>
+                                    {`${f.substring(0, 12)} ${f.length >= 12 ? '...' : ''}`}
+                                </Text>
+                            </Button>
+                        </Tooltip>
+                    ))}
+                </ButtonGroup>
+                <Spacer />
+                {/* RIGHT SIDE */}
+                <Button
+                    leftIcon={<Icon as={VscEdit} />}
+                    size="sm"
+                >
+                    <Text fontWeight="normal">Edit</Text>
+                </Button>
+            </Flex>
+            <SimpleGrid
+                columns={4}
+                gap={2}
+                minChildWidth="360px"
+            >
+                <PreviewTemplate />
+                <PreviewTemplate />
+                <PreviewTemplate />
+                <PreviewTemplate />
+                <PreviewTemplate />
+                <PreviewTemplate />
+            </SimpleGrid>
+        </>
+    );
 }
 
 export default Dashboard;
