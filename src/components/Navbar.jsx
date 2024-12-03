@@ -6,7 +6,7 @@ import pageTitles from '../assets/pageTitles.json'
 import Sidebar from "./Sidebar";
 
 const Navbar = ({ children }) => {
-    const navbarHeight = "55px";
+    const NAVBAR_HEIGHT = "55px";
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -24,7 +24,7 @@ const Navbar = ({ children }) => {
             </div>
             <div style={{ width: "100%" }}>
                 <Flex
-                    h={navbarHeight}
+                    h={NAVBAR_HEIGHT}
                     borderWidth='1px'
                     position="sticky"
                     top={0}
@@ -70,7 +70,7 @@ const Navbar = ({ children }) => {
                         </Menu>
                     </Center>
                 </Flex>
-                <Box p={2} bgColor="gray.50" minHeight={`calc(100vh - ${navbarHeight})`}>
+                <Box p={2} bgColor="gray.50" minHeight={`calc(100vh - ${NAVBAR_HEIGHT})`}>
                     {children}
                 </Box>
             </div>

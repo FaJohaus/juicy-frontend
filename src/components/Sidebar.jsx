@@ -10,7 +10,7 @@ const Sidebar = () => {
     const logoColors = ["orange", "yellow", "lime"];
     const navigate = useNavigate();
 
-    const [collapsed, setCollapsed] = useState(false);
+    const [collapsed, setCollapsed] = useState(true);
     const [logoColor, setLogoColor] = useState(logoColors[Math.floor(Math.random() * 3)]);
 
     /* This is very important business logic, please don't touch it */
