@@ -1,4 +1,3 @@
-import { VStack, Text } from "@chakra-ui/react";
 import { PieChart, Pie, ResponsiveContainer, Cell, Tooltip, Legend } from "recharts";
 import PreviewCard from "./PreviewCard";
 import { useTheme } from "@chakra-ui/react";
@@ -15,10 +14,10 @@ const PieChartPreview = ({ data, title }) => {
 
     /* TBD: Create color array based on length of data array */
     const COLORS = [
-        theme.colors.blue["400"],
-        theme.colors.green["400"],
         theme.colors.yellow["400"],
-        theme.colors.orange["400"]
+        theme.colors.orange["400"],
+        theme.colors.green["400"],
+        theme.colors.blue["400"],
     ];
 
     const RADIAN = Math.PI / 180;

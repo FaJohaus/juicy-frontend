@@ -1,4 +1,4 @@
-import { Card, CardBody, CardFooter, Center, Divider, Text } from "@chakra-ui/react";
+import { Card, CardBody, CardFooter, Center, Divider, Text, Flex, IconButton } from "@chakra-ui/react";
 import { ExternalLinkIcon } from "@chakra-ui/icons";
 
 const PreviewCard = ({ children, title }) => {
@@ -14,11 +14,21 @@ const PreviewCard = ({ children, title }) => {
                 </Center>
             </CardBody>
             <Divider />
-            <CardFooter height="45px">
-                <Center>
+            <CardFooter height="50px">
+                <Flex
+                    alignItems="center"
+                    justifyContent="space-between"
+                    w="100%"
+                >
                     <Text>{title}</Text>
-                    <ExternalLinkIcon />
-                </Center>
+                    <IconButton
+                        icon={<ExternalLinkIcon />}
+                        variant='ghost'
+                        size="sm"
+                        rounded={6}
+                        onClick={() => alert("Bald kommt hier eine Insight")}
+                    />
+                </Flex>
             </CardFooter>
         </Card>
     );
