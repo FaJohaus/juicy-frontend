@@ -1,6 +1,7 @@
 import { VStack, Text } from "@chakra-ui/react";
-import { PieChart, Pie, ResponsiveContainer, Cell } from "recharts";
+import { PieChart, Pie, ResponsiveContainer, Cell, Tooltip, Legend } from "recharts";
 import PreviewCard from "./PreviewCard";
+import { useTheme } from "@chakra-ui/react";
 
 /**
  * 
@@ -10,8 +11,15 @@ import PreviewCard from "./PreviewCard";
  * @returns Pie Chart Preview Card for the Dashboard
  */
 const PieChartPreview = ({ data, title }) => {
+    const theme = useTheme();
+
     /* TBD: Create color array based on length of data array */
-    const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
+    const COLORS = [
+        theme.colors.blue["400"],
+        theme.colors.green["400"],
+        theme.colors.yellow["400"],
+        theme.colors.orange["400"]
+    ];
 
     const RADIAN = Math.PI / 180;
     const percentageLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent }) => {
@@ -43,19 +51,17 @@ const PieChartPreview = ({ data, title }) => {
                             <Cell key={i} fill={COLORS[i % COLORS.length]} />
                         ))}
                     </Pie>
+                    <Tooltip
+                        contentStyle={{ zIndex: 1 }}
+                        wrapperStyle={{ zIndex: 1 }}
+                    />
+                    <Legend
+                        layout="vertical"
+                        align="right"
+                        verticalAlign="middle"
+                    />
                 </PieChart>
             </ResponsiveContainer>
-            <VStack>
-                {data.map((e, i) => (
-                    <Text
-                        minWidth="90px"
-                        key={i}
-                        color={COLORS[i]}
-                    >
-                        {e.name}
-                    </Text>
-                ))}
-            </VStack>
         </PreviewCard>
     );
 }

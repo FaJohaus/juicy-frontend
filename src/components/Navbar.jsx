@@ -29,7 +29,7 @@ const Navbar = ({ children }) => {
                     position="sticky"
                     top={0}
                     backgroundColor="white"
-                    zIndex={1}
+                    zIndex={10}
                 >
                     {/* LEFT SIDE */}
                     <Center>

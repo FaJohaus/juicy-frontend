@@ -1,4 +1,5 @@
 import { Card, CardBody, CardFooter, Center, Divider, Text } from "@chakra-ui/react";
+import { ExternalLinkIcon } from "@chakra-ui/icons";
 
 const PreviewCard = ({ children, title }) => {
     return (
@@ -13,8 +14,11 @@ const PreviewCard = ({ children, title }) => {
                 </Center>
             </CardBody>
             <Divider />
-            <CardFooter>
-                <Text>{title}</Text>
+            <CardFooter height="45px">
+                <Center>
+                    <Text>{title}</Text>
+                    <ExternalLinkIcon />
+                </Center>
             </CardFooter>
         </Card>
     );

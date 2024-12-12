@@ -3,6 +3,8 @@ import { VscFilter, VscEdit } from "react-icons/vsc";
 import PreviewCard from "../widgets/insight-previews/PreviewCard";
 import PieChartPreview from "../widgets/insight-previews/PieChartPreview";
 import { IoMdCloseCircle } from "react-icons/io";
+import BarChartPreview from "../widgets/insight-previews/BarChartPreview";
+import { truncateText } from "../utils";
 
 const Dashboard = () => {
     /* ------ EXAMPLE DATA ----- */
@@ -14,6 +16,30 @@ const Dashboard = () => {
         { name: 'Customer C', value: 300 },
         { name: 'Customer D', value: 200 },
     ];
+
+    const barChartData = [
+        {
+            name: "Customer A",
+            value1: 9,
+        },
+        {
+            name: "Customer B",
+            value1: 6.5,
+        },
+        {
+            name: "Customer C",
+            value1: 5,
+        },
+        {
+            name: "Customer D",
+            value1: 1,
+        },
+        {
+            name: "Bodenlos langer Name, der bitte abgeschnitten werden soll",
+            value1: 8,
+        }
+    ];
+
     /* ---------- */
 
     return (
@@ -34,7 +60,7 @@ const Dashboard = () => {
                                 variant='outline'
                             >
                                 <Text fontWeight="thin" fontSize='xs'>
-                                    {`${f.substring(0, 12)} ${f.length >= 12 ? '...' : ''}`} {/* TBD: Maybe Custom Hook for this? Might be useful in other places */}
+                                    {truncateText(f, 15)}
                                 </Text>
                             </Button>
                         </Tooltip>
@@ -52,15 +78,14 @@ const Dashboard = () => {
                 </Button>
             </Flex>
 
+            {/* TBD: Give all components the same colors for each customer */}
             <SimpleGrid
                 columns={4}
                 gap={2}
-                minChildWidth="360px"
+                minChildWidth="370px"
             >
-                <PieChartPreview data={pieChartData} title="Pie Chart" />
-                <PreviewCard title="Lorem Ipsum">Lorem Ipsum</PreviewCard>
-                <PreviewCard title="Lorem Ipsum">Lorem Ipsum</PreviewCard>
-                <PreviewCard title="Lorem Ipsum">Lorem Ipsum</PreviewCard>
+                <PieChartPreview data={pieChartData} title="Relativer Umsatzanteil" />
+                <BarChartPreview maxVal={10} data={barChartData} title="Aktuelle Kundenzufriedenheit" />
                 <PreviewCard title="Lorem Ipsum">Lorem Ipsum</PreviewCard>
                 <PreviewCard title="Lorem Ipsum">Lorem Ipsum</PreviewCard>
                 <PreviewCard title="Lorem Ipsum">Lorem Ipsum</PreviewCard>
