@@ -3,7 +3,7 @@ import { BarChart, CartesianGrid, XAxis, YAxis, Bar, ResponsiveContainer, Toolti
 import { useTheme } from "@emotion/react";
 import { truncateText } from "../../utils";
 
-/* TBD: Determine fix number of bars at which this widgets become a 'double sized' */
+/* TBD: Determine fix number of bars at which this widgets becomes a 'double sized' */
 const BarChartPreview = ({ data, title, maxVal }) => {
     const theme = useTheme();
 
@@ -31,7 +31,11 @@ const BarChartPreview = ({ data, title, maxVal }) => {
                         contentStyle={{ zIndex: 1 }}
                         wrapperStyle={{ zIndex: 1 }}
                     />
-                    <Bar dataKey="value1" fill={theme.colors.purple["400"]} />
+                    <Bar
+                        dataKey="value1"
+                        fill={theme.colors.purple["400"]}
+                        isAnimationActive={false}
+                    />
                 </BarChart>
             </ResponsiveContainer>
         </PreviewCard>

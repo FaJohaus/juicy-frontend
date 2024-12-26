@@ -25,7 +25,7 @@ const PreviewCard = ({ children, title }) => {
                         icon={<ExternalLinkIcon />}
                         variant='ghost'
                         size="sm"
-                        rounded={6}
+                        rounded={4}
                         onClick={() => alert("Bald kommt hier eine Insight")}
                     />
                 </Flex>
