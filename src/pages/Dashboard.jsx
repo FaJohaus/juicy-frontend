@@ -5,6 +5,7 @@ import PieChartPreview from "../widgets/insight-previews/PieChartPreview";
 import { IoMdCloseCircle } from "react-icons/io";
 import BarChartPreview from "../widgets/insight-previews/BarChartPreview";
 import { truncateText } from "../utils";
+import LineChartPreview from "../widgets/insight-previews/LineChartPreview";
 
 const Dashboard = () => {
     /* ------ EXAMPLE DATA ----- */
@@ -86,7 +87,7 @@ const Dashboard = () => {
             >
                 <PieChartPreview data={pieChartData} title="Relativer Umsatzanteil" />
                 <BarChartPreview maxVal={10} data={barChartData} title="Aktuelle Kundenzufriedenheit" />
-                <PreviewCard title="Lorem Ipsum">Lorem Ipsum</PreviewCard>
+                <LineChartPreview title="Verlauf Kundenzufriedenheit" maxVal={10} />
                 <PreviewCard title="Lorem Ipsum">Lorem Ipsum</PreviewCard>
                 <PreviewCard title="Lorem Ipsum">Lorem Ipsum</PreviewCard>
                 <PreviewCard title="Lorem Ipsum">Lorem Ipsum</PreviewCard>
