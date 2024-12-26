@@ -12,7 +12,6 @@ import { useTheme } from "@chakra-ui/react";
 const PieChartPreview = ({ data, title }) => {
     const theme = useTheme();
 
-    /* TBD: Create color array based on length of data array */
     const COLORS = [
         theme.colors.yellow["400"],
         theme.colors.orange["400"],

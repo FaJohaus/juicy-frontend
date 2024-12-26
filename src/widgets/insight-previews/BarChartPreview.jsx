@@ -13,6 +13,7 @@ const BarChartPreview = ({ data, title, maxVal }) => {
                 <BarChart
                     data={data}
                     margin={{ top: 10, bottom: 10 }}
+                    style={{ marginLeft: -20 }}
                 >
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis

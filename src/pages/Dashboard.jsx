@@ -41,6 +41,39 @@ const Dashboard = () => {
         }
     ];
 
+    // TBD: "Abtastrate" dynamisch nach Zeitintervall und verfügbarem Screenplatz anpassen
+    // TBD: Methode schreiben, die die echten Daten in diese scheiss Form hier überträgt
+    const lineChartData = [
+        {
+            "name": "KW 21",
+            "Customer A": 5,
+            "Customer B": 6,
+            "Customer C": 7,
+            "Customer D": 2
+        },
+        {
+            "name": "KW 22",
+            "Customer A": 5.5,
+            "Customer B": 4,
+            "Customer C": 8,
+            "Customer D": 1
+        },
+        {
+            "name": "KW 23",
+            "Customer A": 4,
+            "Customer B": 6,
+            "Customer C": 8,
+            "Customer D": 1.5
+        },
+        {
+            "name": "KW 24",
+            "Customer A": 6,
+            "Customer B": 6,
+            "Customer C": 7,
+            "Customer D": 1
+        },
+    ];
+
     /* ---------- */
 
     return (
@@ -79,15 +112,14 @@ const Dashboard = () => {
                 </Button>
             </Flex>
 
-            {/* TBD: Give all components the same colors for each customer */}
             <SimpleGrid
                 columns={4}
                 gap={2}
                 minChildWidth="370px"
             >
                 <PieChartPreview data={pieChartData} title="Relativer Umsatzanteil" />
-                <BarChartPreview maxVal={10} data={barChartData} title="Aktuelle Kundenzufriedenheit" />
-                <LineChartPreview title="Verlauf Kundenzufriedenheit" maxVal={10} />
+                <BarChartPreview data={barChartData} title="Aktuelle Kundenzufriedenheit" maxVal={10} />
+                <LineChartPreview data={lineChartData} title="Verlauf Kundenzufriedenheit" maxVal={10} />
                 <PreviewCard title="Lorem Ipsum">Lorem Ipsum</PreviewCard>
                 <PreviewCard title="Lorem Ipsum">Lorem Ipsum</PreviewCard>
                 <PreviewCard title="Lorem Ipsum">Lorem Ipsum</PreviewCard>
