@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect, useCallback } from "react";
+import { createContext } from "react";
 import { SimpleGrid, Flex, Spacer, Button, Icon, Text, ButtonGroup, Tooltip } from "@chakra-ui/react";
 import { VscFilter, VscEdit } from "react-icons/vsc";
 import PreviewCard from "../widgets/insight-previews/PreviewCard";
@@ -78,17 +78,13 @@ const Dashboard = () => {
 
     /* ---------- */
 
-    const [customers, setCustomers] = useState(["Customer A", "Customer B", "Customer C", "Customer D"]); // Will of course later just be fetched...
-    const [chartColors, setChartColors] = useState(useChartColors(customers.length));
-
-    useEffect(() => {
-        console.log(chartColors)
-    }, [customers.length]);
+    const customers = ["Customer A", "Customer B", "Customer C", "Customer D"]; // Will of course later just be fetched...
+    const chartColors = useChartColors(customers.length);
 
     const DashboardContext = createContext({ customers, chartColors });
 
     return (
-        <>
+        <DashboardContext.Provider value={{ customers, chartColors }}>
             <Flex mb={2}>
                 {/* LEFT SIDE */}
                 <ButtonGroup size='sm' isAttached zIndex={0}>
@@ -135,7 +131,7 @@ const Dashboard = () => {
                 <PreviewCard title="Lorem Ipsum">Lorem Ipsum</PreviewCard>
                 <PreviewCard title="Lorem Ipsum">Lorem Ipsum</PreviewCard>
             </SimpleGrid>
-        </>
+        </DashboardContext.Provider>
     );
 }
 
