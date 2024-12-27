@@ -1,3 +1,4 @@
+import { createContext, useState, useEffect } from "react";
 import { SimpleGrid, Flex, Spacer, Button, Icon, Text, ButtonGroup, Tooltip } from "@chakra-ui/react";
 import { VscFilter, VscEdit } from "react-icons/vsc";
 import PreviewCard from "../widgets/insight-previews/PreviewCard";
@@ -75,6 +76,11 @@ const Dashboard = () => {
     ];
 
     /* ---------- */
+
+    const [customers, setCustomers] = useState(["Customer A", "Customer B", "Customer C", "Customer D"]); // Will of course later just be fetched...
+    const [chartColors, setChartColors] = useState(["yellow", "green", "blue", "red"]);
+
+    const DashboardContext = createContext({ customers, chartColors });
 
     return (
         <>
