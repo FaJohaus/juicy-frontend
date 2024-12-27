@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect, useCallback } from "react";
 import { SimpleGrid, Flex, Spacer, Button, Icon, Text, ButtonGroup, Tooltip } from "@chakra-ui/react";
 import { VscFilter, VscEdit } from "react-icons/vsc";
 import PreviewCard from "../widgets/insight-previews/PreviewCard";
@@ -7,6 +7,7 @@ import { IoMdCloseCircle } from "react-icons/io";
 import BarChartPreview from "../widgets/insight-previews/BarChartPreview";
 import { truncateText } from "../utils";
 import LineChartPreview from "../widgets/insight-previews/LineChartPreview";
+import useChartColors from "../hooks/useChartColors";
 
 const Dashboard = () => {
     /* ------ EXAMPLE DATA ----- */
@@ -78,7 +79,11 @@ const Dashboard = () => {
     /* ---------- */
 
     const [customers, setCustomers] = useState(["Customer A", "Customer B", "Customer C", "Customer D"]); // Will of course later just be fetched...
-    const [chartColors, setChartColors] = useState(["yellow", "green", "blue", "red"]);
+    const [chartColors, setChartColors] = useState(useChartColors(customers.length));
+
+    useEffect(() => {
+        console.log(chartColors)
+    }, [customers.length]);
 
     const DashboardContext = createContext({ customers, chartColors });
 
