@@ -26,7 +26,7 @@ const BarChartPreview = ({ data, title, maxVal }) => {
                     />
                     <YAxis
                         domain={[0, maxVal ?? 'auto']}
-                        ticks={[...data.map(o => o.value1), maxVal]}
+                        ticks={[...new Set([...data.map(o => o.value1), maxVal])]}
                         interval={0}
                     />
                     <Tooltip

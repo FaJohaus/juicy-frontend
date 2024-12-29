@@ -52,7 +52,7 @@ const Dashboard = () => {
             "Customer B": 6,
             "Customer C": 7,
             "Customer D": 2,
-            "Customer E": 5
+            "Customer E": null
         },
         {
             "name": "KW 22",
@@ -60,7 +60,7 @@ const Dashboard = () => {
             "Customer B": 4,
             "Customer C": 8,
             "Customer D": 1,
-            "Customer E": 5
+            "Customer E": null
         },
         {
             "name": "KW 23",
