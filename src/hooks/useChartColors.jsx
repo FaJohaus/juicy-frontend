@@ -15,7 +15,7 @@ const useChartColors = (amount) => {
         return [...Array(amount)].map((_, i) => {
             if (amount <= baseColors.length) return theme.colors[baseColors[i]][400];
 
-            return theme.colors[baseColors[i % baseColors.length]][(((Math.floor(i / baseColors.length) + 1) * 2) + 1) * 100];
+            return theme.colors[baseColors[i % baseColors.length]][Math.ceil(i / baseColors.length) * 200 + 100];
         });
     }, [amount]);
 };
