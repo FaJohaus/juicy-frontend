@@ -1,4 +1,3 @@
-import { createContext } from "react";
 import { SimpleGrid, Flex, Spacer, Button, Icon, Text, ButtonGroup, Tooltip } from "@chakra-ui/react";
 import { VscFilter, VscEdit } from "react-icons/vsc";
 import PreviewCard from "../widgets/insight-previews/PreviewCard";
@@ -7,7 +6,7 @@ import { IoMdCloseCircle } from "react-icons/io";
 import BarChartPreview from "../widgets/insight-previews/BarChartPreview";
 import { truncateText } from "../utils";
 import LineChartPreview from "../widgets/insight-previews/LineChartPreview";
-import useChartColors from "../hooks/useChartColors";
+import { DashboardContextProvider } from "../context/DashboardContext";
 
 const Dashboard = () => {
     /* ------ EXAMPLE DATA ----- */
@@ -23,23 +22,19 @@ const Dashboard = () => {
     const barChartData = [
         {
             name: "Customer A",
-            value1: 9,
+            value1: 6,
         },
         {
             name: "Customer B",
-            value1: 6.5,
+            value1: 6,
         },
         {
             name: "Customer C",
-            value1: 5,
+            value1: 7,
         },
         {
             name: "Customer D",
             value1: 1,
-        },
-        {
-            name: "Bodenlos langer Name, der bitte abgeschnitten werden soll",
-            value1: 8,
         }
     ];
 
@@ -79,12 +74,9 @@ const Dashboard = () => {
     /* ---------- */
 
     const customers = ["Customer A", "Customer B", "Customer C", "Customer D"]; // Will of course later just be fetched...
-    const chartColors = useChartColors(customers.length);
-
-    const DashboardContext = createContext({ customers, chartColors });
 
     return (
-        <DashboardContext.Provider value={{ customers, chartColors }}>
+        <DashboardContextProvider customers={customers}>
             <Flex mb={2}>
                 {/* LEFT SIDE */}
                 <ButtonGroup size='sm' isAttached zIndex={0}>
@@ -131,7 +123,7 @@ const Dashboard = () => {
                 <PreviewCard title="Lorem Ipsum">Lorem Ipsum</PreviewCard>
                 <PreviewCard title="Lorem Ipsum">Lorem Ipsum</PreviewCard>
             </SimpleGrid>
-        </DashboardContext.Provider>
+        </DashboardContextProvider>
     );
 }
 

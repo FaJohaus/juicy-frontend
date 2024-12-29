@@ -9,7 +9,7 @@ import { useMemo } from "react";
 const useChartColors = (amount) => {
     const theme = useTheme();
 
-    const baseColors = ["blue", "red", "green", "yellow", "orange", "purple", "teal", "pink", "cyan"];
+    const baseColors = ["blue", "purple", "pink", "red", "orange", "yellow", "green", "teal", "cyan"];
 
     return useMemo(() => {
         return [...Array(amount)].map((_, i) => {

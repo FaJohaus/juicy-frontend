@@ -1,16 +1,10 @@
+import { useContext } from "react";
 import PreviewCard from "./PreviewCard";
 import { LineChart, ResponsiveContainer, CartesianGrid, YAxis, XAxis, Legend, Tooltip, Line } from "recharts";
-import { useTheme } from "@chakra-ui/react";
+import { DashboardContext } from "../../context/DashboardContext";
 
 const LineChartPreview = ({ title, maxVal, data }) => {
-    const theme = useTheme();
-
-    const COLORS = [
-        theme.colors.yellow["500"],
-        theme.colors.orange["400"],
-        theme.colors.green["400"],
-        theme.colors.blue["400"],
-    ];
+    const { chartColors } = useContext(DashboardContext);
 
     return (
         <PreviewCard title={title}>
@@ -30,7 +24,8 @@ const LineChartPreview = ({ title, maxVal, data }) => {
                         <Line
                             type="linear"
                             dataKey={customer}
-                            stroke={COLORS[i % COLORS.length]}
+                            stroke={chartColors[i % chartColors.length]}
+                            strokeWidth={2}
                             key={i}
                             isAnimationActive={false}
                         />

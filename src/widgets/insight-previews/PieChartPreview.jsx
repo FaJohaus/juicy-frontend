@@ -1,6 +1,7 @@
 import { PieChart, Pie, ResponsiveContainer, Cell, Tooltip, Legend } from "recharts";
 import PreviewCard from "./PreviewCard";
-import { useTheme } from "@chakra-ui/react";
+import { useContext } from "react";
+import { DashboardContext } from "../../context/DashboardContext";
 
 /**
  * 
@@ -10,14 +11,7 @@ import { useTheme } from "@chakra-ui/react";
  * @returns Pie Chart Preview Card for the Dashboard
  */
 const PieChartPreview = ({ data, title }) => {
-    const theme = useTheme();
-
-    const COLORS = [
-        theme.colors.yellow["400"],
-        theme.colors.orange["400"],
-        theme.colors.green["400"],
-        theme.colors.blue["400"],
-    ];
+    const { chartColors } = useContext(DashboardContext);
 
     const RADIAN = Math.PI / 180;
     const percentageLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent }) => {
@@ -32,7 +26,6 @@ const PieChartPreview = ({ data, title }) => {
         );
     };
 
-
     return (
         <PreviewCard title={title}>
             <ResponsiveContainer height={220}>
@@ -46,7 +39,7 @@ const PieChartPreview = ({ data, title }) => {
                         isAnimationActive={false}
                     >
                         {data.map((e, i) => (
-                            <Cell key={i} fill={COLORS[i % COLORS.length]} />
+                            <Cell key={i} fill={chartColors[i % chartColors.length]} />
                         ))}
                     </Pie>
                     <Tooltip
