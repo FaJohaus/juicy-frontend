@@ -17,6 +17,7 @@ const Dashboard = () => {
         { name: 'Customer B', value: 300 },
         { name: 'Customer C', value: 300 },
         { name: 'Customer D', value: 200 },
+        { name: 'Customer E', value: 150 },
     ];
 
     const barChartData = [
@@ -35,6 +36,10 @@ const Dashboard = () => {
         {
             name: "Customer D",
             value1: 1,
+        },
+        {
+            name: "Customer E",
+            value1: 8
         }
     ];
 
@@ -46,34 +51,38 @@ const Dashboard = () => {
             "Customer A": 5,
             "Customer B": 6,
             "Customer C": 7,
-            "Customer D": 2
+            "Customer D": 2,
+            "Customer E": 5
         },
         {
             "name": "KW 22",
             "Customer A": 5.5,
             "Customer B": 4,
             "Customer C": 8,
-            "Customer D": 1
+            "Customer D": 1,
+            "Customer E": 5
         },
         {
             "name": "KW 23",
             "Customer A": 4,
             "Customer B": 6,
             "Customer C": 8,
-            "Customer D": 1.5
+            "Customer D": 1.5,
+            "Customer E": 5
         },
         {
             "name": "KW 24",
             "Customer A": 6,
             "Customer B": 6,
             "Customer C": 7,
-            "Customer D": 1
+            "Customer D": 1,
+            "Customer E": 8
         },
     ];
 
     /* ---------- */
 
-    const customers = ["Customer A", "Customer B", "Customer C", "Customer D"]; // Will of course later just be fetched...
+    const customers = ["Customer A", "Customer B", "Customer C", "Customer D", "Customer E"]; // Will of course later just be fetched...
 
     return (
         <DashboardContextProvider customers={customers}>

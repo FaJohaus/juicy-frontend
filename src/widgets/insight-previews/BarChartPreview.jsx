@@ -1,11 +1,12 @@
 import PreviewCard from "./PreviewCard";
-import { BarChart, CartesianGrid, XAxis, YAxis, Bar, ResponsiveContainer, Tooltip } from "recharts";
-import { useTheme } from "@emotion/react";
+import { BarChart, CartesianGrid, XAxis, YAxis, Bar, ResponsiveContainer, Tooltip, Cell } from "recharts";
 import { truncateText } from "../../utils";
+import { useContext } from "react";
+import { DashboardContext } from "../../context/DashboardContext";
 
 /* TBD: Determine fix number of bars at which this widgets becomes a 'double sized' */
 const BarChartPreview = ({ data, title, maxVal }) => {
-    const theme = useTheme();
+    const { chartColors } = useContext(DashboardContext);
 
     return (
         <PreviewCard title={title}>
@@ -32,11 +33,11 @@ const BarChartPreview = ({ data, title, maxVal }) => {
                         contentStyle={{ zIndex: 1 }}
                         wrapperStyle={{ zIndex: 1 }}
                     />
-                    <Bar
-                        dataKey="value1"
-                        fill={theme.colors.purple["400"]}
-                        isAnimationActive={false}
-                    />
+                    <Bar dataKey="value1" isAnimationActive={false}>
+                        {data.map((_, i) => (
+                            <Cell key={`cell-${i}`} fill={chartColors[i]} />
+                        ))}
+                    </Bar>
                 </BarChart>
             </ResponsiveContainer>
         </PreviewCard>

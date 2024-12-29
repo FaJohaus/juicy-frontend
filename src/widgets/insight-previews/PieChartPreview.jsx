@@ -35,11 +35,11 @@ const PieChartPreview = ({ data, title }) => {
                         dataKey="value"
                         label={percentageLabel}
                         labelLine={false}
-                        legendType=""
+                        legendType
                         isAnimationActive={false}
                     >
-                        {data.map((e, i) => (
-                            <Cell key={i} fill={chartColors[i % chartColors.length]} />
+                        {data.map((_, i) => (
+                            <Cell key={i} fill={chartColors[i]} />
                         ))}
                     </Pie>
                     <Tooltip

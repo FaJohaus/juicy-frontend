@@ -24,7 +24,7 @@ const LineChartPreview = ({ title, maxVal, data }) => {
                         <Line
                             type="linear"
                             dataKey={customer}
-                            stroke={chartColors[i % chartColors.length]}
+                            stroke={chartColors[i]}
                             strokeWidth={2}
                             key={i}
                             isAnimationActive={false}
