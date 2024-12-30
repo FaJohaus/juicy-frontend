@@ -7,6 +7,10 @@ const theme = extendTheme({
             400: "#c2e801",
         },
     },
+    widgets: {
+        baseHeight: 300,
+        baseMinWidth: 360,
+    }
 });
 
 export default theme;

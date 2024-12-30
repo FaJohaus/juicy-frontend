@@ -2,13 +2,15 @@ import { useContext } from "react";
 import PreviewCard from "./PreviewCard";
 import { LineChart, ResponsiveContainer, CartesianGrid, YAxis, XAxis, Legend, Tooltip, Line } from "recharts";
 import { DashboardContext } from "../../context/DashboardContext";
+import { useTheme } from "@chakra-ui/react";
 
 const LineChartPreview = ({ title, maxVal, data }) => {
     const { chartColors } = useContext(DashboardContext);
+    const { widgets } = useTheme();
 
     return (
         <PreviewCard title={title}>
-            <ResponsiveContainer height={240}>
+            <ResponsiveContainer height={widgets.baseHeight - 80}>
                 <LineChart data={data} style={{ marginLeft: -20 }}>
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="name" />

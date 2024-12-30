@@ -3,14 +3,16 @@ import { BarChart, CartesianGrid, XAxis, YAxis, Bar, ResponsiveContainer, Toolti
 import { truncateText } from "../../utils";
 import { useContext } from "react";
 import { DashboardContext } from "../../context/DashboardContext";
+import { useTheme } from "@chakra-ui/react";
 
 /* TBD: Determine fix number of bars at which this widgets becomes a 'double sized' */
 const BarChartPreview = ({ data, title, maxVal }) => {
     const { chartColors } = useContext(DashboardContext);
+    const { widgets } = useTheme();
 
     return (
         <PreviewCard title={title}>
-            <ResponsiveContainer height={240}>
+            <ResponsiveContainer height={widgets.baseHeight - 80}>
                 <BarChart
                     data={data}
                     margin={{ top: 10, bottom: 10 }}

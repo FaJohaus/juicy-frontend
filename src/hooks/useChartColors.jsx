@@ -13,7 +13,7 @@ const useChartColors = (amount) => {
 
     return useMemo(() => {
         return [...Array(amount)].map((_, i) => {
-            if (amount <= baseColors.length) return theme.colors[baseColors[i]][400];
+            if (amount <= baseColors.length) return theme.colors[baseColors[i]][500];
 
             return theme.colors[baseColors[i % baseColors.length]][Math.ceil(i / baseColors.length) * 200 + 100];
         });

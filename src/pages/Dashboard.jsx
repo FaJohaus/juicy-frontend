@@ -1,4 +1,4 @@
-import { SimpleGrid, Flex, Spacer, Button, Icon, Text, ButtonGroup, Tooltip } from "@chakra-ui/react";
+import { SimpleGrid, Flex, Spacer, Button, Icon, Text, ButtonGroup, Tooltip, useTheme } from "@chakra-ui/react";
 import { VscFilter, VscEdit } from "react-icons/vsc";
 import PreviewCard from "../widgets/insight-previews/PreviewCard";
 import PieChartPreview from "../widgets/insight-previews/PieChartPreview";
@@ -81,6 +81,7 @@ const Dashboard = () => {
     ];
 
     /* ---------- */
+    const { widgets } = useTheme();
 
     const customers = ["Customer A", "Customer B", "Customer C", "Customer D", "Customer E"]; // Will of course later just be fetched...
 
@@ -121,16 +122,22 @@ const Dashboard = () => {
             </Flex>
 
             <SimpleGrid
-                columns={4}
                 gap={2}
-                minChildWidth="370px"
+                minChildWidth={widgets.baseMinWidth}
             >
                 <PieChartPreview data={pieChartData} title="Relativer Umsatzanteil" />
                 <BarChartPreview data={barChartData} title="Aktuelle Kundenzufriedenheit" maxVal={10} />
                 <LineChartPreview data={lineChartData} title="Verlauf Kundenzufriedenheit" maxVal={10} />
-                <PreviewCard title="Lorem Ipsum">Lorem Ipsum</PreviewCard>
-                <PreviewCard title="Lorem Ipsum">Lorem Ipsum</PreviewCard>
-                <PreviewCard title="Lorem Ipsum">Lorem Ipsum</PreviewCard>
+
+                <PreviewCard title="Lorem Ipsum" doubleWidth>
+                    Double length Lorem Ipsum
+                </PreviewCard>
+                <PreviewCard title="Lorem Ipsum" doubleWidth doubleHeight>
+                    Chunky Lorem Ipsum
+                </PreviewCard>
+                <PreviewCard title="Lorem Ipsum" doubleHeight>
+                    Double height Lorem Ipsum
+                </PreviewCard>
             </SimpleGrid>
         </DashboardContextProvider>
     );

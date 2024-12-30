@@ -1,20 +1,25 @@
-import { Card, CardBody, CardFooter, Center, Divider, Text, Flex, IconButton } from "@chakra-ui/react";
+import { Card, CardBody, CardFooter, Center, Divider, Text, Flex, IconButton, useTheme } from "@chakra-ui/react";
 import { ExternalLinkIcon } from "@chakra-ui/icons";
 
-const PreviewCard = ({ children, title }) => {
+const PreviewCard = ({ children, title, doubleWidth = false, doubleHeight = false }) => {
+    const { widgets } = useTheme();
+    const height = widgets.baseHeight * (doubleHeight ? 2 : 1);
+
     return (
         <Card
-            h="330px"
+            h={height}
             variant="outline"
             style={{ boxShadow: "1px 1px 1px lightgray" }}
+            gridColumn={doubleWidth ? "span 2" : undefined}
+            minWidth={widgets.baseMinWidth}
         >
-            <CardBody>
+            <CardBody maxHeight={height - 55}>
                 <Center>
                     {children}
                 </Center>
             </CardBody>
             <Divider />
-            <CardFooter height="50px">
+            <CardFooter height={50}>
                 <Flex
                     alignItems="center"
                     justifyContent="space-between"
@@ -30,7 +35,7 @@ const PreviewCard = ({ children, title }) => {
                     />
                 </Flex>
             </CardFooter>
-        </Card>
+        </Card >
     );
 }
 
