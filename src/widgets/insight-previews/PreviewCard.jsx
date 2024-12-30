@@ -2,8 +2,8 @@ import { Card, CardBody, CardFooter, Center, Divider, Text, Flex, IconButton, us
 import { ExternalLinkIcon } from "@chakra-ui/icons";
 
 const PreviewCard = ({ children, title, doubleWidth = false, doubleHeight = false }) => {
-    const { widgets } = useTheme();
-    const height = widgets.baseHeight * (doubleHeight ? 2 : 1);
+    const { widget } = useTheme();
+    const height = widget.baseHeight * (doubleHeight ? 2 : 1);
 
     return (
         <Card
@@ -11,7 +11,7 @@ const PreviewCard = ({ children, title, doubleWidth = false, doubleHeight = fals
             variant="outline"
             style={{ boxShadow: "1px 1px 1px lightgray" }}
             gridColumn={doubleWidth ? "span 2" : undefined}
-            minWidth={widgets.baseMinWidth}
+            minWidth={widget.baseMinWidth}
         >
             <CardBody maxHeight={height - 55}>
                 <Center>

@@ -7,10 +7,13 @@ import BarChartPreview from "../widgets/insight-previews/BarChartPreview";
 import { truncateText } from "../utils";
 import LineChartPreview from "../widgets/insight-previews/LineChartPreview";
 import { DashboardContextProvider } from "../context/DashboardContext";
+import TimeLinePreview from "../widgets/insight-previews/TimeLinePreview";
 
 const Dashboard = () => {
     /* ------ EXAMPLE DATA ----- */
-    const exampleFilters = ["This Month", "Company A, Company C", "E-Mail, Phone Calls"];
+
+    // Rework the idea of those. Only time and customer subset make sense globally. Subfilterning events is only for Timeline Preview
+    const exampleFilters = ["This Month", "Company A, Company C"];
 
     const pieChartData = [
         { name: 'Customer A', value: 400 },
@@ -81,7 +84,7 @@ const Dashboard = () => {
     ];
 
     /* ---------- */
-    const { widgets } = useTheme();
+    const { widget } = useTheme();
 
     const customers = ["Customer A", "Customer B", "Customer C", "Customer D", "Customer E"]; // Will of course later just be fetched...
 
@@ -123,21 +126,19 @@ const Dashboard = () => {
 
             <SimpleGrid
                 gap={2}
-                minChildWidth={widgets.baseMinWidth}
+                minChildWidth={widget.baseMinWidth}
             >
                 <PieChartPreview data={pieChartData} title="Relativer Umsatzanteil" />
                 <BarChartPreview data={barChartData} title="Aktuelle Kundenzufriedenheit" maxVal={10} />
                 <LineChartPreview data={lineChartData} title="Verlauf Kundenzufriedenheit" maxVal={10} />
+                <TimeLinePreview title="Timeline alle Events" />
 
-                <PreviewCard title="Lorem Ipsum" doubleWidth>
-                    Double length Lorem Ipsum
-                </PreviewCard>
-                <PreviewCard title="Lorem Ipsum" doubleWidth doubleHeight>
+                {/* <PreviewCard title="Lorem Ipsum" doubleWidth doubleHeight>
                     Chunky Lorem Ipsum
                 </PreviewCard>
                 <PreviewCard title="Lorem Ipsum" doubleHeight>
                     Double height Lorem Ipsum
-                </PreviewCard>
+                </PreviewCard> */}
             </SimpleGrid>
         </DashboardContextProvider>
     );

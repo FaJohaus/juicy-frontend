@@ -13,7 +13,7 @@ import { useTheme } from "@chakra-ui/react";
  */
 const PieChartPreview = ({ data, title }) => {
     const { chartColors } = useContext(DashboardContext);
-    const { widgets } = useTheme();
+    const { widget } = useTheme();
 
     const RADIAN = Math.PI / 180;
     const percentageLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent }) => {
@@ -30,7 +30,7 @@ const PieChartPreview = ({ data, title }) => {
 
     return (
         <PreviewCard title={title}>
-            <ResponsiveContainer height={widgets.baseHeight - 80}>
+            <ResponsiveContainer height={widget.baseHeight - 80}>
                 <PieChart>
                     <Pie
                         data={data}

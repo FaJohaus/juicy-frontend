@@ -7,8 +7,8 @@ const theme = extendTheme({
             400: "#c2e801",
         },
     },
-    widgets: {
-        baseHeight: 300,
+    widget: {
+        baseHeight: 310,
         baseMinWidth: 360,
     }
 });

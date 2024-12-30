@@ -5,14 +5,14 @@ import { useContext } from "react";
 import { DashboardContext } from "../../context/DashboardContext";
 import { useTheme } from "@chakra-ui/react";
 
-/* TBD: Determine fix number of bars at which this widgets becomes a 'double sized' */
+/* TBD: Determine fix number of bars at which this widget becomes a 'double sized' */
 const BarChartPreview = ({ data, title, maxVal }) => {
     const { chartColors } = useContext(DashboardContext);
-    const { widgets } = useTheme();
+    const { widget } = useTheme();
 
     return (
         <PreviewCard title={title}>
-            <ResponsiveContainer height={widgets.baseHeight - 80}>
+            <ResponsiveContainer height={widget.baseHeight - 80}>
                 <BarChart
                     data={data}
                     margin={{ top: 10, bottom: 10 }}
