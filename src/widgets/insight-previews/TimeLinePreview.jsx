@@ -1,21 +1,29 @@
 import { ReactFlow, Background, Controls } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
-import PreviewCard from "./PreviewCard";
 import { Box } from '@chakra-ui/react';
 import { useTheme } from '@chakra-ui/react';
+import PreviewCard from "./PreviewCard";
+import CustomTimelineNode from '../CustomTimelineNode';
 
 /* Je nach Tiefe des Baums vllt. auch doubleheight-widget draus machen? */
 const TimeLinePreview = ({ title }) => {
     const { widget } = useTheme();
 
+    const nodeTypes = {
+        custom: CustomTimelineNode
+    }
+
     const nodes = [
-        { id: '1', position: { x: 0, y: 0 }, data: { label: '1' } },
-        { id: '2', position: { x: 20, y: 100 }, data: { label: '2' } },
+        { id: '1', position: { x: 0, y: 0 }, data: { label: '1' }, type: "custom" },
+        { id: '2', position: { x: 100, y: 0 }, data: { label: '2' }, type: "custom" },
+        { id: '3', position: { x: 0, y: 100 }, data: { label: '3' }, type: "custom" },
     ];
     const edges = [
-        { id: 'e1-2', source: '1', target: '2' }
+        { id: 'e1-2', source: '1', target: '2', type: 'straight' },
+        { id: 'someshitidk', source: '1', target: '3', type: 'straight' }
     ];
 
+    /* 'fit view' aus dem Controlpanel iwie direkt ausführen? */
     return (
         <PreviewCard title={title} doubleWidth>
             <Box
@@ -28,16 +36,23 @@ const TimeLinePreview = ({ title }) => {
                 <ReactFlow
                     nodes={nodes}
                     edges={edges}
+                    proOptions={{ hideAttribution: true }}
+                    nodeTypes={nodeTypes}
+                    fitView
+                    /* ------------------ */
                     panOnDrag={false}
                     zoomOnScroll={false}
                     zoomOnPinch={false}
                     zoomOnDoubleClick={false}
                     panOnScroll={false}
                     elementsSelectable={false}
-                    proOptions={{ hideAttribution: true }}
+                    edgesFocusable={false}
+                    nodesDraggable={false}
+                    nodesConnectable={false}
+                    nodesFocusable={false}
+                    draggable={false}
                 >
                     <Background />
-                    <Controls />
                 </ReactFlow>
             </Box>
         </PreviewCard>
