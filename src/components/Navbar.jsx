@@ -1,5 +1,5 @@
 import { Flex, Spacer, Avatar, Button, Center, IconButton, Text, Menu, MenuButton, MenuList, MenuItem, MenuDivider, Box } from "@chakra-ui/react";
-import { ChevronDownIcon, SearchIcon, BellIcon } from "@chakra-ui/icons";
+import { ChevronDownIcon, BellIcon } from "@chakra-ui/icons";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import pageTitles from '../assets/pageTitles.json'
@@ -41,7 +41,6 @@ const Navbar = ({ children }) => {
                     {/* RIGHT SIDE */}
                     <Center>
                         <IconButton icon={<BellIcon boxSize={5} />} variant='ghost' rounded={100} />
-                        <IconButton icon={<SearchIcon boxSize={4} />} variant='ghost' rounded={100} />
                         <Menu gutter={7}>
                             <MenuButton
                                 as={Button}
