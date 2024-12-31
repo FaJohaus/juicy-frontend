@@ -72,7 +72,7 @@ const TimeLinePreview = ({ title, data }) => {
             };
 
 
-            x += 60;
+            x += n.subevent ? 30 : 60
             y = n.subevent ? y + 50 : 0;
 
             return node;
