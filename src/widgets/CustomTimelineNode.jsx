@@ -1,9 +1,13 @@
-import { Circle } from "@chakra-ui/react";
-import { Handle } from "@xyflow/react";
+import { Circle, Text } from "@chakra-ui/react";
+import { Handle, Position } from "@xyflow/react";
 import { Icon } from "@chakra-ui/icons";
 import { FaDollarSign, FaHandshake } from "react-icons/fa";
 import { RiArrowGoBackFill, RiMailFill, RiPhoneFill } from "react-icons/ri";
 
+/* TBD: 
+    1. Add Title and Date above Node. 
+    2. Modal with more Event Details if clicked on (Disable this on preview or give small Tooltip on hover instead?)
+*/
 const CustomTimelineNode = ({ variant, data }) => {
     const icon = () => {
         switch (variant) {
@@ -23,13 +27,16 @@ const CustomTimelineNode = ({ variant, data }) => {
     }
 
     return (
-        <Circle size={8} bgColor="gray.700">
-            <Circle size={7} bgColor="gray.300">
-                <Icon as={icon()} />
-                <Handle type="source" style={{ top: '50%', zIndex: -1 }} isConnectable={false} />
-                <Handle type="target" style={{ top: '50%', zIndex: -1 }} isConnectable={false} />
+        <>
+            <Circle size={8} bgColor="gray.700">
+                <Circle size={7} bgColor="gray.300">
+                    <Icon as={icon()} />
+                    <Handle type="source" style={{ top: '50%', zIndex: -1 }} /* position={Position.Bottom} */ isConnectable={false} />
+                    <Handle type="target" style={{ top: '50%', zIndex: -1 }} /* position={Position.Top} */ isConnectable={false} />
+                </Circle>
             </Circle>
-        </Circle>
+            <Text fontSize="xs">{data.label}</Text> {/* Try using ReactFlow's NodeMenu instead of rendering that in here */}
+        </>
     );
 };
 

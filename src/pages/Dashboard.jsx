@@ -83,6 +83,21 @@ const Dashboard = () => {
         },
     ];
 
+    const timelineData = [
+        { "_id": "1", "subevent": /* [ */"1.1"/* , "1.2"] */, "nextevent": "2", "previousevent": null, "type": "mail" },
+        { "_id": "1.1", "subevent": null, "nextevent":/*  "1.2" */null, "previousevent": null, "type": "call" },
+        /* { "_id": "1.2", "subevent": null, "nextevent": null, "previousevent": "1.1", "type": "purchase" }, */
+        { "_id": "2", "subevent": "2.1", "nextevent": "3", "previousevent": "1", "type": "retour" },
+        { "_id": "2.1", "subevent": "2.1.1", "nextevent": null, "previousevent": null, "type": "visit" },
+        { "_id": "2.1.1", "subevent": "2.1.1.1", "nextevent": null, "previousevent": null, "type": "mail" },
+        { "_id": "2.1.1.1", "subevent": null, "nextevent": null, "previousevent": null, "type": "call" },
+        { "_id": "3", "subevent": null, "nextevent": "4", "previousevent": "2", "type": "purchase" },
+        { "_id": "4", "subevent": "4.1", "nextevent": null, "previousevent": "3", "type": "retour" },
+        { "_id": "4.1", "subevent": "4.1.1", "nextevent": null, "previousevent": null, "type": "visit" },
+        { "_id": "4.1.1", "subevent": null, "nextevent": null, "previousevent": null, "type": "mail" },
+    ];
+
+
     /* ---------- */
     const { widget } = useTheme();
 
@@ -131,7 +146,7 @@ const Dashboard = () => {
                 <PieChartPreview data={pieChartData} title="Relativer Umsatzanteil" />
                 <BarChartPreview data={barChartData} title="Aktuelle Kundenzufriedenheit" maxVal={10} />
                 <LineChartPreview data={lineChartData} title="Verlauf Kundenzufriedenheit" maxVal={10} />
-                <TimeLinePreview title="Timeline alle Events" />
+                <TimeLinePreview data={timelineData} title="Timeline alle Events" />
 
                 {/* <PreviewCard title="Lorem Ipsum" doubleWidth doubleHeight>
                     Chunky Lorem Ipsum
