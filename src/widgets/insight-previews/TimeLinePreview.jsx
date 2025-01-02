@@ -41,7 +41,13 @@ const TimeLinePreview = ({ title, data }) => {
                     x: x,
                     y: y
                 },
-                data: { label: n._id },
+                data: {
+                    label: n._id,
+                    hasNext: !!n.nextevent,
+                    hasPrev: !!n.previousevent,
+                    hasSub: !!n.subevent,
+                    hasMain: !!y
+                },
                 type: n.type,
             };
 
@@ -105,7 +111,7 @@ const TimeLinePreview = ({ title, data }) => {
                     proOptions={{ hideAttribution: true }}
                     nodeTypes={nodeTypes}
                     edgeTypes={edgeTypes}
-                    /* fitView */
+                    fitView
                     /* ------------------ */
                     panOnDrag={false}
                     zoomOnScroll={false}

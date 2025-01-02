@@ -8,7 +8,7 @@ import { RiArrowGoBackFill, RiMailFill, RiPhoneFill } from "react-icons/ri";
     1. Add Title and Date above Node. 
     2. Modal with more Event Details if clicked on (Disable this on preview or give small Tooltip on hover instead?)
 */
-const CustomTimelineNode = ({ variant, data }) => {
+const CustomTimelineNode = ({ variant, data: { hasNext, hasPrev, hasSub, hasMain } }) => {
     const icon = () => {
         switch (variant) {
             case "mail":
@@ -28,38 +28,41 @@ const CustomTimelineNode = ({ variant, data }) => {
 
     return (
         <>
-            {/* <Text fontSize="xs">{variant}</Text> */}
             <Circle size={8} bgColor="gray.700">
                 <Circle size={7} bgColor="gray.300">
                     <Icon as={icon()} />
-                    <Handle
-                        type="source"
-                        position={Position.Bottom}
-                        id="bottom"
-                        isConnectable={true}
-                        style={{ zIndex: -1 }}
-                    />
-                    <Handle
-                        type="target"
-                        position={Position.Top}
-                        id="top"
-                        isConnectable={true}
-                        style={{ zIndex: -1 }}
-                    />
-                    <Handle
-                        type="source"
-                        position={Position.Right}
-                        id="right"
-                        isConnectable={true}
-                        style={{ zIndex: -1 }}
-                    />
-                    <Handle
-                        type="target"
-                        position={Position.Left}
-                        id="left"
-                        isConnectable={true}
-                        style={{ zIndex: -1 }}
-                    />
+                    {hasSub ?
+                        <Handle
+                            type="source"
+                            position={Position.Bottom}
+                            id="bottom"
+                            isConnectable={false}
+                        /> : <></>
+                    }
+                    {hasMain ?
+                        <Handle
+                            type="target"
+                            position={Position.Top}
+                            id="top"
+                            isConnectable={false}
+                        /> : <></>
+                    }
+                    {hasNext ?
+                        <Handle
+                            type="source"
+                            position={Position.Right}
+                            id="right"
+                            isConnectable={false}
+                        /> : <></>
+                    }
+                    {hasPrev ?
+                        <Handle
+                            type="target"
+                            position={Position.Left}
+                            id="left"
+                            isConnectable={false}
+                        /> : <></>
+                    }
                 </Circle>
             </Circle>
             {/* <Text fontSize="xs">{data.label}</Text> */}
