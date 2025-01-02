@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
-import { ReactFlow, Background } from '@xyflow/react';
+import { ReactFlow, Background, Controls } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 import { Box } from '@chakra-ui/react';
 import { useTheme } from '@chakra-ui/react';
 import PreviewCard from "./PreviewCard";
 import { MailNode, CallNode, PurchaseNode, RetourNode, VisitNode } from '../CustomTimelineNode';
+import CustomTimelineEdge from '../CustomTimelineEdge';
 
 /* Je nach Tiefe des Baums vllt. auch doubleheight-widget draus machen? */
 const TimeLinePreview = ({ title, data }) => {
@@ -21,20 +22,11 @@ const TimeLinePreview = ({ title, data }) => {
         "visit": VisitNode
     };
 
-    /* const nodes = [
-        { id: '1', position: { x: 0, y: 0 }, data: { label: '1' }, type: "mail" },
-        { id: '2', position: { x: 75, y: 0 }, data: { label: '2' }, type: "call" },
-        { id: '3', position: { x: 20, y: 50 }, data: { label: '3' }, type: "purchase" },
-        { id: '4', position: { x: 150, y: 0 }, data: { label: '3' }, type: "retour" },
-        { id: '5', position: { x: 50, y: 100 }, data: { label: '3' }, type: "visit" },
-    ];
+    const edgeTypes = {
+        stepBro: CustomTimelineEdge
+    }
 
-    const edges = [
-        { id: 'e1-2', source: '1', target: '2', type: 'straight' },
-        { id: 'someshitidk', source: '1', target: '3', type: 'straight' }
-    ]; */
-
-    /* Expects a sorted array, where each event is followed by all it's subevents and than it's nextevents
+    /* Expects a sorted array, where each event is followed by all it's subevents and then it's nextevents
     If the Array is not sorted, just sort it beforehand
     */
     const transformData = () => {
@@ -58,7 +50,13 @@ const TimeLinePreview = ({ title, data }) => {
                     id: n._id + n.subevent,
                     source: n._id,
                     target: n.subevent,
-                    type: 'straight'
+                    type: 'stepBro',
+                    sourceHandle: 'bottom',
+                    targetHandle: 'top',
+                    style: {
+                        strokeWidth: 2,
+                        stroke: "black"
+                    }
                 });
             };
 
@@ -67,12 +65,18 @@ const TimeLinePreview = ({ title, data }) => {
                     id: n._id + n.nextevent,
                     source: n._id,
                     target: n.nextevent,
-                    type: 'straight'
+                    type: 'straight',
+                    sourceHandle: 'right',
+                    targetHandle: 'left',
+                    style: {
+                        strokeWidth: 2,
+                        stroke: "black"
+                    }
                 });
             };
 
 
-            x += n.subevent ? 30 : 60
+            x += n.subevent ? 25 : 60;
             y = n.subevent ? y + 50 : 0;
 
             return node;
@@ -100,7 +104,8 @@ const TimeLinePreview = ({ title, data }) => {
                     edges={edges}
                     proOptions={{ hideAttribution: true }}
                     nodeTypes={nodeTypes}
-                    fitView
+                    edgeTypes={edgeTypes}
+                    /* fitView */
                     /* ------------------ */
                     panOnDrag={false}
                     zoomOnScroll={false}
@@ -115,6 +120,7 @@ const TimeLinePreview = ({ title, data }) => {
                     draggable={false}
                 >
                     <Background />
+                    <Controls />
                 </ReactFlow>
             </Box>
         </PreviewCard>

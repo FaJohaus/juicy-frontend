@@ -84,9 +84,8 @@ const Dashboard = () => {
     ];
 
     const timelineData = [
-        { "_id": "1", "subevent": /* [ */"1.1"/* , "1.2"] */, "nextevent": "2", "previousevent": null, "type": "mail" },
-        { "_id": "1.1", "subevent": null, "nextevent":/*  "1.2" */null, "previousevent": null, "type": "call" },
-        /* { "_id": "1.2", "subevent": null, "nextevent": null, "previousevent": "1.1", "type": "purchase" }, */
+        { "_id": "1", "subevent": "1.1", "nextevent": "2", "previousevent": null, "type": "mail" },
+        { "_id": "1.1", "subevent": null, "nextevent": null, "previousevent": null, "type": "call" },
         { "_id": "2", "subevent": "2.1", "nextevent": "3", "previousevent": "1", "type": "retour" },
         { "_id": "2.1", "subevent": "2.1.1", "nextevent": null, "previousevent": null, "type": "visit" },
         { "_id": "2.1.1", "subevent": "2.1.1.1", "nextevent": null, "previousevent": null, "type": "mail" },
@@ -95,6 +94,7 @@ const Dashboard = () => {
         { "_id": "4", "subevent": "4.1", "nextevent": null, "previousevent": "3", "type": "retour" },
         { "_id": "4.1", "subevent": "4.1.1", "nextevent": null, "previousevent": null, "type": "visit" },
         { "_id": "4.1.1", "subevent": null, "nextevent": null, "previousevent": null, "type": "mail" },
+        { "_id": "5", "subevent": null, "nextevent": null, "previousevent": null, "type": "mail" }, //Intentionally without connected edge
     ];
 
 

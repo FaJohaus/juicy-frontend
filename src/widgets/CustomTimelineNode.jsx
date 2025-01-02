@@ -28,14 +28,41 @@ const CustomTimelineNode = ({ variant, data }) => {
 
     return (
         <>
+            {/* <Text fontSize="xs">{variant}</Text> */}
             <Circle size={8} bgColor="gray.700">
                 <Circle size={7} bgColor="gray.300">
                     <Icon as={icon()} />
-                    <Handle type="source" style={{ top: '50%', zIndex: -1 }} /* position={Position.Bottom} */ isConnectable={false} />
-                    <Handle type="target" style={{ top: '50%', zIndex: -1 }} /* position={Position.Top} */ isConnectable={false} />
+                    <Handle
+                        type="source"
+                        position={Position.Bottom}
+                        id="bottom"
+                        isConnectable={true}
+                        style={{ zIndex: -1 }}
+                    />
+                    <Handle
+                        type="target"
+                        position={Position.Top}
+                        id="top"
+                        isConnectable={true}
+                        style={{ zIndex: -1 }}
+                    />
+                    <Handle
+                        type="source"
+                        position={Position.Right}
+                        id="right"
+                        isConnectable={true}
+                        style={{ zIndex: -1 }}
+                    />
+                    <Handle
+                        type="target"
+                        position={Position.Left}
+                        id="left"
+                        isConnectable={true}
+                        style={{ zIndex: -1 }}
+                    />
                 </Circle>
             </Circle>
-            <Text fontSize="xs">{data.label}</Text> {/* Try using ReactFlow's NodeMenu instead of rendering that in here */}
+            {/* <Text fontSize="xs">{data.label}</Text> */}
         </>
     );
 };
