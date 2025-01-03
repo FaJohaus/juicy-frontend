@@ -43,6 +43,7 @@ const TimeLinePreview = ({ title, data }) => {
                 },
                 data: {
                     label: n._id,
+                    date: n.date,
                     hasNext: !!n.nextevent,
                     hasPrev: !!n.previousevent,
                     hasSub: !!n.subevent,
@@ -83,7 +84,7 @@ const TimeLinePreview = ({ title, data }) => {
 
 
             x += n.subevent ? 25 : 60;
-            y = n.subevent ? y + 50 : 0;
+            y = n.subevent ? y + 60 : 0;
 
             return node;
         });
@@ -97,11 +98,11 @@ const TimeLinePreview = ({ title, data }) => {
     }, []);
 
     return (
-        <PreviewCard title={title} doubleWidth>
+        <PreviewCard title={title} doubleWidth doubleHeight>
             <Box
                 width="100vw"
                 minWidth={widget.baseMinWidth * 2 - 10}
-                height={widget.baseHeight - 80}
+                height={widget.baseHeight * 2 - 80}
                 mt={-2}
                 mx={-3}
             >

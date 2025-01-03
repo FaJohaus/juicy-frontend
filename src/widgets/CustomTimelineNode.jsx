@@ -1,14 +1,13 @@
-import { Circle, Text } from "@chakra-ui/react";
-import { Handle, Position } from "@xyflow/react";
+import { Circle, Text, Box } from "@chakra-ui/react";
+import { Handle, Position, NodeToolbar } from "@xyflow/react";
 import { Icon } from "@chakra-ui/icons";
 import { FaDollarSign, FaHandshake } from "react-icons/fa";
 import { RiArrowGoBackFill, RiMailFill, RiPhoneFill } from "react-icons/ri";
 
 /* TBD: 
-    1. Add Title and Date above Node. 
     2. Modal with more Event Details if clicked on (Disable this on preview or give small Tooltip on hover instead?)
 */
-const CustomTimelineNode = ({ variant, data: { hasNext, hasPrev, hasSub, hasMain } }) => {
+const CustomTimelineNode = ({ variant, data: { hasNext, hasPrev, hasSub, hasMain, label, date } }) => {
     const icon = () => {
         switch (variant) {
             case "mail":
@@ -28,6 +27,12 @@ const CustomTimelineNode = ({ variant, data: { hasNext, hasPrev, hasSub, hasMain
 
     return (
         <>
+            <NodeToolbar isVisible>
+                <Box backgroundColor="whiteAlpha.800" rounded={10} px={2}>
+                    <Text fontSize="sm" as='b' textAlign="center">{label}</Text>
+                    <Text fontSize="sm">{date}</Text>
+                </Box>
+            </NodeToolbar >
             <Circle size={8} bgColor="gray.700">
                 <Circle size={7} bgColor="gray.300">
                     <Icon as={icon()} />
@@ -65,7 +70,6 @@ const CustomTimelineNode = ({ variant, data: { hasNext, hasPrev, hasSub, hasMain
                     }
                 </Circle>
             </Circle>
-            {/* <Text fontSize="xs">{data.label}</Text> */}
         </>
     );
 };
