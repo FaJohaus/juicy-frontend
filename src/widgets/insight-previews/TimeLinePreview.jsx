@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { ReactFlow, Background, Controls, useNodesState, useEdgesState } from '@xyflow/react';
+import { ReactFlow, useNodesState, useEdgesState, useReactFlow, ReactFlowProvider } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 import { Box } from '@chakra-ui/react';
 import { useTheme } from '@chakra-ui/react';
@@ -34,6 +34,25 @@ const TimeLinePreview = ({ title, data }) => {
         setEdges(edges);
     }, [data]);
 
+    const Flow = (props) => {
+        const reactFlow = useReactFlow();
+
+        useEffect(() => {
+            const onResize = () => {
+                reactFlow.fitView();
+            };
+
+            window.addEventListener('resize', onResize);
+
+            return () => {
+                window.removeEventListener('resize', onResize);
+            };
+        }, []);
+
+        return <ReactFlow {...props} />;
+    };
+
+
     return (
         <PreviewCard title={title} doubleWidth doubleHeight>
             <Box
@@ -43,31 +62,30 @@ const TimeLinePreview = ({ title, data }) => {
                 mt={-2}
                 mx={-3}
             >
-                <ReactFlow
-                    nodes={nodes}
-                    edges={edges}
-                    onNodesChange={onNodesChange}
-                    onEdgesChange={onEdgesChange}
-                    proOptions={{ hideAttribution: true }}
-                    nodeTypes={nodeTypes}
-                    edgeTypes={edgeTypes}
-                    fitView
-                    /* ------------------ */
-                    panOnDrag={false}
-                    zoomOnScroll={false}
-                    zoomOnPinch={false}
-                    zoomOnDoubleClick={false}
-                    panOnScroll={false}
-                    elementsSelectable={false}
-                    edgesFocusable={false}
-                    nodesDraggable={false}
-                    nodesConnectable={false}
-                    nodesFocusable={false}
-                    draggable={false}
-                >
-                    <Background />
-                    <Controls />
-                </ReactFlow>
+                <ReactFlowProvider>
+                    <Flow
+                        nodes={nodes}
+                        edges={edges}
+                        onNodesChange={onNodesChange}
+                        onEdgesChange={onEdgesChange}
+                        proOptions={{ hideAttribution: true }}
+                        nodeTypes={nodeTypes}
+                        edgeTypes={edgeTypes}
+                        fitView
+                        /* ------------------ */
+                        panOnDrag={false}
+                        zoomOnScroll={false}
+                        zoomOnPinch={false}
+                        zoomOnDoubleClick={false}
+                        panOnScroll={false}
+                        elementsSelectable={false}
+                        edgesFocusable={false}
+                        nodesDraggable={false}
+                        nodesConnectable={false}
+                        nodesFocusable={false}
+                        draggable={false}
+                    />
+                </ReactFlowProvider>
             </Box>
         </PreviewCard>
     );
