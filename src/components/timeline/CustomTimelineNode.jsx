@@ -33,7 +33,7 @@ const CustomTimelineNode = ({ variant, data: { hasNext, hasPrev, hasSub, hasMain
                     <Text fontSize="sm">{date}</Text>
                 </Box>
             </NodeToolbar >
-            <Circle size={8} bgColor="gray.700">
+            <Circle size={8} bgColor="gray.900">
                 <Circle size={7} bgColor="gray.300">
                     <Icon as={icon()} />
                     {hasSub ?
