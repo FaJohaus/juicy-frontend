@@ -66,7 +66,7 @@ const Dashboard = () => {
             "Customer E": null
         },
         {
-            "name": "KW 23",
+            "name": "KW 24",
             "Customer A": 4,
             "Customer B": 6,
             "Customer C": 8,
@@ -84,26 +84,26 @@ const Dashboard = () => {
     ];
 
     const timelineData = [
-        { "_id": "1", "subevent": "1.1", "nextevent": "2", "previousevent": null, "type": "mail", "date": "01.01.2023" },
-        { "_id": "1.1", "subevent": null, "nextevent": null, "previousevent": null, "type": "call", "date": "05.01.2023" },
-        { "_id": "2", "subevent": "2.1", "nextevent": "3", "previousevent": "1", "type": "retour", "date": "15.01.2023" },
-        { "_id": "2.1", "subevent": "2.1.1", "nextevent": null, "previousevent": null, "type": "visit", "date": "28.01.2023" },
-        { "_id": "2.1.1", "subevent": "2.1.1.1", "nextevent": null, "previousevent": null, "type": "mail", "date": "10.02.2023" },
-        { "_id": "2.1.1.1", "subevent": null, "nextevent": null, "previousevent": null, "type": "call", "date": "25.02.2023" },
-        { "_id": "3", "subevent": null, "nextevent": "4", "previousevent": "2", "type": "purchase", "date": "10.03.2023" },
-        { "_id": "4", "subevent": "4.1", "nextevent": null, "previousevent": "3", "type": "retour", "date": "25.03.2023" },
-        { "_id": "4.1", "subevent": "4.1.1", "nextevent": null, "previousevent": null, "type": "visit", "date": "15.04.2023" },
-        { "_id": "4.1.1", "subevent": null, "nextevent": null, "previousevent": null, "type": "mail", "date": "05.05.2023" },
-        { "_id": "5", "subevent": null, "nextevent": null, "previousevent": null, "type": "mail", "date": "20.05.2023" },
+        { "_id": "1", "subevent": "1.1", "nextevent": "2", "previousevent": null, "type": "mail", "date": "01.01.24" },
+        { "_id": "1.1", "subevent": null, "nextevent": null, "previousevent": null, "type": "call", "date": "05.01.24" },
+        { "_id": "2", "subevent": "2.1", "nextevent": "3", "previousevent": "1", "type": "retour", "date": "15.01.24" },
+        { "_id": "2.1", "subevent": "2.1.1", "nextevent": null, "previousevent": null, "type": "visit", "date": "28.01.24" },
+        { "_id": "2.1.1", "subevent": "2.1.1.1", "nextevent": null, "previousevent": null, "type": "mail", "date": "10.02.24" },
+        { "_id": "2.1.1.1", "subevent": null, "nextevent": null, "previousevent": null, "type": "call", "date": "25.02.24" },
+        { "_id": "3", "subevent": null, "nextevent": "4", "previousevent": "2", "type": "purchase", "date": "10.03.24" },
+        { "_id": "4", "subevent": "4.1", "nextevent": null, "previousevent": "3", "type": "retour", "date": "25.03.24" },
+        { "_id": "4.1", "subevent": "4.1.1", "nextevent": null, "previousevent": null, "type": "visit", "date": "15.04.24" },
+        { "_id": "4.1.1", "subevent": null, "nextevent": null, "previousevent": null, "type": "mail", "date": "05.05.24" },
+        { "_id": "5", "subevent": null, "nextevent": null, "previousevent": null, "type": "mail", "date": "20.05.24" },
 
-        /* { "_id": "6", "subevent": null, "nextevent": null, "previousevent": null, "type": "mail", "date": "20.05.2023" },
-        { "_id": "7", "subevent": null, "nextevent": null, "previousevent": null, "type": "mail", "date": "20.05.2023" },
-        { "_id": "8", "subevent": null, "nextevent": null, "previousevent": null, "type": "mail", "date": "20.05.2023" },
-        { "_id": "9", "subevent": null, "nextevent": null, "previousevent": null, "type": "mail", "date": "20.05.2023" },
-        { "_id": "51", "subevent": null, "nextevent": null, "previousevent": null, "type": "mail", "date": "20.05.2023" },
-        { "_id": "52", "subevent": null, "nextevent": null, "previousevent": null, "type": "mail", "date": "20.05.2023" },
-        { "_id": "53", "subevent": null, "nextevent": null, "previousevent": null, "type": "mail", "date": "20.05.2023" },
-        { "_id": "54", "subevent": null, "nextevent": null, "previousevent": null, "type": "mail", "date": "20.05.2023" }, */
+        /* { "_id": "6", "subevent": null, "nextevent": null, "previousevent": null, "type": "mail", "date": "20.05.24" },
+        { "_id": "7", "subevent": null, "nextevent": null, "previousevent": null, "type": "mail", "date": "20.05.24" },
+        { "_id": "8", "subevent": null, "nextevent": null, "previousevent": null, "type": "mail", "date": "20.05.24" },
+        { "_id": "9", "subevent": null, "nextevent": null, "previousevent": null, "type": "mail", "date": "20.05.24" },
+        { "_id": "51", "subevent": null, "nextevent": null, "previousevent": null, "type": "mail", "date": "20.05.24" },
+        { "_id": "52", "subevent": null, "nextevent": null, "previousevent": null, "type": "mail", "date": "20.05.24" },
+        { "_id": "53", "subevent": null, "nextevent": null, "previousevent": null, "type": "mail", "date": "20.05.24" },
+        { "_id": "54", "subevent": null, "nextevent": null, "previousevent": null, "type": "mail", "date": "20.05.24" }, */
     ];
 
 

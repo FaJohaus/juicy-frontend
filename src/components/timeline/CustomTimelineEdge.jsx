@@ -7,12 +7,9 @@ const CustomTimelineEdge = ({
     style = {},
     markerEnd,
 }) => {
-    const verticalMid = (sourceY + targetY) / 2;
-
     const edgePath = `
     M ${sourceX},${sourceY} 
-    L ${sourceX},${verticalMid} 
-    L ${targetX},${verticalMid} 
+    L ${sourceX},${targetY} 
     L ${targetX},${targetY}
   `;
 

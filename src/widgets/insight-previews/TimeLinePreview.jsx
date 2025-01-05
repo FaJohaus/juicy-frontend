@@ -8,7 +8,12 @@ import { MailNode, CallNode, PurchaseNode, RetourNode, VisitNode } from '../../c
 import CustomTimelineEdge from '../../components/timeline/CustomTimelineEdge';
 import { transformTimeLineData as transformData } from '../../utils/timeline';
 
-/* Je nach Tiefe des Baums vllt. auch doubleheight-widget draus machen? */
+/* TBD:
+    - Minimale Zoomstufe definieren, wo ab da einfach das Ding entweder horizontal scrollbar wird oder nur das Ende der Timeline anzeigt
+    - Entscheiden, ob es immer doubleheight, vllt. sogar triplewidth sein soll oder erst dynamisch wenn Graoh zu groß wird
+    - Wenn Graph sehr klein zoome etwas raus, um die Lables der oberen Reihe zu sehen
+    => Vieles sollte sehr entspannt über die fitViewOptions gehen :)
+*/
 const TimeLinePreview = ({ title, data }) => {
     const [nodes, setNodes, onNodesChange] = useNodesState([]);
     const [edges, setEdges, onEdgesChange] = useEdgesState([]);
@@ -27,6 +32,10 @@ const TimeLinePreview = ({ title, data }) => {
         stepBro: CustomTimelineEdge
     }
 
+    const fitViewOptions = {
+        minZoom: 1
+    };
+
     useEffect(() => {
         const { nodes, edges } = transformData(data);
 
@@ -38,15 +47,11 @@ const TimeLinePreview = ({ title, data }) => {
         const reactFlow = useReactFlow();
 
         useEffect(() => {
-            const onResize = () => {
-                reactFlow.fitView();
-            };
+            const onResize = () => reactFlow.fitView(fitViewOptions);
 
             window.addEventListener('resize', onResize);
 
-            return () => {
-                window.removeEventListener('resize', onResize);
-            };
+            return () => window.removeEventListener('resize', onResize);
         }, []);
 
         return <ReactFlow {...props} />;
@@ -54,11 +59,11 @@ const TimeLinePreview = ({ title, data }) => {
 
 
     return (
-        <PreviewCard title={title} doubleWidth doubleHeight>
+        <PreviewCard title={title} doubleWidth /* doubleHeight */>
             <Box
                 width="100vw"
                 minWidth={widget.baseMinWidth * 2 - 10}
-                height={widget.baseHeight * 2 - 80}
+                height={widget.baseHeight /* * 2 */ - 80}
                 mt={-2}
                 mx={-3}
             >
@@ -72,6 +77,7 @@ const TimeLinePreview = ({ title, data }) => {
                         nodeTypes={nodeTypes}
                         edgeTypes={edgeTypes}
                         fitView
+                        fitViewOptions={fitViewOptions}
                         /* ------------------ */
                         panOnDrag={false}
                         zoomOnScroll={false}

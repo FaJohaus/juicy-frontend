@@ -1,3 +1,5 @@
+import { MarkerType } from '@xyflow/react';
+
 /**
  * Transforms the data for the timeline widget and insight for reactflow
  * Expects a sorted array, where each event is followed by all it's subevents and then it's nextevents 
@@ -37,7 +39,12 @@ export const transformTimeLineData = (data) => {
                 target: n.subevent,
                 type: 'stepBro',
                 sourceHandle: 'bottom',
-                targetHandle: 'top',
+                targetHandle: 'left',
+                markerEnd: {
+                    type: MarkerType.Arrow,
+                    strokeWidth: 2,
+                    color: "black"
+                },
                 style: {
                     strokeWidth: 2,
                     stroke: "black"
@@ -53,6 +60,11 @@ export const transformTimeLineData = (data) => {
                 type: 'straight',
                 sourceHandle: 'right',
                 targetHandle: 'left',
+                markerEnd: {
+                    type: MarkerType.Arrow,
+                    strokeWidth: 2,
+                    color: "black"
+                },
                 style: {
                     strokeWidth: 2,
                     stroke: "black"
@@ -61,7 +73,7 @@ export const transformTimeLineData = (data) => {
         };
 
 
-        x += n.subevent ? 25 : 60;
+        x += n.subevent ? 30 : 60;
         y = n.subevent ? y + 60 : 0;
     });
 

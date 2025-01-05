@@ -5,9 +5,9 @@ import { FaDollarSign, FaHandshake } from "react-icons/fa";
 import { RiArrowGoBackFill, RiMailFill, RiPhoneFill } from "react-icons/ri";
 
 /* TBD: 
-    2. Modal with more Event Details if clicked on (Disable this on preview or give small Tooltip on hover instead?)
+    - Modal with more Event Details if clicked on (Disable this on preview or give small Tooltip on hover instead?)
 */
-const CustomTimelineNode = ({ variant, data: { hasNext, hasPrev, hasSub, hasMain, label, date } }) => {
+const CustomTimelineNode = ({ variant, data: { hasNext, hasPrev, hasSub, hasMain, date } }) => {
     const icon = () => {
         switch (variant) {
             case "mail":
@@ -29,7 +29,6 @@ const CustomTimelineNode = ({ variant, data: { hasNext, hasPrev, hasSub, hasMain
         <>
             <NodeToolbar isVisible>
                 <Box backgroundColor="whiteAlpha.800" rounded={10} px={2}>
-                    <Text fontSize="sm" as='b' textAlign="center">{label}</Text>
                     <Text fontSize="sm">{date}</Text>
                 </Box>
             </NodeToolbar >
@@ -44,14 +43,6 @@ const CustomTimelineNode = ({ variant, data: { hasNext, hasPrev, hasSub, hasMain
                             isConnectable={false}
                         /> : <></>
                     }
-                    {hasMain ?
-                        <Handle
-                            type="target"
-                            position={Position.Top}
-                            id="top"
-                            isConnectable={false}
-                        /> : <></>
-                    }
                     {hasNext ?
                         <Handle
                             type="source"
@@ -60,7 +51,7 @@ const CustomTimelineNode = ({ variant, data: { hasNext, hasPrev, hasSub, hasMain
                             isConnectable={false}
                         /> : <></>
                     }
-                    {hasPrev ?
+                    {(hasPrev || hasMain) ?
                         <Handle
                             type="target"
                             position={Position.Left}
