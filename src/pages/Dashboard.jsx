@@ -103,16 +103,16 @@ const Dashboard = () => {
         { "_id": "51", "subevent": null, "nextevent": null, "previousevent": null, "type": "mail", "date": "20.05.24" },
         { "_id": "52", "subevent": null, "nextevent": null, "previousevent": null, "type": "mail", "date": "20.05.24" },
         { "_id": "53", "subevent": null, "nextevent": null, "previousevent": null, "type": "mail", "date": "20.05.24" },
-        { "_id": "54", "subevent": null, "nextevent": null, "previousevent": null, "type": "mail", "date": "20.05.24" },
+        { "_id": "54", "subevent": null, "nextevent": null, "previousevent": null, "type": "call", "date": "20.05.24" },
 
-        /* { "_id": "116", "subevent": null, "nextevent": null, "previousevent": null, "type": "mail", "date": "20.05.24" },
+        { "_id": "116", "subevent": null, "nextevent": null, "previousevent": null, "type": "mail", "date": "20.05.24" },
         { "_id": "117", "subevent": null, "nextevent": null, "previousevent": null, "type": "mail", "date": "20.05.24" },
         { "_id": "118", "subevent": null, "nextevent": null, "previousevent": null, "type": "mail", "date": "20.05.24" },
         { "_id": "119", "subevent": null, "nextevent": null, "previousevent": null, "type": "mail", "date": "20.05.24" },
         { "_id": "151", "subevent": null, "nextevent": null, "previousevent": null, "type": "mail", "date": "20.05.24" },
         { "_id": "152", "subevent": null, "nextevent": null, "previousevent": null, "type": "mail", "date": "20.05.24" },
         { "_id": "153", "subevent": null, "nextevent": null, "previousevent": null, "type": "mail", "date": "20.05.24" },
-        { "_id": "154", "subevent": null, "nextevent": null, "previousevent": null, "type": "mail", "date": "20.05.24" }, */
+        { "_id": "154", "subevent": null, "nextevent": null, "previousevent": null, "type": "call", "date": "20.05.24" },
     ];
 
 

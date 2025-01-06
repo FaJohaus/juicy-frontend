@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { ReactFlow, useNodesState, useEdgesState, useReactFlow, ReactFlowProvider, PanOnScrollMode, useViewport } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 import { Box, Slider, SliderTrack, SliderThumb, Center } from '@chakra-ui/react';
@@ -9,22 +9,18 @@ import CustomTimelineEdge from '../../components/timeline/CustomTimelineEdge';
 import { transformTimeLineData as transformData } from '../../utils/timeline';
 
 /* TBD:
-    - Minimale Zoomstufe definieren, wo ab da einfach das Ding entweder horizontal scrollbar wird oder nur das Ende der Timeline anzeigt
     - Entscheiden, ob es immer doubleheight, vllt. sogar triplewidth sein soll oder erst dynamisch wenn Graph zu groß wird
-    - Wenn Graph sehr klein zoome etwas raus, um die Lables der oberen Reihe zu sehen
-    => Vieles sollte sehr entspannt über die fitViewOptions gehen :)
-
-    Kannst vllt. versuchen mit setViewport und getViewportForBounds ne eigene horizontale Scrollbar zu bauen
-    Oder setze das ganze einfach als child von ner unsichbaren Box mit overflowX="auto"
-    und setze dann die größe des ReactFlows auf "volles Brett"
+    - Wenn komplette Graoh in view passt immer fitView, wenn zu groß die Scrollbar einblenden und horizontal scroll aktivieren
+    - Datum in Timeline irgendwo zentraler genau rendern. villeicht immer so "Steps" für die Main Events
+    - y: 20 noch iwie setzen, damit man die Labels der Main Nodes sieht
 
     Wenn der Baum maximal Teife 4 hat macht doubleHeight eigentlich keinen Sinn...
 */
 const TimeLinePreview = ({ title, data }) => {
+    const { widget } = useTheme();
+
     const [nodes, setNodes, onNodesChange] = useNodesState([]);
     const [edges, setEdges, onEdgesChange] = useEdgesState([]);
-
-    const { widget } = useTheme();
 
     const nodeTypes = {
         "mail": MailNode,
@@ -54,6 +50,25 @@ const TimeLinePreview = ({ title, data }) => {
         const { x } = useViewport();
 
         const [slider, setSlider] = useState(x);
+        const [containerWidth, setContainerWidth] = useState(0);
+
+        const containerRef = useRef(null);
+
+        const { width } = getNodesBounds(getNodes());
+
+        const PADDINGX = 20;
+
+        const rightBound = -(width - containerWidth + PADDINGX);
+
+        useEffect(() => {
+            const observer = new ResizeObserver(e => {
+                setContainerWidth(e[0].contentRect.width);
+            });
+
+            observer.observe(containerRef?.current);
+
+            return () => observer.disconnect();
+        }, []);
 
         /* useEffect(() => {
             const onResize = () => fitView(fitViewOptions);
@@ -63,17 +78,17 @@ const TimeLinePreview = ({ title, data }) => {
             return () => window.removeEventListener('resize', onResize);
         }, []); */
 
-        const { width } = getNodesBounds(getNodes());
 
         // To adjust the slider when the user scrolls the viewport
         useEffect(() => {
             setSlider(x);
-            console.log(x);
+            if (x > PADDINGX) setViewport({ x: PADDINGX });
+            else if (x < rightBound) setViewport({ x: rightBound });
         }, [x])
 
         return (
             <>
-                <ReactFlow {...props} />
+                <ReactFlow {...props} ref={containerRef} />
                 <Center>
                     <Slider
                         focusThumbOnChange={false}
@@ -81,12 +96,12 @@ const TimeLinePreview = ({ title, data }) => {
                         variant="ghost"
                         onChange={(val) => setViewport({ x: val })}
                         isReversed
-                        min={-(width - widget.baseMinWidth * 2)}
-                        max={10}
+                        min={rightBound}
+                        max={PADDINGX}
                         width={400}
                     >
-                        <SliderTrack />
-                        <SliderThumb />
+                        <SliderTrack backgroundColor="gray.300" />
+                        <SliderThumb backgroundColor="gray.500" />
                     </Slider>
                 </Center>
             </>
@@ -99,7 +114,7 @@ const TimeLinePreview = ({ title, data }) => {
             <Box
                 width="100vw"
                 minWidth={widget.baseMinWidth * 2}
-                height={widget.baseHeight /* * 2 */ - 80}
+                height={widget.baseHeight /* * 2  */ - 80}
                 m={-4}
             >
                 <ReactFlowProvider>
