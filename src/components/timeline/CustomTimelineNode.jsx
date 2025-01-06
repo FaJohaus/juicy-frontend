@@ -7,7 +7,7 @@ import { RiArrowGoBackFill, RiMailFill, RiPhoneFill } from "react-icons/ri";
 /* TBD: 
     - Modal with more Event Details if clicked on (Disable this on preview or give small Tooltip on hover instead?)
 */
-const CustomTimelineNode = ({ variant, data: { hasNext, hasPrev, hasSub, hasMain, date } }) => {
+const CustomTimelineNode = ({ variant, data: { hasNext, hasPrev, hasSub, hasMain, date, label } }) => {
     const icon = () => {
         switch (variant) {
             case "mail":
@@ -27,8 +27,9 @@ const CustomTimelineNode = ({ variant, data: { hasNext, hasPrev, hasSub, hasMain
 
     return (
         <>
-            <NodeToolbar isVisible>
-                <Box backgroundColor="whiteAlpha.800" rounded={10} px={2}>
+            <NodeToolbar isVisible offset={2}>
+                <Box /* backgroundColor="whiteAlpha.800" rounded={10} px={2} */>
+                    {/* <Text fontSize="sm" as="b">{label}</Text> */}
                     <Text fontSize="sm">{date}</Text>
                 </Box>
             </NodeToolbar >

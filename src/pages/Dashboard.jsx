@@ -96,14 +96,23 @@ const Dashboard = () => {
         { "_id": "4.1.1", "subevent": null, "nextevent": null, "previousevent": null, "type": "mail", "date": "05.05.24" },
         { "_id": "5", "subevent": null, "nextevent": null, "previousevent": null, "type": "mail", "date": "20.05.24" },
 
-        /* { "_id": "6", "subevent": null, "nextevent": null, "previousevent": null, "type": "mail", "date": "20.05.24" },
+        { "_id": "6", "subevent": null, "nextevent": null, "previousevent": null, "type": "mail", "date": "20.05.24" },
         { "_id": "7", "subevent": null, "nextevent": null, "previousevent": null, "type": "mail", "date": "20.05.24" },
         { "_id": "8", "subevent": null, "nextevent": null, "previousevent": null, "type": "mail", "date": "20.05.24" },
         { "_id": "9", "subevent": null, "nextevent": null, "previousevent": null, "type": "mail", "date": "20.05.24" },
         { "_id": "51", "subevent": null, "nextevent": null, "previousevent": null, "type": "mail", "date": "20.05.24" },
         { "_id": "52", "subevent": null, "nextevent": null, "previousevent": null, "type": "mail", "date": "20.05.24" },
         { "_id": "53", "subevent": null, "nextevent": null, "previousevent": null, "type": "mail", "date": "20.05.24" },
-        { "_id": "54", "subevent": null, "nextevent": null, "previousevent": null, "type": "mail", "date": "20.05.24" }, */
+        { "_id": "54", "subevent": null, "nextevent": null, "previousevent": null, "type": "mail", "date": "20.05.24" },
+
+        /* { "_id": "116", "subevent": null, "nextevent": null, "previousevent": null, "type": "mail", "date": "20.05.24" },
+        { "_id": "117", "subevent": null, "nextevent": null, "previousevent": null, "type": "mail", "date": "20.05.24" },
+        { "_id": "118", "subevent": null, "nextevent": null, "previousevent": null, "type": "mail", "date": "20.05.24" },
+        { "_id": "119", "subevent": null, "nextevent": null, "previousevent": null, "type": "mail", "date": "20.05.24" },
+        { "_id": "151", "subevent": null, "nextevent": null, "previousevent": null, "type": "mail", "date": "20.05.24" },
+        { "_id": "152", "subevent": null, "nextevent": null, "previousevent": null, "type": "mail", "date": "20.05.24" },
+        { "_id": "153", "subevent": null, "nextevent": null, "previousevent": null, "type": "mail", "date": "20.05.24" },
+        { "_id": "154", "subevent": null, "nextevent": null, "previousevent": null, "type": "mail", "date": "20.05.24" }, */
     ];
 
 
@@ -149,6 +158,9 @@ const Dashboard = () => {
                 </Button>
             </Flex>
 
+
+            {/* Mach maxsize von den widgets deutlich kleiner. Sodass auf normalem Screen 4 Stück nebeneinander passen.
+            Dann lieber dynamisch aus manchen widgets doublesized ones machen */}
             <SimpleGrid
                 gap={2}
                 minChildWidth={widget.baseMinWidth}

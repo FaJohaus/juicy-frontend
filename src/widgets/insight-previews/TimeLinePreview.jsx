@@ -1,7 +1,7 @@
-import { useEffect } from 'react';
-import { ReactFlow, useNodesState, useEdgesState, useReactFlow, ReactFlowProvider } from '@xyflow/react';
+import { useEffect, useState } from 'react';
+import { ReactFlow, useNodesState, useEdgesState, useReactFlow, ReactFlowProvider, PanOnScrollMode, useViewport } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
-import { Box } from '@chakra-ui/react';
+import { Box, Slider, SliderTrack, SliderThumb, Center } from '@chakra-ui/react';
 import { useTheme } from '@chakra-ui/react';
 import PreviewCard from "./PreviewCard";
 import { MailNode, CallNode, PurchaseNode, RetourNode, VisitNode } from '../../components/timeline/CustomTimelineNode';
@@ -10,9 +10,15 @@ import { transformTimeLineData as transformData } from '../../utils/timeline';
 
 /* TBD:
     - Minimale Zoomstufe definieren, wo ab da einfach das Ding entweder horizontal scrollbar wird oder nur das Ende der Timeline anzeigt
-    - Entscheiden, ob es immer doubleheight, vllt. sogar triplewidth sein soll oder erst dynamisch wenn Graoh zu groß wird
+    - Entscheiden, ob es immer doubleheight, vllt. sogar triplewidth sein soll oder erst dynamisch wenn Graph zu groß wird
     - Wenn Graph sehr klein zoome etwas raus, um die Lables der oberen Reihe zu sehen
     => Vieles sollte sehr entspannt über die fitViewOptions gehen :)
+
+    Kannst vllt. versuchen mit setViewport und getViewportForBounds ne eigene horizontale Scrollbar zu bauen
+    Oder setze das ganze einfach als child von ner unsichbaren Box mit overflowX="auto"
+    und setze dann die größe des ReactFlows auf "volles Brett"
+
+    Wenn der Baum maximal Teife 4 hat macht doubleHeight eigentlich keinen Sinn...
 */
 const TimeLinePreview = ({ title, data }) => {
     const [nodes, setNodes, onNodesChange] = useNodesState([]);
@@ -33,7 +39,7 @@ const TimeLinePreview = ({ title, data }) => {
     }
 
     const fitViewOptions = {
-        minZoom: 1
+        minZoom: 1,
     };
 
     useEffect(() => {
@@ -43,32 +49,61 @@ const TimeLinePreview = ({ title, data }) => {
         setEdges(edges);
     }, [data]);
 
-    const Flow = (props) => {
-        const reactFlow = useReactFlow();
+    const ScrollableFlow = (props) => {
+        const { fitView, setViewport, getNodesBounds, getNodes } = useReactFlow();
+        const { x } = useViewport();
 
-        useEffect(() => {
-            const onResize = () => reactFlow.fitView(fitViewOptions);
+        const [slider, setSlider] = useState(x);
+
+        /* useEffect(() => {
+            const onResize = () => fitView(fitViewOptions);
 
             window.addEventListener('resize', onResize);
 
             return () => window.removeEventListener('resize', onResize);
-        }, []);
+        }, []); */
 
-        return <ReactFlow {...props} />;
+        const { width } = getNodesBounds(getNodes());
+
+        // To adjust the slider when the user scrolls the viewport
+        useEffect(() => {
+            setSlider(x);
+            console.log(x);
+        }, [x])
+
+        return (
+            <>
+                <ReactFlow {...props} />
+                <Center>
+                    <Slider
+                        focusThumbOnChange={false}
+                        value={slider}
+                        variant="ghost"
+                        onChange={(val) => setViewport({ x: val })}
+                        isReversed
+                        min={-(width - widget.baseMinWidth * 2)}
+                        max={10}
+                        width={400}
+                    >
+                        <SliderTrack />
+                        <SliderThumb />
+                    </Slider>
+                </Center>
+            </>
+        );
     };
-
+    /* TBD: Set Bounds for horizontal scroll */
 
     return (
         <PreviewCard title={title} doubleWidth /* doubleHeight */>
             <Box
                 width="100vw"
-                minWidth={widget.baseMinWidth * 2 - 10}
+                minWidth={widget.baseMinWidth * 2}
                 height={widget.baseHeight /* * 2 */ - 80}
-                mt={-2}
-                mx={-3}
+                m={-4}
             >
                 <ReactFlowProvider>
-                    <Flow
+                    <ScrollableFlow
                         nodes={nodes}
                         edges={edges}
                         onNodesChange={onNodesChange}
@@ -79,11 +114,12 @@ const TimeLinePreview = ({ title, data }) => {
                         fitView
                         fitViewOptions={fitViewOptions}
                         /* ------------------ */
+                        panOnScroll={true}
+                        panOnScrollMode={PanOnScrollMode.Horizontal}
                         panOnDrag={false}
                         zoomOnScroll={false}
                         zoomOnPinch={false}
                         zoomOnDoubleClick={false}
-                        panOnScroll={false}
                         elementsSelectable={false}
                         edgesFocusable={false}
                         nodesDraggable={false}
