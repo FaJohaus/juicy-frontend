@@ -5,6 +5,7 @@ import Dashboard from "./pages/Dashboard";
 import Insights from "./pages/Insights";
 import Automation from "./pages/Automation";
 import Settings from "./pages/Settings";
+import Login from "./pages/Login";
 
 const WithNavbar = () => (
     <>
@@ -25,7 +26,7 @@ const Navigator = () => (
         </Route>
         {/* ROUTES WITHOUT NAVBAR */}
         <Route element={<Outlet />}>
-            <Route path="teapot" element={<div>I'm a teapot</div>} />
+            <Route path="/login" element={<Login />} />
         </Route>
     </Routes>
 );
