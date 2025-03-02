@@ -24,10 +24,10 @@ const Login = () => {
                         <Box>
                             <FormLabel>Password</FormLabel>
                             <Input type='password' />
-                            <FormErrorMessage>Invalid email adress or password</FormErrorMessage>
+                            <FormErrorMessage>Invalid email address or password</FormErrorMessage>
                         </Box>
                         <Button
-                            colorScheme='teal'
+                            colorScheme='orange'
                             type='submit'
                         >
                             Login

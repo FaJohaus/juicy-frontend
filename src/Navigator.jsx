@@ -1,32 +1,38 @@
-import React from "react";
-import { Routes, Route, Outlet } from "react-router-dom";
+import { Routes, Route, Outlet, Navigate } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Dashboard from "./pages/Dashboard";
 import Insights from "./pages/Insights";
 import Automation from "./pages/Automation";
 import Settings from "./pages/Settings";
 import Login from "./pages/Login";
+import { useUser } from "./context/UserContext";
 
 const WithNavbar = () => (
-    <>
-        <Navbar>
-            <Outlet />
-        </Navbar>
-    </>
+    <Navbar>
+        <Outlet />
+    </Navbar>
 );
+
+const PrivateRoute = () => {
+    const { user } = useUser();
+
+    return user ? <Outlet /> : <Navigate to="/login" />;
+};
 
 const Navigator = () => (
     <Routes>
-        {/* ROUTES WITH NAVBAR */}
-        <Route element={<WithNavbar />}>
-            <Route path="/" element={<Dashboard />} />
-            <Route path="/insights" element={<Insights />} />
-            <Route path="/automation" element={<Automation />} />
-            <Route path="/settings" element={<Settings />} />
-        </Route>
-        {/* ROUTES WITHOUT NAVBAR */}
-        <Route element={<Outlet />}>
-            <Route path="/login" element={<Login />} />
+        {/* PUBLIC ROUTES */}
+        <Route path="/login" element={<Login />} />
+        {/* PRIVATE ROUTES */}
+        <Route element={<PrivateRoute />}>
+            {/* ROUTES WITH NAVBAR */}
+            <Route element={<WithNavbar />}>
+                <Route path="/" element={<Dashboard />} />
+                <Route path="/insights" element={<Insights />} />
+                <Route path="/automation" element={<Automation />} />
+                <Route path="/settings" element={<Settings />} />
+            </Route>
+            {/* ROUTES WITHOUT NAVBAR */}
         </Route>
     </Routes>
 );
