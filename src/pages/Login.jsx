@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Box, Link, Stack, Card, Button, Center, FormControl, FormLabel, Input, Heading, FormErrorMessage } from '@chakra-ui/react';
 import JuciyLogo from '../widgets/JuciyLogo';
-import { loginUser } from '../actions/user';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../context/UserContext';
 
@@ -17,15 +16,10 @@ const Login = () => {
         e.preventDefault();
 
         try {
-            await loginUser({
-                "Email": email,
-                "Password": pwd
-            });
-
-            login(email); //TBD: GET username and other info and put that in the context
-            navigate("/")
+            await login(email, pwd); //TBD: GET username and other info and put that in the context
         } catch (e) {
-            console.log("womp womp", e)
+            console.log("womp womp", e) //TBD: differentiate between user and server error
+            setError(true)
         }
     }
 

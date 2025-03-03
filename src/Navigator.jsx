@@ -23,6 +23,7 @@ const Navigator = () => (
     <Routes>
         {/* PUBLIC ROUTES */}
         <Route path="/login" element={<Login />} />
+        <Route path="/pricing" element={<div>Hier stehen dann tolle Preise</div>} />
         {/* PRIVATE ROUTES */}
         <Route element={<PrivateRoute />}>
             {/* ROUTES WITH NAVBAR */}

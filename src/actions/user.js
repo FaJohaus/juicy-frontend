@@ -24,3 +24,7 @@ export async function loginUser(credentials) {
 
     return response.json();
 }
+
+export async function logoutUser() {
+    console.info("werd ich dann mal bei Gelegenheit machen ;)")
+}
