@@ -4,6 +4,14 @@ import { useUser } from "../context/UserContext";
 const LogoutModal = ({ isOpen, onClose }) => {
     const { logout } = useUser();
 
+    const onLogout = async e => {
+        try {
+            await logout();
+        } catch (e) {
+            console.err("womp womp", e)
+        }
+    }
+
     return (
         <Modal onClose={onClose} isOpen={isOpen} size="sm">
             <ModalOverlay />
@@ -16,7 +24,7 @@ const LogoutModal = ({ isOpen, onClose }) => {
                     <Button onClick={onClose} mr={2}>
                         Cancel
                     </Button>
-                    <Button colorScheme='red' onClick={logout}>
+                    <Button colorScheme='red' onClick={onLogout}>
                         Logout
                     </Button>
                 </ModalFooter>

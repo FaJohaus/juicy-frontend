@@ -18,9 +18,7 @@ export async function loginUser(credentials) {
         body: JSON.stringify(credentials),
     });
 
-
-    console.log("hier passieren bald spannende Sachen!")
-
+    console.info("hier passieren bald spannende Sachen!")
 
     return response.json();
 }

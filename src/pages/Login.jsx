@@ -18,7 +18,7 @@ const Login = () => {
         try {
             await login(email, pwd); //TBD: GET username and other info and put that in the context
         } catch (e) {
-            console.log("womp womp", e) //TBD: differentiate between user and server error
+            console.err("womp womp", e) //TBD: differentiate between user and server error
             setError(true)
         }
     }
@@ -62,7 +62,7 @@ const Login = () => {
                             >
                                 Login
                             </Button>
-                            <Link color="blue.700">
+                            <Link color="blue.700" onClick={() => navigate("/pricing")}>
                                 Not so juicy customer satisfaction?
                                 <br />
                                 Elevate your customer journeys - start here!

@@ -7,18 +7,20 @@ const UserContext = createContext();
 const UserProvider = ({ children }) => {
     const navigate = useNavigate();
 
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState(() => {
+        return JSON.parse(localStorage.getItem("user")) || null;
+    });
 
     const login = async (email, pwd) => {
         setUser(email);
 
         try {
-            await loginUser({
+            /* await loginUser({
                 "Email": email,
                 "Password": pwd
-            });
+            }); */
 
-            login(email); //TBD: GET username and other info and put that in the context
+            localStorage.setItem("user", email); //TBD: GET username and other info and put that in the context instead
             navigate("/");
         } catch (e) {
             throw e;
@@ -26,9 +28,14 @@ const UserProvider = ({ children }) => {
 
     };
 
-    const logout = () => {
+    const logout = async () => {
+        try {
+            await logoutUser();
+        } catch (e) {
+            throw e;
+        }
         setUser(null);
-        logoutUser();
+        localStorage.removeItem("user");
     };
 
     return (
