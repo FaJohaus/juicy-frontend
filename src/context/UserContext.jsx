@@ -8,7 +8,7 @@ const UserProvider = ({ children }) => {
     const navigate = useNavigate();
 
     const [user, setUser] = useState(() => {
-        return JSON.parse(localStorage.getItem("user")) || null;
+        return localStorage.getItem("user") || null;
     });
 
     const login = async (email, pwd) => {
