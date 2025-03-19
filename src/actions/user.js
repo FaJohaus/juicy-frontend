@@ -1,26 +1,14 @@
-export async function createUser(userData) {
-    const response = await fetch('/api/user', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(userData),
-    });
-    return response.json();
-}
+import api from "../api";
 
-export async function loginUser(credentials) {
-    const response = await fetch('/api/user/login', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(credentials),
+export const loginUser = async (email, pwd) => {
+    const res = await api.post('/users/user/login', {
+        Email: email,
+        Password: pwd
     });
 
-    console.info("hier passieren bald spannende Sachen!")
+    console.log(res);
 
-    return response.json();
+    return res.data;
 }
 
 export async function logoutUser() {

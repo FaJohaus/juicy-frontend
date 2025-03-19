@@ -18,7 +18,7 @@ const Login = () => {
         try {
             await login(email, pwd); //TBD: GET username and other info and put that in the context
         } catch (e) {
-            console.err("womp womp", e) //TBD: differentiate between user and server error
+            console.error("Page fail", e) //TBD: differentiate between user and server error
             setError(true)
         }
     }

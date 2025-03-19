@@ -15,17 +15,13 @@ const UserProvider = ({ children }) => {
         setUser(email);
 
         try {
-            /* await loginUser({
-                "Email": email,
-                "Password": pwd
-            }); */
+            await loginUser(email, pwd);
 
             localStorage.setItem("user", email); //TBD: GET username and other info and put that in the context instead
             navigate("/");
         } catch (e) {
             throw e;
         }
-
     };
 
     const logout = async () => {

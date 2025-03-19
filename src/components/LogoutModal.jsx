@@ -8,7 +8,7 @@ const LogoutModal = ({ isOpen, onClose }) => {
         try {
             await logout();
         } catch (e) {
-            console.err("womp womp", e)
+            console.error("womp womp", e)
         }
     }
 
