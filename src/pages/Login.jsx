@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Box, Link, Stack, Card, Button, Center, FormControl, FormLabel, Input, Heading, FormErrorMessage } from '@chakra-ui/react';
 import JuciyLogo from '../widgets/JuciyLogo';
 import { useNavigate } from 'react-router-dom';
@@ -6,7 +6,7 @@ import { useUser } from '../context/UserContext';
 
 const Login = () => {
     const navigate = useNavigate();
-    const { login } = useUser();
+    const { login, user } = useUser();
 
     const [email, setEmail] = useState("");
     const [pwd, setPwd] = useState("");
@@ -18,10 +18,14 @@ const Login = () => {
         try {
             await login(email, pwd);
         } catch (e) {
-            console.error("womp womp", e) //TBD: differentiate between user and server error
+            /* console.error(e) */
             setError(true)
         }
     }
+
+    useEffect(() => {
+        if (user) navigate("/");
+    }, []);
 
     return (
         <Center
