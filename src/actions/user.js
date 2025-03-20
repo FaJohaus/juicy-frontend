@@ -6,8 +6,6 @@ export const loginUser = async (email, pwd) => {
         Password: pwd
     });
 
-    console.log(res);
-
     return res.data;
 }
 

@@ -8,16 +8,25 @@ const UserProvider = ({ children }) => {
     const navigate = useNavigate();
 
     const [user, setUser] = useState(() => {
-        return JSON.parse(localStorage.getItem("user")) || null;
+        try {
+            return JSON.parse(localStorage.getItem("user"));
+        } catch (e) {
+            return null;
+        }
     });
 
     const login = async (email, pwd) => {
         setUser(email);
 
         try {
-            await loginUser(email, pwd);
+            const user = await loginUser(email, pwd);
 
-            localStorage.setItem("user", email); //TBD: GET username and other info and put that in the context instead
+            localStorage.setItem("user", JSON.stringify({
+                name: user.Name,
+                email: user.Email,
+                phone: user.Phone
+            }));
+
             navigate("/");
         } catch (e) {
             throw e;
