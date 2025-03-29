@@ -29,7 +29,7 @@ const UserProvider = ({ children }) => {
             setUser(user);
             localStorage.setItem("user", JSON.stringify(user));
 
-            navigate("/");
+            navigate("/dashboard/0");
         } catch (e) {
             throw e;
         }

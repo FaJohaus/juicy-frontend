@@ -24,7 +24,7 @@ const Login = () => {
     }
 
     /*     useEffect(() => {
-            if (user) navigate("/");
+            if (user) navigate("/dashboard/0");
         }, []); */
 
     return (

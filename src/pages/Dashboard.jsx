@@ -146,6 +146,7 @@ const Dashboard = () => {
             }
 
             navigate(`/dashboard/${user.dashboards[0]}`);
+            return;
         }
 
         /* get the current dashboard */
@@ -172,7 +173,7 @@ const Dashboard = () => {
             try {
                 const { name } = await getDashboard(id);
 
-                titles.push(name);
+                titles.push({ id: id, title: name });
             } catch (e) {
                 console.error("Error fetching titles: ", e);
             }
@@ -235,7 +236,9 @@ const Dashboard = () => {
                         {/* RIGHT SIDE */}
                         <Select size="sm" width="300px" mr={2} variant="filled">
                             {dashboardTitles.map(d => {
-                                return <option key={d}>{d}</option>
+                                return <option key={d.id} onClick={() => navigate(`/dashboard/${d.id}`)}>
+                                    {d.title}
+                                </option>
                             })}
                         </Select>
                         <Button
