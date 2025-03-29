@@ -3,11 +3,11 @@ import useChartColors from "../hooks/useChartColors";
 
 const DashboardContext = createContext();
 
-const DashboardContextProvider = ({ customers, children }) => {
+const DashboardContextProvider = ({ customers, time, children }) => {
     const chartColors = useChartColors(customers.length);
 
     return (
-        <DashboardContext.Provider value={{ customers, chartColors }}>
+        <DashboardContext.Provider value={{ customers, time, chartColors }}>
             {children}
         </DashboardContext.Provider>
     )

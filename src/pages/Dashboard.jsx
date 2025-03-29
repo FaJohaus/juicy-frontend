@@ -1,8 +1,9 @@
-import { SimpleGrid, Flex, Spacer, Button, Icon, Text, ButtonGroup, Tooltip, useTheme, Box, Select } from "@chakra-ui/react";
-import { VscFilter, VscEdit } from "react-icons/vsc";
+import { SimpleGrid, Flex, Spacer, Button, Icon, Text, Tooltip, useTheme, TagLeftIcon, Select, Tag } from "@chakra-ui/react";
+import { VscEdit } from "react-icons/vsc";
 import PreviewCard from "../widgets/insight-previews/PreviewCard";
 import PieChartPreview from "../widgets/insight-previews/PieChartPreview";
-import { IoMdCloseCircle } from "react-icons/io";
+import { BsPeople } from "react-icons/bs";
+import { VscCalendar } from "react-icons/vsc";
 import BarChartPreview from "../widgets/insight-previews/BarChartPreview";
 import { truncateText } from "../utils";
 import LineChartPreview from "../widgets/insight-previews/LineChartPreview";
@@ -11,6 +12,7 @@ import TimeLinePreview from "../widgets/insight-previews/TimeLinePreview";
 import { useUser } from "../context/UserContext";
 import { useEffect, useState } from "react";
 import { getDashboard } from "../actions/dashboards";
+import { getCustomerName } from "../actions/customers";
 
 const Dashboard = () => {
     /* ------ EXAMPLE DATA ----- */
@@ -99,7 +101,7 @@ const Dashboard = () => {
         { "_id": "4.1.1", "subevent": null, "nextevent": null, "previousevent": null, "type": "mail", "date": "05.05.24" },
         { "_id": "5", "subevent": null, "nextevent": null, "previousevent": null, "type": "mail", "date": "20.05.24" },
 
-        { "_id": "6", "subevent": null, "nextevent": null, "previousevent": null, "type": "mail", "date": "20.05.24" },
+        /* { "_id": "6", "subevent": null, "nextevent": null, "previousevent": null, "type": "mail", "date": "20.05.24" },
         { "_id": "7", "subevent": null, "nextevent": null, "previousevent": null, "type": "mail", "date": "20.05.24" },
         { "_id": "8", "subevent": null, "nextevent": null, "previousevent": null, "type": "mail", "date": "20.05.24" },
         { "_id": "9", "subevent": null, "nextevent": null, "previousevent": null, "type": "mail", "date": "20.05.24" },
@@ -115,7 +117,7 @@ const Dashboard = () => {
         { "_id": "151", "subevent": null, "nextevent": null, "previousevent": null, "type": "mail", "date": "20.05.24" },
         { "_id": "152", "subevent": null, "nextevent": null, "previousevent": null, "type": "mail", "date": "20.05.24" },
         { "_id": "153", "subevent": null, "nextevent": null, "previousevent": null, "type": "mail", "date": "20.05.24" },
-        { "_id": "154", "subevent": null, "nextevent": null, "previousevent": null, "type": "call", "date": "20.05.24" },
+        { "_id": "154", "subevent": null, "nextevent": null, "previousevent": null, "type": "call", "date": "20.05.24" }, */
     ];
 
 
@@ -123,14 +125,18 @@ const Dashboard = () => {
     /* ---------- */
     const { widget } = useTheme();
 
-    const customers = ["Customer A", "Customer B", "Customer C", "Customer D", "Customer E"]; // Will of course later just be fetched...
+    /*  const customers = ["Customer A", "Customer B", "Customer C", "Customer D", "Customer E"];
+     const time = -1; */
 
     const { user } = useUser();
 
     const [dashboardTitles, setDashboardTitles] = useState([]);
-    const [currentId, setCurrentId] = useState("67e4bb965bc932a587535769");
-    const [current, setCurrent] = useState();
+    const [currentId, setCurrentId] = useState("67e839844f1857a26a2268d2");
+    const [current, setCurrent] = useState(); // the current dashboard
+    const [customers, setCustomers] = useState([]);
+    const [time, setTime] = useState();
 
+    /* get the current dashboard */
     useEffect(() => {
         const fetchDashboard = async () => {
             try {
@@ -138,17 +144,37 @@ const Dashboard = () => {
 
                 setCurrent(data);
             } catch (e) {
-                console.error(e);
+                console.error("Error fetching current dashboard: ", e);
             }
         }
 
         fetchDashboard();
     }, [currentId]);
 
+    /* get all customer names */
     useEffect(() => {
-        console.log(current);
-    }, [current])
+        if (!current) return;
 
+        const fetchCustomers = async () => {
+            const custs = [];
+
+            try {
+                for (const id of current.customers) {
+                    const cust = await getCustomerName(id);
+
+                    custs.push({ id: id, name: cust })
+                }
+            } catch (error) {
+                console.error("Error fetching customers:", error);
+            }
+
+            setCustomers(custs);
+        };
+
+        fetchCustomers();
+    }, [current]);
+
+    /* get the titles of all dashboards */
     useEffect(() => {
         if (!user) return;
 
@@ -159,7 +185,7 @@ const Dashboard = () => {
 
                 titles.push(name);
             } catch (e) {
-                console.error(e);
+                console.error("Error fetching titles: ", e);
             }
         };
 
@@ -171,66 +197,56 @@ const Dashboard = () => {
     }, [user]);
 
     return (
-        <DashboardContextProvider customers={customers}>
-            <Flex mb={2}>
-                {/* LEFT SIDE */}
-                <ButtonGroup size='sm' isAttached zIndex={0}>
-                    <Button
-                        leftIcon={<Icon as={VscFilter} />}
-                        size="sm"
-                    >
-                        <Text fontWeight="normal">Filter</Text>
-                    </Button>
-                    {exampleFilters.map((f, i) => (
-                        <Tooltip key={i} label={f}>
-                            <Button
-                                leftIcon={<Icon as={IoMdCloseCircle} color="red.500" />}
-                                variant='outline'
-                            >
-                                <Text fontWeight="thin" fontSize='xs'>
-                                    {truncateText(f, 15)}
+        <>
+            {!current ? <div>loading...</div> :
+                <DashboardContextProvider customers={customers} time={current.time}>
+                    <Flex mb={2}>
+                        {/* LEFT SIDE */}
+                        <Tag mr={2}>
+                            <TagLeftIcon as={VscCalendar} />
+                            <Text>
+                                Time: {current.time.start.substring(0, 10)} - {current.time.end.substring(0, 10)}
+                            </Text>
+                        </Tag>
+                        <Tooltip label={customers.map((c, i) => `${c.name}${i !== customers.length - 1 ? ", " : ""}`)}>
+                            <Tag mr={2}>
+                                <TagLeftIcon as={BsPeople} />
+                                <Text>
+                                    Customers: {
+                                        truncateText(`${customers.map((c, i) => `${truncateText(c.name, 8)}${i !== customers.length - 1 ? ", " : ""}`)}`, 30)
+                                    }
                                 </Text>
-                            </Button>
+                            </Tag>
                         </Tooltip>
-                    ))}
-                </ButtonGroup>
 
-                <Spacer />
+                        <Spacer />
 
-                {/* RIGHT SIDE */}
-                <Select size="sm" width="300px" mr={2} variant="filled">
-                    {dashboardTitles.map(d => {
-                        return <option key={d}>{d}</option>
-                    })}
-                </Select>
-                <Button
-                    leftIcon={<Icon as={VscEdit} />}
-                    size="sm"
-                >
-                    <Text fontWeight="normal">Edit</Text>
-                </Button>
-            </Flex>
+                        {/* RIGHT SIDE */}
+                        <Select size="sm" width="300px" mr={2} variant="filled">
+                            {dashboardTitles.map(d => {
+                                return <option key={d}>{d}</option>
+                            })}
+                        </Select>
+                        <Button
+                            leftIcon={<Icon as={VscEdit} />}
+                            size="sm"
+                        >
+                            <Text fontWeight="normal">Edit</Text>
+                        </Button>
+                    </Flex>
 
-
-            {/* Mach maxsize von den widgets deutlich kleiner. Sodass auf normalem Screen 4 Stück nebeneinander passen.
-            Dann lieber dynamisch aus manchen widgets doublesized ones machen */}
-            <SimpleGrid
-                gap={2}
-                minChildWidth={widget.baseMinWidth}
-            >
-                <PieChartPreview data={pieChartData} title="Relativer Umsatzanteil" />
-                <BarChartPreview data={barChartData} title="Aktuelle Kundenzufriedenheit" maxVal={10} />
-                <LineChartPreview data={lineChartData} title="Verlauf Kundenzufriedenheit" maxVal={10} />
-                <TimeLinePreview data={timelineData} title="Timeline alle Events" />
-
-                {/* <PreviewCard title="Lorem Ipsum" doubleWidth doubleHeight>
-                    Chunky Lorem Ipsum
-                </PreviewCard>
-                <PreviewCard title="Lorem Ipsum" doubleHeight>
-                    Double height Lorem Ipsum
-                </PreviewCard> */}
-            </SimpleGrid>
-        </DashboardContextProvider>
+                    <SimpleGrid
+                        gap={2}
+                        minChildWidth={widget.baseMinWidth}
+                    >
+                        <PieChartPreview data={pieChartData} title="Relativer Umsatzanteil" />
+                        <BarChartPreview data={barChartData} title="Aktuelle Kundenzufriedenheit" maxVal={10} />
+                        <LineChartPreview data={lineChartData} title="Verlauf Kundenzufriedenheit" maxVal={10} />
+                        <TimeLinePreview data={timelineData} title="Timeline alle Events" />
+                    </SimpleGrid>
+                </DashboardContextProvider>
+            }
+        </>
     );
 }
 
