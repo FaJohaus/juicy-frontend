@@ -124,20 +124,45 @@ const Dashboard = () => {
 
     /* ---------- */
     const { widget } = useTheme();
-
-    /*  const customers = ["Customer A", "Customer B", "Customer C", "Customer D", "Customer E"];
-     const time = -1; */
-
     const { user } = useUser();
 
     const [dashboardTitles, setDashboardTitles] = useState([]);
-    const [currentId, setCurrentId] = useState("67e839844f1857a26a2268d2");
+    const [currentId, setCurrentId] = useState();
     const [current, setCurrent] = useState(); // the current dashboard
     const [customers, setCustomers] = useState([]);
     const [time, setTime] = useState();
 
-    /* get the current dashboard */
+    /* EFFECTS WHEN NEW USER OBJECT */
     useEffect(() => {
+        if (!user) return;
+
+        /* set current dashboard id */
+        setCurrentId(user.dashboards[0]);
+
+        /* get the titles of all dashboards */
+        const titles = [];
+        const fetchData = async (id) => {
+            try {
+                const { name } = await getDashboard(id);
+
+                titles.push(name);
+            } catch (e) {
+                console.error("Error fetching titles: ", e);
+            }
+        };
+
+        user.dashboards.forEach(d => {
+            fetchData(d);
+        });
+
+        setDashboardTitles(titles);
+    }, [user]);
+
+    /* EFFECTS WHEN NEW CURRENT DASHBOARD ID */
+    useEffect(() => {
+        if (!currentId) return;
+
+        /* get the current dashboard */
         const fetchDashboard = async () => {
             try {
                 const data = await getDashboard(currentId);
@@ -151,10 +176,11 @@ const Dashboard = () => {
         fetchDashboard();
     }, [currentId]);
 
-    /* get all customer names */
+    /* EFFECTS WHEN NEW CURRENT DASHBOARD */
     useEffect(() => {
         if (!current) return;
 
+        /* get all customer names */
         const fetchCustomers = async () => {
             const custs = [];
 
@@ -174,28 +200,6 @@ const Dashboard = () => {
         fetchCustomers();
     }, [current]);
 
-    /* get the titles of all dashboards */
-    useEffect(() => {
-        if (!user) return;
-
-        const titles = [];
-        const fetchData = async (id) => {
-            try {
-                const { name } = await getDashboard(id);
-
-                titles.push(name);
-            } catch (e) {
-                console.error("Error fetching titles: ", e);
-            }
-        };
-
-        user.dashboards.forEach(d => {
-            fetchData(d);
-        });
-
-        setDashboardTitles(titles);
-    }, [user]);
-
     return (
         <>
             {!current ? <div>loading...</div> :
@@ -208,13 +212,11 @@ const Dashboard = () => {
                                 Time: {current.time.start.substring(0, 10)} - {current.time.end.substring(0, 10)}
                             </Text>
                         </Tag>
-                        <Tooltip label={customers.map((c, i) => `${c.name}${i !== customers.length - 1 ? ", " : ""}`)}>
+                        <Tooltip label={customers.map((c) => c.name).join(", ")}>
                             <Tag mr={2}>
                                 <TagLeftIcon as={BsPeople} />
                                 <Text>
-                                    Customers: {
-                                        truncateText(`${customers.map((c, i) => `${truncateText(c.name, 8)}${i !== customers.length - 1 ? ", " : ""}`)}`, 30)
-                                    }
+                                    Customers: {truncateText(customers.map((c) => c.name).join(", "), 30)}
                                 </Text>
                             </Tag>
                         </Tooltip>
