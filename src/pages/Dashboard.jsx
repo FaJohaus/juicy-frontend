@@ -1,4 +1,4 @@
-import { SimpleGrid, Flex, Spacer, Button, Icon, Text, ButtonGroup, Tooltip, useTheme } from "@chakra-ui/react";
+import { SimpleGrid, Flex, Spacer, Button, Icon, Text, ButtonGroup, Tooltip, useTheme, Box, Select } from "@chakra-ui/react";
 import { VscFilter, VscEdit } from "react-icons/vsc";
 import PreviewCard from "../widgets/insight-previews/PreviewCard";
 import PieChartPreview from "../widgets/insight-previews/PieChartPreview";
@@ -8,6 +8,9 @@ import { truncateText } from "../utils";
 import LineChartPreview from "../widgets/insight-previews/LineChartPreview";
 import { DashboardContextProvider } from "../context/DashboardContext";
 import TimeLinePreview from "../widgets/insight-previews/TimeLinePreview";
+import { useUser } from "../context/UserContext";
+import { useEffect, useState } from "react";
+import { getDashboard } from "../actions/dashboards";
 
 const Dashboard = () => {
     /* ------ EXAMPLE DATA ----- */
@@ -122,6 +125,51 @@ const Dashboard = () => {
 
     const customers = ["Customer A", "Customer B", "Customer C", "Customer D", "Customer E"]; // Will of course later just be fetched...
 
+    const { user } = useUser();
+
+    const [dashboardTitles, setDashboardTitles] = useState([]);
+    const [currentId, setCurrentId] = useState("67e4bb965bc932a587535769");
+    const [current, setCurrent] = useState();
+
+    useEffect(() => {
+        const fetchDashboard = async () => {
+            try {
+                const data = await getDashboard(currentId);
+
+                setCurrent(data);
+            } catch (e) {
+                console.error(e);
+            }
+        }
+
+        fetchDashboard();
+    }, [currentId]);
+
+    useEffect(() => {
+        console.log(current);
+    }, [current])
+
+    useEffect(() => {
+        if (!user) return;
+
+        const titles = [];
+        const fetchData = async (id) => {
+            try {
+                const { name } = await getDashboard(id);
+
+                titles.push(name);
+            } catch (e) {
+                console.error(e);
+            }
+        };
+
+        user.dashboards.forEach(d => {
+            fetchData(d);
+        });
+
+        setDashboardTitles(titles);
+    }, [user]);
+
     return (
         <DashboardContextProvider customers={customers}>
             <Flex mb={2}>
@@ -150,6 +198,11 @@ const Dashboard = () => {
                 <Spacer />
 
                 {/* RIGHT SIDE */}
+                <Select size="sm" width="300px" mr={2} variant="filled">
+                    {dashboardTitles.map(d => {
+                        return <option key={d}>{d}</option>
+                    })}
+                </Select>
                 <Button
                     leftIcon={<Icon as={VscEdit} />}
                     size="sm"

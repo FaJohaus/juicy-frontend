@@ -16,16 +16,18 @@ const UserProvider = ({ children }) => {
     });
 
     const login = async (email, pwd) => {
-        setUser(email);
-
         try {
-            const user = await loginUser(email, pwd);
+            const _user = await loginUser(email, pwd);
 
-            localStorage.setItem("user", JSON.stringify({
-                name: user.Name,
-                email: user.Email,
-                phone: user.Phone
-            }));
+            const user = {
+                name: _user.Name,
+                email: _user.Email,
+                phone: _user.Phone,
+                dashboards: _user.dashboard
+            }
+
+            setUser(user);
+            localStorage.setItem("user", JSON.stringify(user));
 
             navigate("/");
         } catch (e) {
@@ -38,7 +40,8 @@ const UserProvider = ({ children }) => {
             await logoutUser();
         } catch (e) {
             throw e;
-        }
+        };
+
         setUser(null);
         localStorage.removeItem("user");
     };

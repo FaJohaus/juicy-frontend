@@ -23,9 +23,9 @@ const Login = () => {
         }
     }
 
-    useEffect(() => {
-        if (user) navigate("/");
-    }, []);
+    /*     useEffect(() => {
+            if (user) navigate("/");
+        }, []); */
 
     return (
         <Center

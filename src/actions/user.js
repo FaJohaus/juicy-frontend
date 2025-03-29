@@ -10,5 +10,5 @@ export const loginUser = async (email, pwd) => {
 }
 
 export async function logoutUser() {
-    return await api.get('/users/user/logout')
+    return await api.get('/users/user/logout');
 }
