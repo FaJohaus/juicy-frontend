@@ -13,6 +13,7 @@ import { useUser } from "../context/UserContext";
 import { useEffect, useState } from "react";
 import { getDashboard } from "../actions/dashboards";
 import { getCustomerName } from "../actions/customers";
+import { useNavigate, useParams } from "react-router-dom";
 
 const Dashboard = () => {
     /* ------ EXAMPLE DATA ----- */
@@ -123,21 +124,47 @@ const Dashboard = () => {
 
 
     /* ---------- */
+    const navigate = useNavigate();
+
     const { widget } = useTheme();
     const { user } = useUser();
+    const { id } = useParams();
 
     const [dashboardTitles, setDashboardTitles] = useState([]);
-    const [currentId, setCurrentId] = useState();
     const [current, setCurrent] = useState(); // the current dashboard
     const [customers, setCustomers] = useState([]);
     const [time, setTime] = useState();
 
-    /* EFFECTS WHEN NEW USER OBJECT */
+    /* EFFECTS WHEN ID CHANGES */
     useEffect(() => {
         if (!user) return;
 
-        /* set current dashboard id */
-        setCurrentId(user.dashboards[0]);
+        if (id === "0") {
+            // => user has no dashboard yet
+            if (!user.dashboards[0]) {
+                // guide user to create first dashboard or something idgaf
+            }
+
+            navigate(`/dashboard/${user.dashboards[0]}`);
+        }
+
+        /* get the current dashboard */
+        const fetchDashboard = async () => {
+            try {
+                const data = await getDashboard(id);
+
+                setCurrent(data);
+            } catch (e) {
+                console.error("Error fetching current dashboard: ", e);
+            }
+        }
+
+        fetchDashboard();
+    }, [id, user]);
+
+    /* EFFECTS WHEN NEW USER OBJECT */
+    useEffect(() => {
+        if (!id) return;
 
         /* get the titles of all dashboards */
         const titles = [];
@@ -157,24 +184,6 @@ const Dashboard = () => {
 
         setDashboardTitles(titles);
     }, [user]);
-
-    /* EFFECTS WHEN NEW CURRENT DASHBOARD ID */
-    useEffect(() => {
-        if (!currentId) return;
-
-        /* get the current dashboard */
-        const fetchDashboard = async () => {
-            try {
-                const data = await getDashboard(currentId);
-
-                setCurrent(data);
-            } catch (e) {
-                console.error("Error fetching current dashboard: ", e);
-            }
-        }
-
-        fetchDashboard();
-    }, [currentId]);
 
     /* EFFECTS WHEN NEW CURRENT DASHBOARD */
     useEffect(() => {

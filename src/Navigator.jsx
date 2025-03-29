@@ -28,7 +28,8 @@ const Navigator = () => (
         <Route element={<PrivateRoute />}>
             {/* ROUTES WITH NAVBAR */}
             <Route element={<WithNavbar />}>
-                <Route path="/" element={<Dashboard />} />
+                <Route path="/" element={<Navigate to="/dashboard/0" />} />
+                <Route path="/dashboard/:id" element={<Dashboard />} />
                 <Route path="/insights" element={<Insights />} />
                 <Route path="/automation" element={<Automation />} />
                 <Route path="/settings" element={<Settings />} />

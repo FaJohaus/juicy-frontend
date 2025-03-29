@@ -16,7 +16,7 @@ const Navbar = ({ children }) => {
     const [showLogoutModal, setShowLogoutModal] = useState(false);
 
     useEffect(() => {
-        setPageTitle(pageTitles[location.pathname.substring(1)]); /* TBD: Just write a custom hook for this shit */
+        setPageTitle(pageTitles[location.pathname.split("/")[1]]);
     }, [location.pathname]);
 
     return (
