@@ -10,6 +10,7 @@ import { getDashboard } from "../actions/dashboards";
 import { getCustomerName } from "../actions/customers";
 import { useNavigate, useParams } from "react-router-dom";
 import PreviewWrapper from "../widgets/insight-previews/PreviewWrapper";
+import CustomerBadges from "../components/CustomerBadges";
 
 const Dashboard = () => {
     const navigate = useNavigate();
@@ -104,20 +105,13 @@ const Dashboard = () => {
                 <DashboardContextProvider customers={customers} time={current.time}>
                     <Flex mb={2}>
                         {/* LEFT SIDE */}
-                        <Tag mr={2}>
+                        <Tag mr={1}>
                             <TagLeftIcon as={VscCalendar} />
                             <Text>
                                 Time: {current.time.start.substring(0, 10)} - {current.time.end.substring(0, 10)}
                             </Text>
                         </Tag>
-                        <Tooltip label={customers.map((c) => c.name).join(", ")}>
-                            <Tag mr={2}>
-                                <TagLeftIcon as={BsPeople} />
-                                <Text>
-                                    Customers: {truncateText(customers.map((c) => c.name).join(", "), 30)}
-                                </Text>
-                            </Tag>
-                        </Tooltip>
+                        <CustomerBadges />
 
                         <Spacer />
 
