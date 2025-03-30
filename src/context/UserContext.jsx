@@ -31,6 +31,7 @@ const UserProvider = ({ children }) => {
 
             navigate("/dashboard/0");
         } catch (e) {
+            console.error("Error logging in: ", e);
             throw e;
         }
     };
@@ -39,6 +40,7 @@ const UserProvider = ({ children }) => {
         try {
             await logoutUser();
         } catch (e) {
+            console.error("Error logging out: ", e);
             throw e;
         };
 

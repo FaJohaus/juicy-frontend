@@ -1,6 +1,5 @@
 import { SimpleGrid, Flex, Spacer, Button, Icon, Text, Tooltip, useTheme, TagLeftIcon, Select, Tag } from "@chakra-ui/react";
 import { VscEdit } from "react-icons/vsc";
-import PreviewCard from "../widgets/insight-previews/PreviewCard";
 import PieChartPreview from "../widgets/insight-previews/PieChartPreview";
 import { BsPeople } from "react-icons/bs";
 import { VscCalendar } from "react-icons/vsc";
@@ -14,12 +13,10 @@ import { useEffect, useState } from "react";
 import { getDashboard } from "../actions/dashboards";
 import { getCustomerName } from "../actions/customers";
 import { useNavigate, useParams } from "react-router-dom";
+import PreviewWrapper from "../widgets/insight-previews/PreviewWrapper";
 
 const Dashboard = () => {
     /* ------ EXAMPLE DATA ----- */
-
-    // Rework the idea of those. Only time and customer subset make sense globally. Subfilterning events is only for Timeline Preview
-    const exampleFilters = ["This Month", "Company A, Company C"];
 
     const pieChartData = [
         { name: 'Customer A', value: 400 },
@@ -143,9 +140,10 @@ const Dashboard = () => {
             // => user has no dashboard yet
             if (!user.dashboards[0]) {
                 // guide user to create first dashboard or something idgaf
+            } else {
+                navigate(`/dashboard/${user.dashboards[0]}`);
             }
 
-            navigate(`/dashboard/${user.dashboards[0]}`);
             return;
         }
 
@@ -155,6 +153,7 @@ const Dashboard = () => {
                 const data = await getDashboard(id);
 
                 setCurrent(data);
+
             } catch (e) {
                 console.error("Error fetching current dashboard: ", e);
             }
@@ -253,6 +252,7 @@ const Dashboard = () => {
                         gap={2}
                         minChildWidth={widget.baseMinWidth}
                     >
+                        <PreviewWrapper id={"66080d1f9b1d4e3a5c1a0002"} />
                         <PieChartPreview data={pieChartData} title="Relativer Umsatzanteil" />
                         <BarChartPreview data={barChartData} title="Aktuelle Kundenzufriedenheit" maxVal={10} />
                         <LineChartPreview data={lineChartData} title="Verlauf Kundenzufriedenheit" maxVal={10} />
