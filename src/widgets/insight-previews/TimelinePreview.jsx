@@ -16,7 +16,7 @@ import { transformTimeLineData as transformData } from '../../utils/timeline';
 
     Wenn der Baum maximal Teife 4 hat macht doubleHeight eigentlich keinen Sinn...
 */
-const TimeLinePreview = ({ title, data }) => {
+const TimelinePreview = ({ title, data }) => {
     const { widget } = useTheme();
 
     const [nodes, setNodes, onNodesChange] = useNodesState([]);
@@ -148,4 +148,4 @@ const TimeLinePreview = ({ title, data }) => {
     );
 }
 
-export default TimeLinePreview;
+export default TimelinePreview;
