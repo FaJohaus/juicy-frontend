@@ -1,4 +1,4 @@
-import { SimpleGrid, Flex, Spacer, Button, Icon, Text, useTheme, TagLeftIcon, Select, Tag } from "@chakra-ui/react";
+import { SimpleGrid, Flex, Spacer, Button, Icon, Text, useTheme, TagLeftIcon, Select, Tag, Spinner } from "@chakra-ui/react";
 import { VscEdit } from "react-icons/vsc";
 import { VscCalendar } from "react-icons/vsc";
 import { DashboardContextProvider } from "../context/DashboardContext";
@@ -101,8 +101,8 @@ const Dashboard = () => {
 
     return (
         <>
-            {!current ? <div>loading...</div> :
-                <DashboardContextProvider customers={customers} time={current.time}>
+            {!current ? <Spinner /> :
+                <DashboardContextProvider customers={customers} time={current.time} name={current.name} widgets={current.widgets}>
                     <DashboardEditModal isOpen={showEditModal} onClose={() => setShowEditModal(false)} />
                     <Flex mb={2}>
                         {/* LEFT SIDE */}

@@ -4,11 +4,11 @@ import { useContext } from "react";
 
 const DashboardContext = createContext();
 
-const DashboardContextProvider = ({ customers, time, children }) => {
+const DashboardContextProvider = ({ customers, time, children, name, widgets }) => {
     const chartColors = useChartColors(customers.length);
 
     return (
-        <DashboardContext.Provider value={{ customers, time, chartColors }}>
+        <DashboardContext.Provider value={{ customers, time, chartColors, name, widgets }}>
             {children}
         </DashboardContext.Provider>
     );
