@@ -1,8 +1,6 @@
-import { SimpleGrid, Flex, Spacer, Button, Icon, Text, Tooltip, useTheme, TagLeftIcon, Select, Tag } from "@chakra-ui/react";
+import { SimpleGrid, Flex, Spacer, Button, Icon, Text, useTheme, TagLeftIcon, Select, Tag } from "@chakra-ui/react";
 import { VscEdit } from "react-icons/vsc";
-import { BsPeople } from "react-icons/bs";
 import { VscCalendar } from "react-icons/vsc";
-import { truncateText } from "../utils";
 import { DashboardContextProvider } from "../context/DashboardContext";
 import { useUser } from "../context/UserContext";
 import { useEffect, useState } from "react";
@@ -11,6 +9,7 @@ import { getCustomerName } from "../actions/customers";
 import { useNavigate, useParams } from "react-router-dom";
 import PreviewWrapper from "../widgets/insight-previews/PreviewWrapper";
 import CustomerBadges from "../components/CustomerBadges";
+import DashboardEditModal from "../components/DashboardEditModal";
 
 const Dashboard = () => {
     const navigate = useNavigate();
@@ -22,6 +21,7 @@ const Dashboard = () => {
     const [dashboardTitles, setDashboardTitles] = useState([]);
     const [current, setCurrent] = useState(); // the current dashboard
     const [customers, setCustomers] = useState([]);
+    const [showEditModal, setShowEditModal] = useState(false);
 
     /* EFFECTS WHEN ID CHANGES */
     useEffect(() => {
@@ -103,6 +103,7 @@ const Dashboard = () => {
         <>
             {!current ? <div>loading...</div> :
                 <DashboardContextProvider customers={customers} time={current.time}>
+                    <DashboardEditModal isOpen={showEditModal} onClose={() => setShowEditModal(false)} />
                     <Flex mb={2}>
                         {/* LEFT SIDE */}
                         <Tag mr={1}>
@@ -126,6 +127,7 @@ const Dashboard = () => {
                         <Button
                             leftIcon={<Icon as={VscEdit} />}
                             size="sm"
+                            onClick={() => setShowEditModal(true)}
                         >
                             <Text fontWeight="normal">Edit</Text>
                         </Button>

@@ -1,5 +1,6 @@
 import { createContext } from "react";
 import useChartColors from "../hooks/useChartColors";
+import { useContext } from "react";
 
 const DashboardContext = createContext();
 
@@ -10,7 +11,12 @@ const DashboardContextProvider = ({ customers, time, children }) => {
         <DashboardContext.Provider value={{ customers, time, chartColors }}>
             {children}
         </DashboardContext.Provider>
-    )
-}
+    );
+};
 
-export { DashboardContext, DashboardContextProvider };
+const useDashboard = () => {
+    return useContext(DashboardContext);
+};
+
+
+export { useDashboard, DashboardContextProvider };

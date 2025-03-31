@@ -1,13 +1,12 @@
 import PreviewCard from "./PreviewCard";
 import { BarChart, CartesianGrid, XAxis, YAxis, Bar, ResponsiveContainer, Tooltip, Cell } from "recharts";
 import { truncateText } from "../../utils";
-import { useContext } from "react";
-import { DashboardContext } from "../../context/DashboardContext";
+import { useDashboard } from "../../context/DashboardContext";
 import { useTheme } from "@chakra-ui/react";
 
 /* TBD: Determine fix number of bars at which this widget becomes a 'double sized' */
 const BarChartPreview = ({ data, title, maxVal }) => {
-    const { chartColors } = useContext(DashboardContext);
+    const { chartColors } = useDashboard();
     const { widget } = useTheme();
 
     return (

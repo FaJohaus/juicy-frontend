@@ -1,10 +1,9 @@
-import { useContext } from "react";
-import { DashboardContext } from "../context/DashboardContext";
+import { useDashboard } from "../context/DashboardContext";
 import { Tag, TagLeftIcon, Text } from "@chakra-ui/react";
 import { FaCircle } from "react-icons/fa";
 
 const CustomerBadges = () => {
-    const { chartColors, customers } = useContext(DashboardContext);
+    const { chartColors, customers } = useDashboard();
 
     return (
         <>
@@ -16,6 +15,50 @@ const CustomerBadges = () => {
                     </Tag>
                 )
             })}
+            {/* <Tag m={1} >
+                <TagLeftIcon as={FaCircle} color="red" />
+                <Text >ALARAM SUPER LANGE NAME!!</Text>
+            </Tag>
+            <Tag m={1} >
+                <TagLeftIcon as={FaCircle} color="red" />
+                <Text >ALARAM SUPER LANGE NAME!!</Text>
+            </Tag>
+            <Tag m={1} >
+                <TagLeftIcon as={FaCircle} color="red" />
+                <Text >ALARAM SUPER LANGE NAME!!</Text>
+            </Tag>
+            <Tag m={1} >
+                <TagLeftIcon as={FaCircle} color="red" />
+                <Text >ALARAM SUPER LANGE NAME!!</Text>
+            </Tag>
+            <Tag m={1} >
+                <TagLeftIcon as={FaCircle} color="red" />
+                <Text >ALARAM SUPER LANGE NAME!!</Text>
+            </Tag>
+            <Tag m={1} >
+                <TagLeftIcon as={FaCircle} color="red" />
+                <Text >ALARAM SUPER LANGE NAME!!</Text>
+            </Tag>
+            <Tag m={1} >
+                <TagLeftIcon as={FaCircle} color="red" />
+                <Text >ALARAM SUPER LANGE NAME!!</Text>
+            </Tag>
+            <Tag m={1} >
+                <TagLeftIcon as={FaCircle} color="red" />
+                <Text >ALARAM SUPER LANGE NAME!!</Text>
+            </Tag>
+            <Tag m={1} >
+                <TagLeftIcon as={FaCircle} color="red" />
+                <Text >ALARAM SUPER LANGE NAME!!</Text>
+            </Tag>
+            <Tag m={1} >
+                <TagLeftIcon as={FaCircle} color="red" />
+                <Text >ALARAM SUPER LANGE NAME!!</Text>
+            </Tag>
+            <Tag m={1} >
+                <TagLeftIcon as={FaCircle} color="red" />
+                <Text >ALARAM SUPER LANGE NAME!!</Text>
+            </Tag> */}
         </>
     );
 };

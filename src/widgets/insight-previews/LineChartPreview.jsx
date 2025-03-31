@@ -1,11 +1,10 @@
-import { useContext } from "react";
 import PreviewCard from "./PreviewCard";
 import { LineChart, ResponsiveContainer, CartesianGrid, YAxis, XAxis, Legend, Tooltip, Line } from "recharts";
-import { DashboardContext } from "../../context/DashboardContext";
+import { useDashboard } from "../../context/DashboardContext";
 import { useTheme } from "@chakra-ui/react";
 
 const LineChartPreview = ({ title, maxVal, data }) => {
-    const { chartColors } = useContext(DashboardContext);
+    const { chartColors } = useDashboard();
     const { widget } = useTheme();
 
     return (

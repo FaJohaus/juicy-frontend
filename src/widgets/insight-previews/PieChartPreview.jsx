@@ -1,7 +1,6 @@
 import { PieChart, Pie, ResponsiveContainer, Cell, Tooltip, Legend } from "recharts";
 import PreviewCard from "./PreviewCard";
-import { useContext } from "react";
-import { DashboardContext } from "../../context/DashboardContext";
+import { useDashboard } from "../../context/DashboardContext";
 import { useTheme } from "@chakra-ui/react";
 
 /**
@@ -12,7 +11,7 @@ import { useTheme } from "@chakra-ui/react";
  * @returns Pie Chart Preview Card for the Dashboard
  */
 const PieChartPreview = ({ data, title }) => {
-    const { chartColors } = useContext(DashboardContext);
+    const { chartColors } = useDashboard();
     const { widget } = useTheme();
 
     const RADIAN = Math.PI / 180;
