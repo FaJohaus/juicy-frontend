@@ -1,8 +1,11 @@
 export const truncateText = (text, maxLength) => text.length <= maxLength ? text : `${text.substring(0, maxLength - 3)}...`;
 
-export const swap = (arr, i, j) => {
-    const temp = arr[i];
+export const swapInState = (arr, set, i, j) => {
+    const copy = [...arr];
+    const temp = copy[i];
 
-    arr[i] = arr[j];
-    arr[j] = temp;
+    copy[i] = copy[j];
+    copy[j] = temp;
+
+    set(copy);
 }

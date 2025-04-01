@@ -4,7 +4,7 @@ import { FaChartPie, FaChartBar, FaProjectDiagram } from "react-icons/fa";
 import { FaTableList, FaChartLine } from "react-icons/fa6";
 import { MdOutlineNumbers, MdModeEdit } from "react-icons/md";
 
-const WidgetListItem = ({ widget, move }) => {
+const WidgetListItem = ({ widget, onMove, onDelete }) => {
     const getWidgetIcon = () => {
         switch (widget.diagramType) {
             case "bar":
@@ -38,25 +38,22 @@ const WidgetListItem = ({ widget, move }) => {
             <Box alignItems="center" display="flex">
                 <Stack spacing={0.5} mr={5} height="100%" justify="center">
                     <IconButton
-                        backgroundColor="gray.100"
                         size="xs"
                         height={4}
                         icon={<ChevronUpIcon boxSize={5} />}
-                        onClick={() => move({ up: true, id: widget._id })}
+                        onClick={() => onMove(true, widget._id)}
                     />
                     <IconButton
-                        backgroundColor="gray.100"
                         size="xs"
                         height={4}
                         icon={<ChevronDownIcon boxSize={5} />}
-                        onClick={() => move({ up: false, id: widget._id })}
+                        onClick={() => onMove(false, widget._id)}
                     />
                 </Stack>
                 <Icon as={getWidgetIcon()} mr={2} />
                 <Text as="b">
                     {widget.name}
                 </Text>
-                {": (short description of data here)"}
             </Box>
             <Box>
                 <IconButton
@@ -70,6 +67,7 @@ const WidgetListItem = ({ widget, move }) => {
                     size="sm"
                     rounded={10}
                     icon={<DeleteIcon />}
+                    onClick={() => onDelete(widget._id)}
                 />
             </Box>
         </Flex>

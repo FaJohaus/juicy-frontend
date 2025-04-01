@@ -5,7 +5,7 @@ import {
 import { useEffect, useState } from "react";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import { useDashboard } from "../context/DashboardContext";
-import { swap } from "../utils";
+import { swapInState } from "../utils";
 
 import WidgetListItem from "../widgets/WidgetListItem";
 
@@ -14,24 +14,18 @@ const DashboardEditModal = ({ isOpen, onClose }) => {
     const { name, time, customers, widgets } = useDashboard();
 
     const [widgetList, setWidgetList] = useState([...widgets]);
-    const [moveWidget, setMoveWidget] = useState();
 
-    /* PLEASE DON'T QUESTION THIS EFFECT, IT'S GOING THROUGH A PHASE */
-    useEffect(() => {
-        if (!moveWidget) return;
+    const onMoveWidget = (up, id) => {
+        const i = widgetList.findIndex(w => w._id === id);
 
-        const i = widgetList.findIndex(w => w._id === moveWidget.id);
+        if ((!up && i === widgetList.length - 1) || (up && i === 0)) return;
 
-        if ((!moveWidget.up && i === widgetList.length - 1) || (moveWidget.up && i === 0)) return;
-
-        if (moveWidget.up) {
-            swap(widgetList, i, i - 1);
+        if (up) {
+            swapInState(widgetList, setWidgetList, i, i - 1);
         } else {
-            swap(widgetList, i, i + 1);
-        }
-
-        setMoveWidget(null);
-    }, [moveWidget]);
+            swapInState(widgetList, setWidgetList, i, i + 1);
+        };
+    }
 
     const handleCustomerChange = (values) => {
         /* console.log(values); */
@@ -41,7 +35,7 @@ const DashboardEditModal = ({ isOpen, onClose }) => {
         <Modal isOpen={isOpen} onClose={onClose}>
             <ModalOverlay />
             <ModalContent
-                maxW="88vw"
+                maxW="85vw"
                 maxH="90vh"
             >
                 <ModalCloseButton />
@@ -96,7 +90,7 @@ const DashboardEditModal = ({ isOpen, onClose }) => {
                     >
                         <CardBody>
                             {widgetList.map(w =>
-                                <WidgetListItem widget={w} key={w._id} move={setMoveWidget} />
+                                <WidgetListItem widget={w} key={w._id} onMove={onMoveWidget} />
                             )}
                         </CardBody>
                     </Card>
