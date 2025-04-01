@@ -1,5 +1,5 @@
 import { Flex, MenuList, MenuItemOption, MenuOptionGroup } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const chartTypes = [
     "Bar",
@@ -27,6 +27,7 @@ const eventTypes = [
 const CreateWidgetMenu = () => {
     const [selectedDataType, setSelectedDataType] = useState();
     const [selectedChartType, setSelectedChartType] = useState();
+    const [selectedEventTypes, setSelectedEventTypes] = useState(eventTypes);
 
     return (
         <MenuList>
@@ -47,12 +48,12 @@ const CreateWidgetMenu = () => {
                 </MenuOptionGroup>
 
                 {/* EVENT SUBGROUP SELECTION */}
-                {selectedDataType !== "Events" ? <></> :
+                {selectedDataType === "Events" ?
                     <MenuOptionGroup
                         title="Events"
-                        type="radio"
-                        value={selectedChartType}
-                        onChange={(value) => setSelectedChartType(value)}
+                        type="checkbox"
+                        value={selectedEventTypes}
+                        onChange={(value) => setSelectedEventTypes(value)}
                         minWidth="200px"
                     >
                         {eventTypes.map((t) => (
@@ -60,11 +61,11 @@ const CreateWidgetMenu = () => {
                                 {t}
                             </MenuItemOption>
                         ))}
-                    </MenuOptionGroup>
+                    </MenuOptionGroup> : <></>
                 }
 
                 {/* CHART SELECTION */}
-                {!selectedDataType ? <></> :
+                {selectedDataType ?
                     <MenuOptionGroup
                         title="Chart"
                         type="radio"
@@ -77,7 +78,7 @@ const CreateWidgetMenu = () => {
                                 {t}
                             </MenuItemOption>
                         ))}
-                    </MenuOptionGroup>
+                    </MenuOptionGroup> : <></>
                 }
             </Flex>
         </MenuList>
