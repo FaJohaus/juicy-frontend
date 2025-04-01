@@ -1,13 +1,15 @@
 import {
     Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalFooter, ModalCloseButton, Menu,
-    MenuList, Flex, Card, MenuButton, Button, MenuOptionGroup, MenuItemOption, CardBody, Heading
+    MenuList, Flex, Card, MenuButton, Button, MenuOptionGroup, MenuItemOption, CardBody, Heading,
+    IconButton
 } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
-import { ChevronDownIcon } from "@chakra-ui/icons";
+import { ChevronDownIcon, SmallAddIcon } from "@chakra-ui/icons";
 import { useDashboard } from "../context/DashboardContext";
 import { swapInState } from "../utils";
 
 import WidgetListItem from "../widgets/WidgetListItem";
+import CreateWidgetMenu from "../widgets/CreateWidgetMenu";
 
 const DashboardEditModal = ({ isOpen, onClose }) => {
     /* TBD: Get ALL customers of one user instead */
@@ -31,6 +33,7 @@ const DashboardEditModal = ({ isOpen, onClose }) => {
         };
     }
 
+    /* TBD: Widget selber dann auch löschen, nicht nur dessen ID im Dashboard */
     const onDeleteWidget = (id) => {
         const temp = [...widgetList];
 
@@ -108,6 +111,17 @@ const DashboardEditModal = ({ isOpen, onClose }) => {
                                     onDelete={onDeleteWidget}
                                 />
                             )}
+                            <Flex justify="center">
+                                <Menu closeOnSelect={false} placement="top">
+                                    <MenuButton
+                                        as={IconButton}
+                                        icon={<SmallAddIcon />}
+                                        height={9}
+                                        width="200px"
+                                    />
+                                    <CreateWidgetMenu />
+                                </Menu>
+                            </Flex>
                         </CardBody>
                     </Card>
                 </ModalBody>

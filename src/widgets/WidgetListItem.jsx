@@ -1,28 +1,10 @@
-import { Box, Text, Icon, Flex, IconButton, Stack } from "@chakra-ui/react"
+import { Box, Text, Icon, Flex, IconButton, Stack, Menu, MenuButton } from "@chakra-ui/react"
 import { DeleteIcon, ChevronDownIcon, ChevronUpIcon } from "@chakra-ui/icons"
-import { FaChartPie, FaChartBar, FaProjectDiagram } from "react-icons/fa";
-import { FaTableList, FaChartLine } from "react-icons/fa6";
-import { MdOutlineNumbers, MdModeEdit } from "react-icons/md";
+import { MdModeEdit } from "react-icons/md";
+import { getWidgetIcon } from "../utils/widgets";
+import CreateWidgetMenu from "./CreateWidgetMenu";
 
 const WidgetListItem = ({ widget, onMove, onDelete }) => {
-    const getWidgetIcon = () => {
-        switch (widget.diagramType) {
-            case "bar":
-                return FaChartBar;
-            case "pie":
-                return FaChartPie;
-            case "graph":
-                return FaChartLine;
-            case "timeline":
-                return FaProjectDiagram;
-            case "table":
-                return FaTableList;
-            case "big number":
-                return MdOutlineNumbers;
-            default:
-                return null;
-        }
-    }
 
     return (
         <Flex
@@ -50,18 +32,22 @@ const WidgetListItem = ({ widget, onMove, onDelete }) => {
                         onClick={() => onMove(false, widget._id)}
                     />
                 </Stack>
-                <Icon as={getWidgetIcon()} mr={2} />
+                <Icon as={getWidgetIcon(widget)} mr={2} />
                 <Text as="b">
                     {widget.name}
                 </Text>
             </Box>
             <Box>
-                <IconButton
-                    variant="ghost"
-                    size="sm"
-                    rounded={10}
-                    icon={<MdModeEdit />}
-                />
+                <Menu closeOnSelect={false} placement="right">
+                    <MenuButton
+                        as={IconButton}
+                        variant="ghost"
+                        size="sm"
+                        rounded={10}
+                        icon={<MdModeEdit />}
+                    />
+                    <CreateWidgetMenu />
+                </Menu>
                 <IconButton
                     variant="ghost"
                     size="sm"
