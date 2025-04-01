@@ -2,7 +2,7 @@ import {
     Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalFooter, ModalCloseButton, Menu,
     MenuList, Flex, Card, MenuButton, Button, MenuOptionGroup, MenuItemOption, CardBody, Heading
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import { useDashboard } from "../context/DashboardContext";
 import { swapInState } from "../utils";
@@ -15,6 +15,10 @@ const DashboardEditModal = ({ isOpen, onClose }) => {
 
     const [widgetList, setWidgetList] = useState([...widgets]);
 
+    useEffect(() => {
+        if (!isOpen) setWidgetList([...widgets]);
+    }, [isOpen]);
+
     const onMoveWidget = (up, id) => {
         const i = widgetList.findIndex(w => w._id === id);
 
@@ -25,6 +29,13 @@ const DashboardEditModal = ({ isOpen, onClose }) => {
         } else {
             swapInState(widgetList, setWidgetList, i, i + 1);
         };
+    }
+
+    const onDeleteWidget = (id) => {
+        const temp = [...widgetList];
+
+        temp.splice(temp.findIndex(w => w._id === id), 1);
+        setWidgetList(temp);
     }
 
     const handleCustomerChange = (values) => {
@@ -90,7 +101,12 @@ const DashboardEditModal = ({ isOpen, onClose }) => {
                     >
                         <CardBody>
                             {widgetList.map(w =>
-                                <WidgetListItem widget={w} key={w._id} onMove={onMoveWidget} />
+                                <WidgetListItem
+                                    widget={w}
+                                    key={w._id}
+                                    onMove={onMoveWidget}
+                                    onDelete={onDeleteWidget}
+                                />
                             )}
                         </CardBody>
                     </Card>
