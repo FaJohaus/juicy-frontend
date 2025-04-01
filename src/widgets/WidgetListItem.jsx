@@ -1,10 +1,10 @@
-import { Box, Text, Icon, Flex, IconButton } from "@chakra-ui/react"
-import { ArrowUpDownIcon, DeleteIcon } from "@chakra-ui/icons"
+import { Box, Text, Icon, Flex, IconButton, Stack } from "@chakra-ui/react"
+import { DeleteIcon, ChevronDownIcon, ChevronUpIcon } from "@chakra-ui/icons"
 import { FaChartPie, FaChartBar, FaProjectDiagram } from "react-icons/fa";
 import { FaTableList, FaChartLine } from "react-icons/fa6";
 import { MdOutlineNumbers, MdModeEdit } from "react-icons/md";
 
-const WidgetListItem = ({ widget }) => {
+const WidgetListItem = ({ widget, move }) => {
     const getWidgetIcon = () => {
         switch (widget.diagramType) {
             case "bar":
@@ -36,7 +36,22 @@ const WidgetListItem = ({ widget }) => {
             px={2}
         >
             <Box alignItems="center" display="flex">
-                <ArrowUpDownIcon mr={5} />
+                <Stack spacing={0.5} mr={5} height="100%" justify="center">
+                    <IconButton
+                        backgroundColor="gray.100"
+                        size="xs"
+                        height={4}
+                        icon={<ChevronUpIcon boxSize={5} />}
+                        onClick={() => move({ up: true, id: widget._id })}
+                    />
+                    <IconButton
+                        backgroundColor="gray.100"
+                        size="xs"
+                        height={4}
+                        icon={<ChevronDownIcon boxSize={5} />}
+                        onClick={() => move({ up: false, id: widget._id })}
+                    />
+                </Stack>
                 <Icon as={getWidgetIcon()} mr={2} />
                 <Text as="b">
                     {widget.name}
@@ -44,8 +59,18 @@ const WidgetListItem = ({ widget }) => {
                 {": (short description of data here)"}
             </Box>
             <Box>
-                <IconButton variant="ghost" size="sm" rounded={50} icon={<MdModeEdit />} />
-                <IconButton variant="ghost" size="sm" rounded={50} icon={<DeleteIcon />} />
+                <IconButton
+                    variant="ghost"
+                    size="sm"
+                    rounded={10}
+                    icon={<MdModeEdit />}
+                />
+                <IconButton
+                    variant="ghost"
+                    size="sm"
+                    rounded={10}
+                    icon={<DeleteIcon />}
+                />
             </Box>
         </Flex>
     );

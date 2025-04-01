@@ -1,6 +1,6 @@
 import { SimpleGrid, Flex, Spacer, Button, Icon, Text, useTheme, TagLeftIcon, Select, Tag, Spinner } from "@chakra-ui/react";
-import { VscEdit } from "react-icons/vsc";
-import { VscCalendar } from "react-icons/vsc";
+import { CalendarIcon } from "@chakra-ui/icons"
+import { MdModeEdit } from "react-icons/md";
 import { DashboardContextProvider } from "../context/DashboardContext";
 import { useUser } from "../context/UserContext";
 import { useEffect, useState } from "react";
@@ -107,7 +107,7 @@ const Dashboard = () => {
                     <Flex mb={2}>
                         {/* LEFT SIDE */}
                         <Tag mr={1}>
-                            <TagLeftIcon as={VscCalendar} />
+                            <TagLeftIcon as={CalendarIcon} />
                             <Text>
                                 Time: {current.time.start.substring(0, 10)} - {current.time.end.substring(0, 10)}
                             </Text>
@@ -125,7 +125,7 @@ const Dashboard = () => {
                             })}
                         </Select>
                         <Button
-                            leftIcon={<Icon as={VscEdit} />}
+                            leftIcon={<Icon as={MdModeEdit} />}
                             size="sm"
                             onClick={() => setShowEditModal(true)}
                         >

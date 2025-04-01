@@ -1,16 +1,37 @@
 import {
     Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalFooter, ModalCloseButton, Menu,
-    MenuList, Flex, Card, MenuButton, Button, MenuOptionGroup, MenuItemOption, CardBody,
-    Heading
+    MenuList, Flex, Card, MenuButton, Button, MenuOptionGroup, MenuItemOption, CardBody, Heading
 } from "@chakra-ui/react";
-import { ChevronDownIcon } from "@chakra-ui/icons"
+import { useEffect, useState } from "react";
+import { ChevronDownIcon } from "@chakra-ui/icons";
 import { useDashboard } from "../context/DashboardContext";
+import { swap } from "../utils";
 
 import WidgetListItem from "../widgets/WidgetListItem";
 
 const DashboardEditModal = ({ isOpen, onClose }) => {
-    /* TBD: Get ALL customers of one user instead*/
+    /* TBD: Get ALL customers of one user instead */
     const { name, time, customers, widgets } = useDashboard();
+
+    const [widgetList, setWidgetList] = useState([...widgets]);
+    const [moveWidget, setMoveWidget] = useState();
+
+    /* PLEASE DON'T QUESTION THIS EFFECT, IT'S GOING THROUGH A PHASE */
+    useEffect(() => {
+        if (!moveWidget) return;
+
+        const i = widgetList.findIndex(w => w._id === moveWidget.id);
+
+        if ((!moveWidget.up && i === widgetList.length - 1) || (moveWidget.up && i === 0)) return;
+
+        if (moveWidget.up) {
+            swap(widgetList, i, i - 1);
+        } else {
+            swap(widgetList, i, i + 1);
+        }
+
+        setMoveWidget(null);
+    }, [moveWidget]);
 
     const handleCustomerChange = (values) => {
         /* console.log(values); */
@@ -43,8 +64,6 @@ const DashboardEditModal = ({ isOpen, onClose }) => {
                                     <MenuItemOption value="last quarter">Last Quarter</MenuItemOption>
                                     <MenuItemOption value="last month">Last Month</MenuItemOption>
                                     <MenuItemOption value="last year">Last Year</MenuItemOption>
-                                    <MenuItemOption value="last 2 years">Last 2 Years</MenuItemOption>
-                                    <MenuItemOption value="last 5 years">Last 5 Years</MenuItemOption>
                                     <MenuItemOption value="custom">Custom Time</MenuItemOption>
                                 </MenuOptionGroup>
                             </MenuList>
@@ -76,8 +95,8 @@ const DashboardEditModal = ({ isOpen, onClose }) => {
                         variant='outline'
                     >
                         <CardBody>
-                            {widgets.map(w =>
-                                <WidgetListItem widget={w} key={w._id} />
+                            {widgetList.map(w =>
+                                <WidgetListItem widget={w} key={w._id} move={setMoveWidget} />
                             )}
                         </CardBody>
                     </Card>
