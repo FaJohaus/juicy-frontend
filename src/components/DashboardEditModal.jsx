@@ -9,17 +9,17 @@ import { MdModeEdit } from "react-icons/md";
 import { useDashboard } from "../context/DashboardContext";
 import { useUser } from "../context/UserContext";
 import { swapInState } from "../utils";
-
 import WidgetListItem from "../widgets/WidgetListItem";
 import CreateWidgetMenu from "../widgets/CreateWidgetMenu";
 
-const DashboardEditModal = ({ isOpen, onClose }) => {
+const DashboardEditModal = ({ isOpen, onClose, onEdit }) => {
     const { name, time, dashboardCustomers, widgets } = useDashboard();
     const { user } = useUser();
 
     const [widgetList, setWidgetList] = useState([...widgets]);
     const [customerList, setCustomerList] = useState(dashboardCustomers.map(c => c.id));
     const [timespan, setTimespan] = useState();
+    const [changes, setChanges] = useState({});
 
     useEffect(() => {
         if (!isOpen) setWidgetList([...widgets]);
@@ -28,6 +28,33 @@ const DashboardEditModal = ({ isOpen, onClose }) => {
     useEffect(() => {
         setCustomerList(dashboardCustomers.map(c => c.id));
     }, [dashboardCustomers]);
+
+    /* -------------------- SAVING CHANGES ------------------ */
+    /* useEffect(() => {
+        if (time === timespan) return;
+
+        const _changes = JSON.parse(JSON.stringify(changes));
+        _changes.time = timespan;
+        setChanges(_changes);
+    }, [timespan]); */
+
+    useEffect(() => {
+        if (JSON.stringify(widgets) === JSON.stringify(widgetList)) return;
+
+        const _changes = JSON.parse(JSON.stringify(changes));
+        _changes.widgets = widgetList;
+        setChanges(_changes);
+    }, [widgetList]);
+
+    useEffect(() => {
+        if (JSON.stringify(dashboardCustomers.map(c => c.id)) === JSON.stringify(customerList)) return;
+
+        const _changes = JSON.parse(JSON.stringify(changes));
+        _changes.customers = customerList;
+        setChanges(_changes);
+    }, [customerList]);
+
+    /* -------------------- SAVING CHANGES ------------------ */
 
     const onMoveWidget = (up, id) => {
         const i = widgetList.findIndex(w => w._id === id);
@@ -144,7 +171,7 @@ const DashboardEditModal = ({ isOpen, onClose }) => {
                     <Button colorScheme="red" mr={2} onClick={onClose}>
                         Cancel
                     </Button>
-                    <Button colorScheme="blue">
+                    <Button colorScheme="blue" onClick={() => onEdit(changes)}>
                         Save Changes
                     </Button>
                 </ModalFooter>

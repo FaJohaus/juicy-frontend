@@ -11,3 +11,9 @@ export const getMyDashboards = async () => {
 
     return res.data;
 }
+
+export const updateDashboard = async (id, changes) => {
+    const res = await api.put(`/dashboards/dashboard?id=${id}`, changes);
+
+    return res.data;
+}

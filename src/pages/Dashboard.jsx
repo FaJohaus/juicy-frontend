@@ -9,6 +9,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import PreviewWrapper from "../widgets/insight-previews/PreviewWrapper";
 import CustomerBadges from "../components/CustomerBadges";
 import DashboardEditModal from "../components/DashboardEditModal";
+import { updateDashboard } from "../actions/dashboards";
 
 const Dashboard = () => {
     const navigate = useNavigate();
@@ -38,18 +39,6 @@ const Dashboard = () => {
         }
 
         /* get the current dashboard */
-        const fetchDashboard = async () => {
-            setCurrent(null);
-
-            try {
-                const data = await getDashboard(id);
-
-                setCurrent(data);
-            } catch (e) {
-                console.error("Error fetching current dashboard: ", e);
-            }
-        }
-
         fetchDashboard();
     }, [id, user]);
 
@@ -79,11 +68,32 @@ const Dashboard = () => {
         setCustomers(user.customers.filter(c => current.customers.includes(c.id)));
     }, [current]);
 
+    const fetchDashboard = async () => {
+        setCurrent(null);
+
+        try {
+            const data = await getDashboard(id);
+
+            setCurrent(data);
+        } catch (e) {
+            console.error("Error fetching current dashboard: ", e);
+        }
+    }
+
+    const onEdit = async (changes) => {
+        if (!changes) return;
+        const newCurrent = await updateDashboard(id, changes);
+
+        setCurrent(newCurrent);
+        setShowEditModal(false);
+        fetchDashboard();
+    }
+
     return (
         <>
             {!current ? <Spinner /> :
                 <DashboardContextProvider dashboardCustomers={customers} time={current.time} name={current.name} widgets={current.widgets}>
-                    <DashboardEditModal isOpen={showEditModal} onClose={() => setShowEditModal(false)} />
+                    <DashboardEditModal isOpen={showEditModal} onClose={() => setShowEditModal(false)} onEdit={onEdit} />
                     <Flex mb={2}>
                         {/* LEFT SIDE */}
                         <Tag mr={1}>
