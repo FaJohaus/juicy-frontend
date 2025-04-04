@@ -75,23 +75,8 @@ const Dashboard = () => {
         if (!current) return;
 
         /* get all customer names */
-        const fetchCustomers = async () => {
-            const custs = [];
+        setCustomers(user.customers.filter(c => current.customers.includes(c.id)))
 
-            try {
-                for (const id of current.customers) {
-                    const cust = await getCustomerName(id);
-
-                    custs.push({ id: id, name: cust })
-                }
-            } catch (error) {
-                console.error("Error fetching customers:", error);
-            }
-
-            setCustomers(custs);
-        };
-
-        fetchCustomers();
     }, [current]);
 
     return (
