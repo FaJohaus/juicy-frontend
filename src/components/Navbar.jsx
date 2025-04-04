@@ -5,6 +5,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import pageTitles from '../assets/pageTitles.json'
 import Sidebar from "./Sidebar";
 import LogoutModal from "./LogoutModal";
+import { getDashboard } from "../actions/dashboards";
 
 const Navbar = ({ children }) => {
     const NAVBAR_HEIGHT = "55px";
@@ -16,7 +17,23 @@ const Navbar = ({ children }) => {
     const [showLogoutModal, setShowLogoutModal] = useState(false);
 
     useEffect(() => {
-        setPageTitle(pageTitles[location.pathname.split("/")[1]]);
+        const title = pageTitles[location.pathname.split("/")[1]];
+
+        setPageTitle(title);
+
+        if (title === "Dashboard") {
+            const getTitle = async () => {
+                try {
+                    const { name } = await getDashboard(location.pathname.split("/")[2]);
+
+                    setPageTitle(`Dashboard: ${name}`);
+                } catch (e) {
+                    console.error("Could not get dashboard title: ", e)
+                };
+            }
+
+            getTitle();
+        }
     }, [location.pathname]);
 
     return (

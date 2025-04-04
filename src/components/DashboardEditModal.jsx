@@ -19,10 +19,15 @@ const DashboardEditModal = ({ isOpen, onClose }) => {
 
     const [widgetList, setWidgetList] = useState([...widgets]);
     const [customerList, setCustomerList] = useState(dashboardCustomers.map(c => c.id));
+    const [timespan, setTimespan] = useState();
 
     useEffect(() => {
         if (!isOpen) setWidgetList([...widgets]);
     }, [isOpen]);
+
+    useEffect(() => {
+        setCustomerList(dashboardCustomers.map(c => c.id));
+    }, [dashboardCustomers]);
 
     const onMoveWidget = (up, id) => {
         const i = widgetList.findIndex(w => w._id === id);
@@ -68,7 +73,12 @@ const DashboardEditModal = ({ isOpen, onClose }) => {
                                 Select Time
                             </MenuButton>
                             <MenuList>
-                                <MenuOptionGroup defaultValue='current' type='radio'>
+                                <MenuOptionGroup
+                                    defaultValue='current'
+                                    type='radio'
+                                    value={timespan}
+                                    onChange={(value) => setTimespan(value)}
+                                >
                                     <MenuItemOption value="current">
                                         {time.start.substring(0, 10)} - {time.end.substring(0, 10)}
                                     </MenuItemOption>

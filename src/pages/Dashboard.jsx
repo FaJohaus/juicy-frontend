@@ -5,7 +5,6 @@ import { DashboardContextProvider } from "../context/DashboardContext";
 import { useUser } from "../context/UserContext";
 import { useEffect, useState } from "react";
 import { getDashboard, getMyDashboards } from "../actions/dashboards";
-import { getCustomerName } from "../actions/customers";
 import { useNavigate, useParams } from "react-router-dom";
 import PreviewWrapper from "../widgets/insight-previews/PreviewWrapper";
 import CustomerBadges from "../components/CustomerBadges";
@@ -40,6 +39,8 @@ const Dashboard = () => {
 
         /* get the current dashboard */
         const fetchDashboard = async () => {
+            setCurrent(null);
+
             try {
                 const data = await getDashboard(id);
 
@@ -75,9 +76,13 @@ const Dashboard = () => {
         if (!current) return;
 
         /* get all customer names */
-        setCustomers(user.customers.filter(c => current.customers.includes(c.id)))
-
+        setCustomers(user.customers.filter(c => current.customers.includes(c.id)));
     }, [current]);
+
+    const onDashboardChange = (id) => {
+        /* setCurrent(null); */
+        navigate(`/dashboard/${id}`);
+    }
 
     return (
         <>
@@ -99,7 +104,7 @@ const Dashboard = () => {
                         {/* RIGHT SIDE */}
                         <Select size="sm" width="300px" mr={2} variant="filled">
                             {dashboardTitles.map(d => {
-                                return <option key={d._id} onClick={() => navigate(`/dashboard/${d._id}`)}>
+                                return <option key={d._id} onClick={() => onDashboardChange(d._id)}>
                                     {d.name}
                                 </option>
                             })}
