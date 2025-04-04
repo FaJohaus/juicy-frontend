@@ -5,3 +5,9 @@ export const getDashboard = async id => {
 
     return res.data;
 }
+
+export const getMyDashboards = async () => {
+    const res = await api.get('/dashboards/my');
+
+    return res.data;
+}

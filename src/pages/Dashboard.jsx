@@ -4,7 +4,7 @@ import { MdModeEdit } from "react-icons/md";
 import { DashboardContextProvider } from "../context/DashboardContext";
 import { useUser } from "../context/UserContext";
 import { useEffect, useState } from "react";
-import { getDashboard } from "../actions/dashboards";
+import { getDashboard, getMyDashboards } from "../actions/dashboards";
 import { getCustomerName } from "../actions/customers";
 import { useNavigate, useParams } from "react-router-dom";
 import PreviewWrapper from "../widgets/insight-previews/PreviewWrapper";
@@ -57,22 +57,17 @@ const Dashboard = () => {
         if (!id) return;
 
         /* get the titles of all dashboards */
-        const titles = [];
-        const fetchData = async (id) => {
+        const fetchDashboardTitles = async () => {
             try {
-                const { name } = await getDashboard(id);
+                const titles = await getMyDashboards();
 
-                titles.push({ id: id, title: name });
+                setDashboardTitles(titles);
             } catch (e) {
-                console.error("Error fetching titles: ", e);
+                console.error("Error fetching dashboard titles: ", e);
             }
         };
 
-        user.dashboards.forEach(d => {
-            fetchData(d);
-        });
-
-        setDashboardTitles(titles);
+        fetchDashboardTitles();
     }, [user]);
 
     /* EFFECTS WHEN NEW CURRENT DASHBOARD */
@@ -119,8 +114,8 @@ const Dashboard = () => {
                         {/* RIGHT SIDE */}
                         <Select size="sm" width="300px" mr={2} variant="filled">
                             {dashboardTitles.map(d => {
-                                return <option key={d.id} onClick={() => navigate(`/dashboard/${d.id}`)}>
-                                    {d.title}
+                                return <option key={d._id} onClick={() => navigate(`/dashboard/${d._id}`)}>
+                                    {d.name}
                                 </option>
                             })}
                         </Select>
