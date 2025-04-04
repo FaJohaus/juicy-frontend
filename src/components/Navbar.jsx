@@ -21,14 +21,14 @@ const Navbar = ({ children }) => {
 
         setPageTitle(title);
 
-        if (title === "Dashboard") {
+        if (title === "Dashboard" && location.pathname.split("/")[2] !== "0") {
             const getTitle = async () => {
                 try {
                     const { name } = await getDashboard(location.pathname.split("/")[2]);
 
                     setPageTitle(`Dashboard: ${name}`);
                 } catch (e) {
-                    console.error("Could not get dashboard title: ", e)
+                    console.error("Could not get dashboard title: ", e);
                 };
             }
 
