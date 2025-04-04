@@ -1,6 +1,7 @@
 import { createContext, useState, useContext } from 'react';
 import { loginUser, logoutUser } from '../actions/user';
 import { useNavigate } from 'react-router-dom';
+import { fetchAllCustomers } from '../actions/customers';
 
 const UserContext = createContext();
 
@@ -18,12 +19,14 @@ const UserProvider = ({ children }) => {
     const login = async (email, pwd) => {
         try {
             const _user = await loginUser(email, pwd);
+            const custs = await getCustomers();
 
             const user = {
                 name: _user.Name,
                 email: _user.Email,
                 phone: _user.Phone,
-                dashboards: _user.dashboard
+                dashboards: _user.dashboards,
+                customers: custs
             }
 
             setUser(user);
@@ -48,8 +51,47 @@ const UserProvider = ({ children }) => {
         localStorage.removeItem("user");
     };
 
+    const refetchUser = async () => {
+        try {
+            const _user = await refetchUser();
+            const custs = await getCustomers();
+
+            const user = {
+                name: _user.Name,
+                email: _user.Email,
+                phone: _user.Phone,
+                dashboards: _user.dashboards,
+                customers: custs
+            }
+
+            setUser(user);
+            localStorage.setItem("user", JSON.stringify(user));
+        } catch (e) {
+            console.error("Error fetching user: ", e);
+            throw e;
+        }
+
+    }
+
+    const getCustomers = async () => {
+        try {
+            const custs = await fetchAllCustomers();
+
+            return custs.map(c => {
+                return {
+                    name: `${c.Name.First} ${c.Name.Last}`,
+                    email: c.Email,
+                    id: c._id
+                }
+            });
+        } catch (e) {
+            console.error("Error fetching customers: ", e);
+            throw e;
+        }
+    }
+
     return (
-        <UserContext.Provider value={{ user, login, logout }}>
+        <UserContext.Provider value={{ user, login, logout, refetchUser }}>
             {children}
         </UserContext.Provider>
     );

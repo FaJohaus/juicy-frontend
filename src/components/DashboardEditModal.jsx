@@ -5,17 +5,20 @@ import {
 } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import { ChevronDownIcon, SmallAddIcon } from "@chakra-ui/icons";
+import { MdModeEdit } from "react-icons/md";
 import { useDashboard } from "../context/DashboardContext";
+import { useUser } from "../context/UserContext";
 import { swapInState } from "../utils";
 
 import WidgetListItem from "../widgets/WidgetListItem";
 import CreateWidgetMenu from "../widgets/CreateWidgetMenu";
 
 const DashboardEditModal = ({ isOpen, onClose }) => {
-    /* TBD: Get ALL customers of one user instead */
-    const { name, time, customers, widgets } = useDashboard();
+    const { name, time, dashboardCustomers, widgets } = useDashboard();
+    const { user } = useUser();
 
     const [widgetList, setWidgetList] = useState([...widgets]);
+    const [customerList, setCustomerList] = useState(dashboardCustomers.map(c => c.id));
 
     useEffect(() => {
         if (!isOpen) setWidgetList([...widgets]);
@@ -41,10 +44,6 @@ const DashboardEditModal = ({ isOpen, onClose }) => {
         setWidgetList(temp);
     }
 
-    const handleCustomerChange = (values) => {
-        /* console.log(values); */
-    }
-
     return (
         <Modal isOpen={isOpen} onClose={onClose}>
             <ModalOverlay />
@@ -55,6 +54,11 @@ const DashboardEditModal = ({ isOpen, onClose }) => {
                 <ModalCloseButton />
                 <ModalHeader textAlign="center">
                     {name}
+                    <IconButton
+                        icon={<MdModeEdit />}
+                        variant="ghost"
+                        rounded={100}
+                    />
                 </ModalHeader>
                 <ModalBody>
                     {/* TOP MENU */}
@@ -84,9 +88,10 @@ const DashboardEditModal = ({ isOpen, onClose }) => {
                             <MenuList>
                                 <MenuOptionGroup
                                     type='checkbox'
-                                    onChange={handleCustomerChange}
+                                    value={customerList}
+                                    onChange={(value) => setCustomerList(value)}
                                 >
-                                    {customers.map(c =>
+                                    {user.customers.map(c =>
                                         <MenuItemOption value={c.id} key={c.id}>{c.name}</MenuItemOption>
                                     )}
                                 </MenuOptionGroup>

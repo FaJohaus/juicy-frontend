@@ -43,15 +43,15 @@ const WidgetListItem = ({ widget, onMove, onDelete }) => {
                         as={IconButton}
                         variant="ghost"
                         size="sm"
-                        rounded={10}
+                        rounded={100}
                         icon={<MdModeEdit />}
                     />
-                    <CreateWidgetMenu />
+                    <CreateWidgetMenu widget={widget} />
                 </Menu>
                 <IconButton
                     variant="ghost"
                     size="sm"
-                    rounded={10}
+                    rounded={100}
                     icon={<DeleteIcon />}
                     onClick={() => onDelete(widget._id)}
                 />

@@ -3,11 +3,11 @@ import { Tag, TagLeftIcon, Text } from "@chakra-ui/react";
 import { FaCircle } from "react-icons/fa";
 
 const CustomerBadges = () => {
-    const { chartColors, customers } = useDashboard();
+    const { chartColors, dashboardCustomers } = useDashboard();
 
     return (
         <>
-            {customers.map((c, i) => {
+            {dashboardCustomers.map((c, i) => {
                 return (
                     <Tag m={1} key={i}>
                         <TagLeftIcon as={FaCircle} color={chartColors[i]} />

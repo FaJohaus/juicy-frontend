@@ -9,6 +9,12 @@ export const loginUser = async (email, pwd) => {
     return res.data;
 }
 
-export async function logoutUser() {
+export const logoutUser = async () => {
     return await api.get('/users/user/logout');
+}
+
+export const refetchUser = async () => {
+    const res = await api.get('/users/user');
+
+    return res.data;
 }

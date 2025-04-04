@@ -1,33 +1,37 @@
 import { Flex, MenuList, MenuItemOption, MenuOptionGroup } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
+import {
+    BAR, PIE, GRAPH, TIMELINE, TABLE, BIG_NUMBER,
+    EVENTS, EVENTS_AMOUNT, SATISFACTION, SATISFACTION_AVERAGE, REVENUE, REVENUE_AVERAGE,
+    PURCHASE, RETOUR, EMAIL, TALK, CALL,
+    chartTypes, eventTypes, dataTypes
+} from "../assets/types";
 
-const chartTypes = [
-    "Bar",
-    "Pie",
-    "Graph",
-    "Timeline",
-    "Table",
-    "Big number",
-];
-
-const dataTypes = [
-    "Events",
-    "Satisfaction",
-    "Revenue"
-];
-
-const eventTypes = [
-    "Purchase",
-    "Retour",
-    "E-Mail",
-    "Talk",
-    "Call"
-];
-
-const CreateWidgetMenu = () => {
+/* Kleine Notiz an dich selber: Das Diagramm kann aktuell grad nicht ausgewählt werden,
+ wahrschienlich weil die Gleichheit von String und Typ aus assets hier nicht richtig geprüft wird.
+ Da warst du grade dran, großer :)
+ Aber nur beim Erstellen neuer Widgets, beim Editieren von existierenden nicht... huh*/
+/* Also used for editing, if a widget prop is passed */
+const CreateWidgetMenu = ({ widget }) => {
     const [selectedDataType, setSelectedDataType] = useState();
-    const [selectedChartType, setSelectedChartType] = useState();
+    const [selectedChartType, setSelectedChartType] = useState(widget?.diagramType ?? null);
     const [selectedEventTypes, setSelectedEventTypes] = useState(eventTypes);
+
+    /* TBD: Different data and charts available when 1 customer vs. multiple customers */
+    const combinations = (dataType) => {
+        if (dataType === EVENTS)
+            return [TIMELINE, TABLE];
+        if (dataType === EVENTS_AMOUNT)
+            return [GRAPH, BAR, BIG_NUMBER];
+        if (dataType === SATISFACTION)
+            return [GRAPH, BAR, BIG_NUMBER];
+        if (dataType === SATISFACTION_AVERAGE)
+            return [GRAPH, BAR, BIG_NUMBER];
+        if (dataType === REVENUE)
+            return [PIE];
+        if (dataType === REVENUE_AVERAGE)
+            return [GRAPH, BAR, BIG_NUMBER];
+    }
 
     return (
         <MenuList>
@@ -42,13 +46,13 @@ const CreateWidgetMenu = () => {
                 >
                     {dataTypes.map((t) => (
                         <MenuItemOption key={t} value={t}>
-                            {t}
+                            {t[0].toUpperCase() + t.substring(1)}
                         </MenuItemOption>
                     ))}
                 </MenuOptionGroup>
 
                 {/* EVENT SUBGROUP SELECTION */}
-                {selectedDataType === "Events" ?
+                {(selectedDataType === EVENTS || selectedDataType === EVENTS_AMOUNT) ?
                     <MenuOptionGroup
                         title="Events"
                         type="checkbox"
@@ -58,7 +62,7 @@ const CreateWidgetMenu = () => {
                     >
                         {eventTypes.map((t) => (
                             <MenuItemOption key={t} value={t}>
-                                {t}
+                                {t[0].toUpperCase() + t.substring(1)}
                             </MenuItemOption>
                         ))}
                     </MenuOptionGroup> : <></>
@@ -73,9 +77,9 @@ const CreateWidgetMenu = () => {
                         onChange={(value) => setSelectedChartType(value)}
                         minWidth="200px"
                     >
-                        {chartTypes.map((t) => (
+                        {combinations(selectedDataType).map((t) => (
                             <MenuItemOption key={t} value={t}>
-                                {t}
+                                {t[0].toUpperCase() + t.substring(1)}
                             </MenuItemOption>
                         ))}
                     </MenuOptionGroup> : <></>

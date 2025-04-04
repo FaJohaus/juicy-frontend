@@ -102,7 +102,7 @@ const Dashboard = () => {
     return (
         <>
             {!current ? <Spinner /> :
-                <DashboardContextProvider customers={customers} time={current.time} name={current.name} widgets={current.widgets}>
+                <DashboardContextProvider dashboardCustomers={customers} time={current.time} name={current.name} widgets={current.widgets}>
                     <DashboardEditModal isOpen={showEditModal} onClose={() => setShowEditModal(false)} />
                     <Flex mb={2}>
                         {/* LEFT SIDE */}
