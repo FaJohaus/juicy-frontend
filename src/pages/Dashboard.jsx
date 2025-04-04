@@ -79,11 +79,6 @@ const Dashboard = () => {
         setCustomers(user.customers.filter(c => current.customers.includes(c.id)));
     }, [current]);
 
-    const onDashboardChange = (id) => {
-        /* setCurrent(null); */
-        navigate(`/dashboard/${id}`);
-    }
-
     return (
         <>
             {!current ? <Spinner /> :
@@ -102,9 +97,15 @@ const Dashboard = () => {
                         <Spacer />
 
                         {/* RIGHT SIDE */}
-                        <Select size="sm" width="300px" mr={2} variant="filled">
+                        <Select
+                            size="sm"
+                            width="300px"
+                            mr={2}
+                            variant="filled"
+                            defaultValue={id}
+                        >
                             {dashboardTitles.map(d => {
-                                return <option key={d._id} onClick={() => onDashboardChange(d._id)}>
+                                return <option key={d._id} value={d._id} onClick={() => navigate(`/dashboard/${d._id}`)}>
                                     {d.name}
                                 </option>
                             })}
