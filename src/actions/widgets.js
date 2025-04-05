@@ -10,8 +10,8 @@ export const getWidget = async id => {
     return res.data.find(w => w._id === id);
 }
 
-export const queryEvents = async (CustomerID) => {
-    const res = await api.get(`/events/?CustomerID=${CustomerID}`);
+export const queryEvents = async (customerID, time) => {
+    const res = await api.get(`/events/?CustomerID=${customerID}&startdate=${time.start}&enddate=${time.end}`);
 
     return res.data;
 }

@@ -152,7 +152,7 @@ const PreviewWrapper = ({ widget }) => {
     useEffect(() => {
         const getTimelineData = async () => {
             try {
-                const data = await queryEvents(dashboardCustomers[0].id);
+                const data = await queryEvents(dashboardCustomers[0].id, time);
 
                 setTimelineData(data);
             } catch (e) {
@@ -172,7 +172,7 @@ const PreviewWrapper = ({ widget }) => {
             case "graph":
                 return <LineChartPreview title={widget.view.name} data={lineChartData} />;
             case "timeline":
-                return <TimelinePreview title={widget.view.name} data={timelineData ?? []} />; // Query Anfrage an api/events/`${query}`
+                return <TimelinePreview title={widget.view.name} data={timelineData ?? []} />;
             case "table":
                 return <TablePreview title={widget.view.name} data={demoRows} columns={columnNames} />
             case "big number":

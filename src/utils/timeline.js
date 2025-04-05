@@ -89,7 +89,6 @@ export const transformTimeLineData = (data) => {
             });
         };
 
-
         x += n.subevent ? 35 : 70;
         y = n.subevent ? y + 60 : 0;
     });

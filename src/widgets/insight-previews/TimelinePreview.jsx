@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from 'react';
 import { ReactFlow, useNodesState, useEdgesState, useReactFlow, ReactFlowProvider, PanOnScrollMode, useViewport } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 import { Box, Slider, SliderTrack, SliderThumb, Center } from '@chakra-ui/react';
-import { useTheme } from '@chakra-ui/react';
+import { useTheme, Select } from '@chakra-ui/react';
 import PreviewCard from "./PreviewCard";
 import { MailNode, CallNode, PurchaseNode, RetourNode, VisitNode } from '../../components/timeline/CustomTimelineNode';
 import CustomTimelineEdge from '../../components/timeline/CustomTimelineEdge';
@@ -143,6 +143,16 @@ const TimelinePreview = ({ title, data }) => {
                         draggable={false}
                     />
                 </ReactFlowProvider>
+                {/* <Box position="relative" overflow="visible">
+                    <Select
+                        size="sm"
+                        width="300px"
+                        mr={2}
+                        variant="filled"
+                        zIndex={10}
+                        position="absolute"
+                    ></Select>
+                </Box> */}
             </Box>
         </PreviewCard>
     );
