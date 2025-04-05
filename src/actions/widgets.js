@@ -9,3 +9,9 @@ export const getWidget = async id => {
 
     return res.data.find(w => w._id === id);
 }
+
+export const queryEvents = async (CustomerID) => {
+    const res = await api.get(`/events/?CustomerID=${CustomerID}`);
+
+    return res.data;
+}

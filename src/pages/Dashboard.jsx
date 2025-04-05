@@ -20,7 +20,7 @@ const Dashboard = () => {
 
     const [dashboardTitles, setDashboardTitles] = useState([]);
     const [current, setCurrent] = useState(); // the current dashboard
-    const [customers, setCustomers] = useState([]);
+    const [customers, setCustomers] = useState();
     const [showEditModal, setShowEditModal] = useState(false);
 
     /* EFFECTS WHEN ID CHANGES */
@@ -91,8 +91,13 @@ const Dashboard = () => {
 
     return (
         <>
-            {!current ? <Spinner /> :
-                <DashboardContextProvider dashboardCustomers={customers} time={current.time} name={current.name} widgets={current.widgets}>
+            {!(current && customers) ? <Spinner /> :
+                <DashboardContextProvider
+                    dashboardCustomers={customers}
+                    time={current.time}
+                    name={current.name}
+                    widgets={current.widgets}
+                >
                     <DashboardEditModal isOpen={showEditModal} onClose={() => setShowEditModal(false)} onEdit={onEdit} />
                     <Flex mb={2}>
                         {/* LEFT SIDE */}

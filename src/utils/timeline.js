@@ -12,6 +12,25 @@ export const transformTimeLineData = (data) => {
     const edges = [];
     const nodes = [];
 
+    const translateNames = (name) => {
+        switch (name) {
+            case "TalkEvent":
+                return "visit"
+            case "EmailEvent":
+                return "mail"
+            case "CallEvent":
+                return "call"
+            case "KaufEvent":
+                return "purchase"
+            case "RetourEvent":
+                return "retour"
+            case "StornoEvent":
+                return "retour"
+            default:
+                return null
+        }
+    }
+
     data.forEach(n => {
         nodes.push({
             id: n._id,
@@ -21,13 +40,13 @@ export const transformTimeLineData = (data) => {
             },
             data: {
                 label: n._id,
-                date: n.date,
+                date: n.Date.substring(0, 10),
                 hasNext: !!n.nextevent,
                 hasPrev: !!n.previousevent,
                 hasSub: !!n.subevent,
                 hasMain: !!y
             },
-            type: n.type,
+            type: translateNames(n.__t),
         });
 
         if (n.subevent) {

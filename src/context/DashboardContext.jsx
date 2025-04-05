@@ -1,4 +1,4 @@
-import { createContext } from "react";
+import { createContext, useEffect } from "react";
 import useChartColors from "../hooks/useChartColors";
 import { useContext } from "react";
 
