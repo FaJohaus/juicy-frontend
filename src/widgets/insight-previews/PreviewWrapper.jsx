@@ -3,7 +3,9 @@ import BarChartPreview from "./BarChartPreview";
 import PieChartPreview from "./PieChartPreview";
 import LineChartPreview from "./LineChartPreview";
 import TimelinePreview from "./TimelinePreview";
+import TablePreview from "./MyTablePreview";
 import { getWidget } from "../../actions/widgets";
+
 import { useEffect, useState } from "react";
 
 /**
@@ -128,6 +130,17 @@ const PreviewWrapper = ({ widget }) => {
         { "_id": "154", "subevent": null, "nextevent": null, "previousevent": null, "type": "call", "date": "20.05.24" }, */
     ];
 
+    const columnNames = ["Name", "Age", "Email"];
+
+    const demoRows = [
+        { name: "Alice", age: 25, email: "alice@example.com" },
+        { name: "Bob", age: 30, email: "bob@example.com" },
+        { name: "Charlie", age: 35, email: "charlie@example.com" },
+        { name: "Alice", age: 25, email: "alice@example.com" },
+        { name: "Bob", age: 30, email: "bob@example.com" },
+        { name: "Charlie", age: 35, email: "charlie@example.com" },
+    ];
+
     /* ---------- */
 
     const getPreview = () => {
@@ -141,7 +154,7 @@ const PreviewWrapper = ({ widget }) => {
             case "timeline":
                 return <TimelinePreview title={widget.name} data={timelineData} />;
             case "table":
-                return <PreviewCard title="TBD" />
+                return <TablePreview title={widget.name} data={demoRows} columns={columnNames} />
             case "big number":
                 return <PreviewCard title="TBD" />
             default:

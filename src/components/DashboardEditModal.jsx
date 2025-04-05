@@ -20,6 +20,7 @@ const DashboardEditModal = ({ isOpen, onClose, onEdit }) => {
     const [customerList, setCustomerList] = useState(dashboardCustomers.map(c => c.id));
     const [timespan, setTimespan] = useState();
     const [changes, setChanges] = useState({});
+    const [deletedWidgets, setDeletedWidgets] = useState([]);
 
     useEffect(() => {
         if (!isOpen) setWidgetList([...widgets]);
@@ -68,12 +69,12 @@ const DashboardEditModal = ({ isOpen, onClose, onEdit }) => {
         };
     }
 
-    /* TBD: Widget selber dann auch löschen, nicht nur dessen ID im Dashboard */
     const onDeleteWidget = (id) => {
         const temp = [...widgetList];
 
         temp.splice(temp.findIndex(w => w._id === id), 1);
         setWidgetList(temp);
+        setDeletedWidgets(deletedWidgets.push(id));
     }
 
     return (
@@ -81,7 +82,6 @@ const DashboardEditModal = ({ isOpen, onClose, onEdit }) => {
             <ModalOverlay />
             <ModalContent
                 maxW="85vw"
-                maxH="90vh"
             >
                 <ModalCloseButton />
                 <ModalHeader textAlign="center">
@@ -171,7 +171,7 @@ const DashboardEditModal = ({ isOpen, onClose, onEdit }) => {
                     <Button colorScheme="red" mr={2} onClick={onClose}>
                         Cancel
                     </Button>
-                    <Button colorScheme="blue" onClick={() => onEdit(changes)}>
+                    <Button colorScheme="blue" onClick={() => onEdit(changes, deletedWidgets)}>
                         Save Changes
                     </Button>
                 </ModalFooter>
