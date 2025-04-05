@@ -34,7 +34,7 @@ const WidgetListItem = ({ widget, onMove, onDelete }) => {
                 </Stack>
                 <Icon as={getWidgetIcon(widget)} mr={2} />
                 <Text as="b">
-                    {widget.name}
+                    {widget.view.name}
                 </Text>
             </Box>
             <Box>

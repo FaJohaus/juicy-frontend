@@ -144,17 +144,17 @@ const PreviewWrapper = ({ widget }) => {
     /* ---------- */
 
     const getPreview = () => {
-        switch (widget.diagramType) {
+        switch (widget.view.diagramType) {
             case "bar":
-                return <BarChartPreview title={widget.name} data={barChartData} />;
+                return <BarChartPreview title={widget.view.name} data={barChartData} />;
             case "pie":
-                return <PieChartPreview title={widget.name} data={pieChartData} />;
+                return <PieChartPreview title={widget.view.name} data={pieChartData} />;
             case "graph":
-                return <LineChartPreview title={widget.name} data={lineChartData} />;
+                return <LineChartPreview title={widget.view.name} data={lineChartData} />;
             case "timeline":
-                return <TimelinePreview title={widget.name} data={timelineData} />;
+                return <TimelinePreview title={widget.view.name} data={timelineData} />; // Query Anfrage an api/events/`${query}`
             case "table":
-                return <TablePreview title={widget.name} data={demoRows} columns={columnNames} />
+                return <TablePreview title={widget.view.name} data={demoRows} columns={columnNames} />
             case "big number":
                 return <PreviewCard title="TBD" />
             default:
