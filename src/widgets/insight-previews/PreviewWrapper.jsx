@@ -88,19 +88,6 @@ const PreviewWrapper = ({ widget }) => {
     ];
 
     const timelineDataOld = [
-        /* { "_id": "1", "subevent": "1.1", "nextevent": "2", "previousevent": null, "__t": "mail", "Date": "01.01.24" },
-        { "_id": "1.1", "subevent": null, "nextevent": null, "previousevent": null, "__t": "call", "Date": "05.01.24" },
-        { "_id": "2", "subevent": "2.1", "nextevent": "3", "previousevent": "1", "__t": "retour", "Date": "15.01.24" },
-        { "_id": "2.1", "subevent": "2.1.1", "nextevent": null, "previousevent": null, "__t": "visit", "Date": "28.01.24" },
-        { "_id": "2.1.1", "subevent": "2.1.1.1", "nextevent": null, "previousevent": null, "__t": "mail", "Date": "10.02.24" },
-        { "_id": "2.1.1.1", "subevent": null, "nextevent": null, "previousevent": null, "__t": "call", "Date": "25.02.24" },
-        { "_id": "3", "subevent": null, "nextevent": "4", "previousevent": "2", "__t": "purchase", "Date": "10.03.24" },
-        { "_id": "4", "subevent": "4.1", "nextevent": null, "previousevent": "3", "__t": "retour", "Date": "25.03.24" },
-        { "_id": "4.1", "subevent": "4.1.1", "nextevent": null, "previousevent": null, "__t": "visit", "Date": "15.04.24" },
-        { "_id": "4.1.1", "subevent": null, "nextevent": null, "previousevent": null, "__t": "mail", "Date": "05.05.24" },
-        { "_id": "5", "subevent": null, "nextevent": null, "previousevent": null, "__t": "mail", "Date": "20.05.24" }, */
-
-
         { "_id": "647b9f1e1c4a1a001f1e1a01", "subevent": "647b9f1e1c4a1a001f1e1a02", "nextevent": "647b9f1e1c4a1a001f1e1a03", "previousevent": null, "__t": "EmailEvent", "Date": "2024-06-01T12:30:00.000Z", "CustomerID": "67f15e10bfb2d86b66a3459b" },
         { "_id": "647b9f1e1c4a1a001f1e1a02", "subevent": null, "nextevent": null, "previousevent": null, "__t": "CallEvent", "Date": "2024-06-05T14:45:00.000Z", "CustomerID": "67f15e10bfb2d86b66a3459b" },
         { "_id": "647b9f1e1c4a1a001f1e1a03", "subevent": "647b9f1e1c4a1a001f1e1a04", "nextevent": "647b9f1e1c4a1a001f1e1a08", "previousevent": "647b9f1e1c4a1a001f1e1a01", "__t": "RetourEvent", "Date": "2024-07-10T09:15:00.000Z", "CustomerID": "67f15e10bfb2d86b66a3459b" },
@@ -111,7 +98,15 @@ const PreviewWrapper = ({ widget }) => {
         { "_id": "647b9f1e1c4a1a001f1e1a09", "subevent": "647b9f1e1c4a1a001f1e1a10", "nextevent": null, "previousevent": "647b9f1e1c4a1a001f1e1a08", "__t": "RetourEvent", "Date": "2024-12-05T10:10:00.000Z", "CustomerID": "67f15e10bfb2d86b66a3459b" },
         { "_id": "647b9f1e1c4a1a001f1e1a10", "subevent": "647b9f1e1c4a1a001f1e1a11", "nextevent": null, "previousevent": null, "__t": "TalkEvent", "Date": "2025-01-15T15:30:00.000Z", "CustomerID": "67f15e10bfb2d86b66a3459b" },
         { "_id": "647b9f1e1c4a1a001f1e1a11", "subevent": null, "nextevent": null, "previousevent": null, "__t": "EmailEvent", "Date": "2025-02-20T12:00:00.000Z", "CustomerID": "67f15e10bfb2d86b66a3459b" },
-        { "_id": "647b9f1e1c4a1a001f1e1a12", "subevent": null, "nextevent": null, "previousevent": null, "__t": "EmailEvent", "Date": "2025-03-25T09:40:00.000Z", "CustomerID": "67f15e10bfb2d86b66a3459b" }
+        { "_id": "647b9f1e1c4a1a001f1e1a12", "subevent": null, "nextevent": null, "previousevent": null, "__t": "EmailEvent", "Date": "2025-03-25T09:40:00.000Z", "CustomerID": "67f15e10bfb2d86b66a3459b" },
+
+        { "_id": "647b9f1e1c4a1a001f1e1a13", "subevent": null, "nextevent": null, "previousevent": null, "__t": "EmailEvent", "Date": "2025-03-25T09:40:00.000Z", "CustomerID": "67f15e10bfb2d86b66a3459b" },
+        { "_id": "647b9f1e1c4a1a001f1e1a14", "subevent": null, "nextevent": null, "previousevent": null, "__t": "EmailEvent", "Date": "2025-03-25T09:40:00.000Z", "CustomerID": "67f15e10bfb2d86b66a3459b" },
+        { "_id": "647b9f1e1c4a1a001f1e1a15", "subevent": null, "nextevent": null, "previousevent": null, "__t": "EmailEvent", "Date": "2025-03-25T09:40:00.000Z", "CustomerID": "67f15e10bfb2d86b66a3459b" },
+        { "_id": "647b9f1e1c4a1a001f1e1a16", "subevent": null, "nextevent": null, "previousevent": null, "__t": "EmailEvent", "Date": "2025-03-25T09:40:00.000Z", "CustomerID": "67f15e10bfb2d86b66a3459b" },
+        { "_id": "647b9f1e1c4a1a001f1e1a17", "subevent": null, "nextevent": null, "previousevent": null, "__t": "EmailEvent", "Date": "2025-03-25T09:40:00.000Z", "CustomerID": "67f15e10bfb2d86b66a3459b" },
+        { "_id": "647b9f1e1c4a1a001f1e1a18", "subevent": null, "nextevent": null, "previousevent": null, "__t": "EmailEvent", "Date": "2025-03-25T09:40:00.000Z", "CustomerID": "67f15e10bfb2d86b66a3459b" },
+        { "_id": "647b9f1e1c4a1a001f1e1a19", "subevent": null, "nextevent": null, "previousevent": null, "__t": "EmailEvent", "Date": "2025-03-25T09:40:00.000Z", "CustomerID": "67f15e10bfb2d86b66a3459b" }
     ];
 
     const columnNames = ["Name", "Age", "Email"];
@@ -203,7 +198,7 @@ const PreviewWrapper = ({ widget }) => {
             case "graph":
                 return <LineChartPreview title={widget.view.name} data={lineChartData} />;
             case "timeline":
-                return <TimelinePreview title={widget.view.name} data={timelineData ?? []} />;
+                return <TimelinePreview title={widget.view.name} data={timelineDataOld ?? []} />;
             case "table":
                 return <TablePreview
                     title={widget.view.name}

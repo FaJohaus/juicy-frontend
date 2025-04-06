@@ -20,7 +20,6 @@ const DashboardEditModal = ({ isOpen, onClose, onEdit }) => {
     const [customerList, setCustomerList] = useState(dashboardCustomers.map(c => c.id));
     const [timespan, setTimespan] = useState();
     const [changes, setChanges] = useState({});
-    const [deletedWidgets, setDeletedWidgets] = useState([]);
 
     useEffect(() => {
         if (!isOpen) setWidgetList([...widgets]);
@@ -74,7 +73,6 @@ const DashboardEditModal = ({ isOpen, onClose, onEdit }) => {
 
         temp.splice(temp.findIndex(w => w._id === id), 1);
         setWidgetList(temp);
-        setDeletedWidgets(deletedWidgets.push(id));
     }
 
     const addWidget = (widget) => {
@@ -175,7 +173,7 @@ const DashboardEditModal = ({ isOpen, onClose, onEdit }) => {
                     <Button colorScheme="red" mr={2} onClick={onClose}>
                         Cancel
                     </Button>
-                    <Button colorScheme="blue" onClick={() => onEdit(changes, deletedWidgets)}>
+                    <Button colorScheme="blue" onClick={() => onEdit(changes)}>
                         Save Changes
                     </Button>
                 </ModalFooter>

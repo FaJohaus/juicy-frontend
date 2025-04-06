@@ -56,7 +56,7 @@ const TimelinePreview = ({ title, data }) => {
 
         const { width } = getNodesBounds(getNodes());
 
-        const PADDINGX = 20;
+        const PADDINGX = 30;
 
         const rightBound = -(width - containerWidth + PADDINGX);
 
@@ -81,10 +81,14 @@ const TimelinePreview = ({ title, data }) => {
 
         // To adjust the slider when the user scrolls the viewport
         useEffect(() => {
-            setSlider(x);
-            if (x > PADDINGX) setViewport({ x: PADDINGX });
-            else if (x < rightBound) setViewport({ x: rightBound });
-        }, [x])
+            if (x > PADDINGX) {
+                if (x !== PADDINGX) setViewport({ x: PADDINGX });
+            } else if (x < rightBound) {
+                if (x !== rightBound) setViewport({ x: rightBound });
+            } else {
+                setSlider(x);
+            }
+        }, [x]);
 
         return (
             <>

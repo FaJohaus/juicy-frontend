@@ -81,7 +81,7 @@ const Dashboard = () => {
         }
     }
 
-    const onEdit = async (changes, deletedWidgets) => {
+    const onEdit = async (changes) => {
         if (!changes) return;
         const newCurrent = await updateDashboard(id, changes);
 
