@@ -135,17 +135,14 @@ const PreviewWrapper = ({ widget }) => {
                     setTableData(() => {
                         switch (widget.view.description) {
                             case "TalkEvent":
-                                return data.map(e => [truncateText(dashboardCustomers.find(c => c.id === e.CustomerID).name, 10), e.Date.substring(0, 10), e.Duration, e.rating]);
-                            case "EmailEvent":
-                                return [];
                             case "CallEvent":
-                                return [];
+                                return data.map(e => [truncateText(dashboardCustomers.find(c => c.id === e.CustomerID).name, 10), e.Date.substring(0, 10), `${e.Duration} min`, e.rating]);
+                            case "EmailEvent":
+                                return data.map(e => [truncateText(dashboardCustomers.find(c => c.id === e.CustomerID).name, 10), e.Date.substring(0, 10), truncateText(e.Subject, 12), e.rating]);
                             case "KaufEvent":
-                                return [];
                             case "RetourEvent":
-                                return [];
                             case "StornoEvent":
-                                return [];
+                                return data.map(e => [truncateText(dashboardCustomers.find(c => c.id === e.CustomerID).name, 10), e.Date.substring(0, 10), (e.Kaufpreis ? `${e.Kaufpreis / 100} €` : ""), e.rating]);
                             default:
                                 return [];
                         }
@@ -165,15 +162,13 @@ const PreviewWrapper = ({ widget }) => {
             case "TalkEvent":
                 return ["Customer", "Date", "Duration", "Rating"];
             case "EmailEvent":
-                return ["Customer", "Date", "Rating"];
+                return ["Customer", "Date", "Subject", "Rating"];
             case "CallEvent":
                 return ["Customer", "Date", "Duration", "Rating"];
             case "KaufEvent":
-                return ["Customer", "Date", "Rating"];
             case "RetourEvent":
-                return ["Customer", "Date", "Rating"];
             case "StornoEvent":
-                return ["Customer", "Date", "Rating"];
+                return ["Customer", "Date", "Value", "Rating"];
             default:
                 return [];
         }
