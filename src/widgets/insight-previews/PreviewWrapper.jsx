@@ -4,8 +4,7 @@ import PieChartPreview from "./PieChartPreview";
 import LineChartPreview from "./LineChartPreview";
 import TimelinePreview from "./TimelinePreview";
 import TablePreview from "./MyTablePreview";
-import { getWidget } from "../../actions/widgets";
-import { queryEvents } from "../../actions/widgets";
+import { queryEvents, queryEventsAdvanced } from "../../actions/widgets";
 
 import { useEffect, useState } from "react";
 import { useDashboard } from "../../context/DashboardContext";
@@ -114,8 +113,9 @@ const PreviewWrapper = ({ widget }) => {
     const [timelineData, setTimelineData] = useState();
     const [tableData, setTableData] = useState();
 
+    /* Get widget data */
     useEffect(() => {
-        if (/* widget.diagramType === "timeline" */true) {
+        if (widget.view.diagramType === "timeline") {
             const getTimelineData = async () => {
                 try {
                     const data = await queryEvents(dashboardCustomers[0].id, time);
@@ -127,31 +127,38 @@ const PreviewWrapper = ({ widget }) => {
             }
 
             getTimelineData();
-        } else if (widget.diagramType === "table") {
+        } else if (widget.view.diagramType === "table") {
             const getTableData = async () => {
                 try {
-                    const data = await queryEvents(dashboardCustomers[0].id, time);
+                    const data = await queryEventsAdvanced(dashboardCustomers.map(c => c.id), time, [widget.view.description]);
 
-                    setTableData(data);
+                    setTableData(() => {
+                        switch (widget.view.description) {
+                            case "TalkEvent":
+                                return data.map(e => [truncateText(dashboardCustomers.find(c => c.id === e.CustomerID).name, 10), e.Date.substring(0, 10), e.Duration, e.rating]);
+                            case "EmailEvent":
+                                return [];
+                            case "CallEvent":
+                                return [];
+                            case "KaufEvent":
+                                return [];
+                            case "RetourEvent":
+                                return [];
+                            case "StornoEvent":
+                                return [];
+                            default:
+                                return [];
+                        }
+                    }
+                    );
                 } catch (e) {
-                    console.error("Could not get timeline data: ", e);
+                    console.error("Could not get table data: ", e);
                 }
             }
 
             getTableData();
         }
     }, [dashboardCustomers]);
-
-    const getTableData = (type) => {
-        const data = timelineData.filter(event => event.__t === type);
-
-        switch (type) {
-            case "TalkEvent":
-                return data.map(e => [truncateText(dashboardCustomers.find(c => c.id === e.CustomerID).name, 10), e.Date.substring(0, 10), e.Duration, e.rating]);
-            default:
-                return null;
-        }
-    }
 
     const getTableColumns = (type) => {
         switch (type) {
@@ -168,7 +175,7 @@ const PreviewWrapper = ({ widget }) => {
             case "StornoEvent":
                 return ["Customer", "Date", "Rating"];
             default:
-                return null;
+                return [];
         }
     }
 
@@ -185,8 +192,8 @@ const PreviewWrapper = ({ widget }) => {
             case "table":
                 return <TablePreview
                     title={widget.view.name}
-                    data={timelineData ? getTableData(widget.view.description) : []}
-                    columns={timelineData ? getTableColumns(widget.view.description) : []}
+                    data={tableData ?? []}
+                    columns={getTableColumns(widget.view.description)}
                 />
             case "big number":
                 return <PreviewCard title="TBD" />

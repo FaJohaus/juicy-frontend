@@ -16,6 +16,28 @@ export const queryEvents = async (customerID, time) => {
     return res.data;
 }
 
+export const queryEventsAdvanced = async (customers, time, types) => {
+    let events = [];
+
+    const fetchPerUser = async (customer) => {
+        try {
+            const customerEvents = await queryEvents(customer, time);
+
+            events = events.concat(customerEvents);
+        } catch (e) {
+            throw e;
+        }
+    }
+
+    await Promise.all(customers.map(fetchPerUser));
+
+    if (types) {
+        events = events.filter(e => types.includes(e.__t));
+    }
+
+    return events;
+}
+
 export const createWidget = async (name, diagramtype, customers, dashboardID, description) => {
     const res = await api.post("dashboards/widgets/widget", {
         "view": {

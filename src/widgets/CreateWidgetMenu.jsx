@@ -7,6 +7,7 @@ import {
     chartTypes, eventTypes, dataTypes
 } from "../assets/types";
 import { useDashboard } from "../context/DashboardContext";
+import { translateEventNames } from "../utils";
 
 /* Kleine Notiz an dich selber: Das Diagramm kann aktuell grad nicht ausgewählt werden,
  wahrschienlich weil die Gleichheit von String und Typ aus assets hier nicht richtig geprüft wird.
@@ -19,7 +20,7 @@ const CreateWidgetMenu = ({ widget, addWidget, closeMenu }) => {
 
     const [selectedDataType, setSelectedDataType] = useState();
     const [selectedChartType, setSelectedChartType] = useState(widget?.diagramType ?? undefined);
-    const [selectedEventTypes, setSelectedEventTypes] = useState(eventTypes);
+    const [selectedEventType, setSelectedEventType] = useState();
     const [name, setName] = useState("");
 
     const combinations = (dataType) => {
@@ -38,7 +39,11 @@ const CreateWidgetMenu = ({ widget, addWidget, closeMenu }) => {
     }
 
     const onCreate = async () => {
-        const widget = await createWidgetHere(name, selectedChartType, selectedDataType);
+        const widget = await createWidgetHere(
+            name,
+            selectedChartType,
+            (selectedDataType === EVENTS && selectedChartType === TABLE) ? translateEventNames(selectedEventType) : selectedDataType
+        );
 
         addWidget(widget);
         closeMenu();
@@ -69,23 +74,6 @@ const CreateWidgetMenu = ({ widget, addWidget, closeMenu }) => {
                     ))}
                 </MenuOptionGroup>
 
-                {/* EVENT SUBGROUP SELECTION */}
-                {(selectedDataType === EVENTS || selectedDataType === EVENTS_AMOUNT) ?
-                    <MenuOptionGroup
-                        title="Events"
-                        type="checkbox"
-                        value={selectedEventTypes}
-                        onChange={(value) => setSelectedEventTypes(value)}
-                        minWidth="200px"
-                    >
-                        {eventTypes.map((t) => (
-                            <MenuItemOption key={t} value={t}>
-                                {t[0].toUpperCase() + t.substring(1)}
-                            </MenuItemOption>
-                        ))}
-                    </MenuOptionGroup> : <></>
-                }
-
                 {/* CHART SELECTION */}
                 {selectedDataType ?
                     <MenuOptionGroup
@@ -102,8 +90,25 @@ const CreateWidgetMenu = ({ widget, addWidget, closeMenu }) => {
                         ))}
                     </MenuOptionGroup> : <></>
                 }
+
+                {/* EVENT SUBGROUP SELECTION */}
+                {((selectedDataType === EVENTS && selectedChartType === TABLE) || selectedDataType === EVENTS_AMOUNT) ?
+                    <MenuOptionGroup
+                        title="Events"
+                        type="radio"
+                        value={selectedEventType}
+                        onChange={(value) => setSelectedEventType(value)}
+                        minWidth="200px"
+                    >
+                        {eventTypes.map((t) => (
+                            <MenuItemOption key={t} value={t}>
+                                {t[0].toUpperCase() + t.substring(1)}
+                            </MenuItemOption>
+                        ))}
+                    </MenuOptionGroup> : <></>
+                }
             </Flex>
-            {selectedChartType ?
+            {(selectedChartType !== TABLE && selectedChartType) || (selectedEventType) ?
                 <Flex
                     direction="row"
                     alignContent="center"
