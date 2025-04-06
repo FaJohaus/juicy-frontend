@@ -13,7 +13,7 @@ import { useDashboard } from "../context/DashboardContext";
  Da warst du grade dran, großer :)
  Aber nur beim Erstellen neuer Widgets, beim Editieren von existierenden nicht... huh*/
 /* Also used for editing, if a widget prop is passed */
-const CreateWidgetMenu = ({ widget, addWidget }) => {
+const CreateWidgetMenu = ({ widget, addWidget, closeMenu }) => {
     const { createWidgetHere } = useDashboard();
     const toast = useToast();
 
@@ -41,6 +41,7 @@ const CreateWidgetMenu = ({ widget, addWidget }) => {
         const widget = await createWidgetHere(name, selectedChartType, selectedDataType);
 
         addWidget(widget);
+        closeMenu();
 
         toast({
             title: "Widget was created",

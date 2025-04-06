@@ -20,6 +20,7 @@ const DashboardEditModal = ({ isOpen, onClose, onEdit }) => {
     const [customerList, setCustomerList] = useState(dashboardCustomers.map(c => c.id));
     const [timespan, setTimespan] = useState();
     const [changes, setChanges] = useState({});
+    const [showCreateMenu, setShowCreateMenu] = useState(false);
 
     useEffect(() => {
         if (!isOpen) setWidgetList([...widgets]);
@@ -156,14 +157,20 @@ const DashboardEditModal = ({ isOpen, onClose, onEdit }) => {
                                 />
                             )}
                             <Flex justify="center">
-                                <Menu closeOnSelect={false} placement="top">
+                                <Menu
+                                    closeOnSelect={false}
+                                    placement="top"
+                                    isOpen={showCreateMenu}
+                                    onClose={() => setShowCreateMenu(false)}
+                                >
                                     <MenuButton
                                         as={IconButton}
                                         icon={<SmallAddIcon />}
                                         height={9}
                                         width="200px"
+                                        onClick={() => setShowCreateMenu(true)}
                                     />
-                                    <CreateWidgetMenu addWidget={addWidget} />
+                                    <CreateWidgetMenu addWidget={addWidget} closeMenu={() => setShowCreateMenu(false)} />
                                 </Menu>
                             </Flex>
                         </CardBody>

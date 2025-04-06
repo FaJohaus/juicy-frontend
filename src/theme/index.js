@@ -9,7 +9,7 @@ const theme = extendTheme({
     },
     widget: {
         baseHeight: 310,
-        baseMinWidth: 360,
+        baseMinWidth: 400,
     }
 });
 
