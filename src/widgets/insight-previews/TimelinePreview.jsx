@@ -92,22 +92,24 @@ const TimelinePreview = ({ title, data }) => {
 
         return (
             <>
-                <ReactFlow {...props} ref={containerRef} />
-                <Center>
-                    <Slider
-                        focusThumbOnChange={false}
-                        value={slider}
-                        variant="ghost"
-                        onChange={(val) => setViewport({ x: val })}
-                        isReversed
-                        min={rightBound}
-                        max={PADDINGX}
-                        width={400}
-                    >
-                        <SliderTrack backgroundColor="gray.300" />
-                        <SliderThumb backgroundColor="gray.500" />
-                    </Slider>
-                </Center>
+                <ReactFlow {...props} ref={containerRef} panOnScroll={width > containerWidth} />
+                {(width > containerWidth) && (
+                    <Center>
+                        <Slider
+                            focusThumbOnChange={false}
+                            value={slider}
+                            variant="ghost"
+                            onChange={(val) => setViewport({ x: val })}
+                            isReversed
+                            min={rightBound}
+                            max={PADDINGX}
+                            width={400}
+                        >
+                            <SliderTrack backgroundColor="gray.300" />
+                            <SliderThumb backgroundColor="gray.500" />
+                        </Slider>
+                    </Center>
+                )}
             </>
         );
     };
@@ -133,7 +135,6 @@ const TimelinePreview = ({ title, data }) => {
                         fitView
                         fitViewOptions={fitViewOptions}
                         /* ------------------ */
-                        panOnScroll={true}
                         panOnScrollMode={PanOnScrollMode.Horizontal}
                         panOnDrag={false}
                         zoomOnScroll={false}

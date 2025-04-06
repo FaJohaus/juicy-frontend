@@ -100,30 +100,13 @@ const PreviewWrapper = ({ widget }) => {
         { "_id": "647b9f1e1c4a1a001f1e1a11", "subevent": null, "nextevent": null, "previousevent": null, "__t": "EmailEvent", "Date": "2025-02-20T12:00:00.000Z", "CustomerID": "67f15e10bfb2d86b66a3459b" },
         { "_id": "647b9f1e1c4a1a001f1e1a12", "subevent": null, "nextevent": null, "previousevent": null, "__t": "EmailEvent", "Date": "2025-03-25T09:40:00.000Z", "CustomerID": "67f15e10bfb2d86b66a3459b" },
 
-        { "_id": "647b9f1e1c4a1a001f1e1a13", "subevent": null, "nextevent": null, "previousevent": null, "__t": "EmailEvent", "Date": "2025-03-25T09:40:00.000Z", "CustomerID": "67f15e10bfb2d86b66a3459b" },
+        /* { "_id": "647b9f1e1c4a1a001f1e1a13", "subevent": null, "nextevent": null, "previousevent": null, "__t": "EmailEvent", "Date": "2025-03-25T09:40:00.000Z", "CustomerID": "67f15e10bfb2d86b66a3459b" },
         { "_id": "647b9f1e1c4a1a001f1e1a14", "subevent": null, "nextevent": null, "previousevent": null, "__t": "EmailEvent", "Date": "2025-03-25T09:40:00.000Z", "CustomerID": "67f15e10bfb2d86b66a3459b" },
         { "_id": "647b9f1e1c4a1a001f1e1a15", "subevent": null, "nextevent": null, "previousevent": null, "__t": "EmailEvent", "Date": "2025-03-25T09:40:00.000Z", "CustomerID": "67f15e10bfb2d86b66a3459b" },
         { "_id": "647b9f1e1c4a1a001f1e1a16", "subevent": null, "nextevent": null, "previousevent": null, "__t": "EmailEvent", "Date": "2025-03-25T09:40:00.000Z", "CustomerID": "67f15e10bfb2d86b66a3459b" },
         { "_id": "647b9f1e1c4a1a001f1e1a17", "subevent": null, "nextevent": null, "previousevent": null, "__t": "EmailEvent", "Date": "2025-03-25T09:40:00.000Z", "CustomerID": "67f15e10bfb2d86b66a3459b" },
         { "_id": "647b9f1e1c4a1a001f1e1a18", "subevent": null, "nextevent": null, "previousevent": null, "__t": "EmailEvent", "Date": "2025-03-25T09:40:00.000Z", "CustomerID": "67f15e10bfb2d86b66a3459b" },
-        { "_id": "647b9f1e1c4a1a001f1e1a19", "subevent": null, "nextevent": null, "previousevent": null, "__t": "EmailEvent", "Date": "2025-03-25T09:40:00.000Z", "CustomerID": "67f15e10bfb2d86b66a3459b" }
-    ];
-
-    const columnNames = ["Name", "Age", "Email"];
-
-    const demoRows = [
-        { name: "Alice", age: 25, email: "alice@example.com" },
-        { name: "Bob", age: 30, email: "bob@example.com" },
-        { name: "Charlie", age: 35, email: "charlie@example.com" },
-        { name: "Alice", age: 25, email: "alice@example.com" },
-        { name: "Bob", age: 30, email: "bob@example.com" },
-        { name: "Charlie", age: 35, email: "charlie@example.com" },
-        { name: "Alice", age: 25, email: "alice@example.com" },
-        { name: "Bob", age: 30, email: "bob@example.com" },
-        { name: "Charlie", age: 35, email: "charlie@example.com" },
-        /* { name: "Alice", age: 25, email: "alice@example.com" },
-        { name: "Bob", age: 30, email: "bob@example.com" },
-        { name: "Charlie", age: 35, email: "charlie@example.com" }, */
+        { "_id": "647b9f1e1c4a1a001f1e1a19", "subevent": null, "nextevent": null, "previousevent": null, "__t": "EmailEvent", "Date": "2025-03-25T09:40:00.000Z", "CustomerID": "67f15e10bfb2d86b66a3459b" } */
     ];
 
     /* ---------- */
@@ -198,7 +181,7 @@ const PreviewWrapper = ({ widget }) => {
             case "graph":
                 return <LineChartPreview title={widget.view.name} data={lineChartData} />;
             case "timeline":
-                return <TimelinePreview title={widget.view.name} data={timelineDataOld ?? []} />;
+                return <TimelinePreview title={widget.view.name} data={timelineData ?? []} />;
             case "table":
                 return <TablePreview
                     title={widget.view.name}
