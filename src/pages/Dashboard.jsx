@@ -1,28 +1,30 @@
-import { SimpleGrid, Flex, Spacer, Button, Icon, Text, useTheme, TagLeftIcon, Select, Tag, Spinner, useToast } from "@chakra-ui/react";
-import { CalendarIcon } from "@chakra-ui/icons"
+import { SimpleGrid, Flex, Spacer, Button, Icon, Text, useTheme, TagLeftIcon, Select, Tag, Spinner, useToast, IconButton, Tooltip } from "@chakra-ui/react";
+import { CalendarIcon, SmallAddIcon } from "@chakra-ui/icons"
 import { MdModeEdit } from "react-icons/md";
 import { DashboardContextProvider } from "../context/DashboardContext";
 import { useUser } from "../context/UserContext";
 import { useEffect, useState } from "react";
-import { getDashboard, getMyDashboards } from "../actions/dashboards";
+import { createDashboard, getDashboard, getMyDashboards } from "../actions/dashboards";
 import { useNavigate, useParams } from "react-router-dom";
 import PreviewWrapper from "../widgets/insight-previews/PreviewWrapper";
 import CustomerBadges from "../components/CustomerBadges";
 import DashboardEditModal from "../components/DashboardEditModal";
 import { updateDashboard } from "../actions/dashboards";
+import DashboardCreateModal from "../components/DashboardCreateModel";
 
 const Dashboard = () => {
     const navigate = useNavigate();
     const toast = useToast();
 
     const { widget } = useTheme();
-    const { user } = useUser();
+    const { user, refetchUser } = useUser();
     const { id } = useParams();
 
     const [dashboardTitles, setDashboardTitles] = useState([]);
     const [current, setCurrent] = useState(); // the current dashboard
     const [customers, setCustomers] = useState();
     const [showEditModal, setShowEditModal] = useState(false);
+    const [showCreateModal, setShowCreateModal] = useState(false);
 
     /* EFFECTS WHEN ID CHANGES */
     useEffect(() => {
@@ -94,6 +96,17 @@ const Dashboard = () => {
             duration: 2000,
             isClosable: true
         })
+    };
+
+    const onCreate = async (name, customers) => {
+        try {
+            const id = await createDashboard(name, customers);
+
+            await refetchUser();
+            navigate(`/dashboard/${id}`);
+        } catch (e) {
+            console.error("Error creating dashboard: ", e);
+        }
     }
 
     return (
@@ -107,6 +120,7 @@ const Dashboard = () => {
                     id={id}
                 >
                     <DashboardEditModal isOpen={showEditModal} onClose={() => setShowEditModal(false)} onEdit={onEdit} />
+                    <DashboardCreateModal isOpen={showCreateModal} onClose={() => setShowCreateModal(false)} onCreate={onCreate} />
                     <Flex mb={2}>
                         {/* LEFT SIDE */}
                         <Tag mr={1}>
@@ -120,6 +134,14 @@ const Dashboard = () => {
                         <Spacer />
 
                         {/* RIGHT SIDE */}
+                        <Tooltip label="Create new dashboard">
+                            <IconButton
+                                as={SmallAddIcon}
+                                size="sm"
+                                mr={2}
+                                onClick={() => setShowCreateModal(true)}
+                            />
+                        </Tooltip>
                         <Select
                             size="sm"
                             width="300px"

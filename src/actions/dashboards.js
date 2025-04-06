@@ -17,3 +17,9 @@ export const updateDashboard = async (id, changes) => {
 
     return res.data;
 }
+
+export const createDashboard = async (name, customers) => {
+    const res = await api.post("dashboards/dashboard", { name: name, customers: customers });
+
+    return res.data._id;
+}

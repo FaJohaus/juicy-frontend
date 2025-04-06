@@ -13,7 +13,7 @@ export const logoutUser = async () => {
     return await api.get('/users/user/logout');
 }
 
-export const refetchUser = async () => {
+export const getUser = async () => {
     const res = await api.get('/users/user');
 
     return res.data;

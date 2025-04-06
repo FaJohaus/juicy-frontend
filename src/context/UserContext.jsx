@@ -1,5 +1,5 @@
 import { createContext, useState, useContext } from 'react';
-import { loginUser, logoutUser } from '../actions/user';
+import { loginUser, logoutUser, getUser } from '../actions/user';
 import { useNavigate } from 'react-router-dom';
 import { fetchAllCustomers } from '../actions/customers';
 
@@ -53,7 +53,7 @@ const UserProvider = ({ children }) => {
 
     const refetchUser = async () => {
         try {
-            const _user = await refetchUser();
+            const _user = await getUser();
             const custs = await getCustomers();
 
             const user = {
