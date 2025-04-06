@@ -11,8 +11,25 @@ export const getWidget = async id => {
 }
 
 export const queryEvents = async (customerID, time) => {
-    /* const res = await api.get(`/events/?CustomerID=${customerID}&startdate=${time.start}&enddate=${time.end}`); */
-    const res = await api.get(`/events/?CustomerID=${customerID}`);
+    const res = await api.get(`/events/?CustomerID=${customerID}&startdate=${time.start}&enddate=${time.end}`);
+
+    return res.data;
+}
+
+export const createWidget = async (name, diagramtype, customers, dashboardID, description) => {
+    const res = await api.post("dashboards/widgets/widget", {
+        "view": {
+            "name": name,
+            "diagramType": diagramtype,
+            "description": description
+        },
+        "data": {
+            "customers": customers,
+            "rating": "satisfaction",
+            "tree": diagramtype === "timeline"
+        },
+        "dashboardID": dashboardID
+    });
 
     return res.data;
 }

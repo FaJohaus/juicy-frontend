@@ -1,23 +1,27 @@
-import { Flex, MenuList, MenuItemOption, MenuOptionGroup } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { Flex, MenuList, MenuItemOption, MenuOptionGroup, Heading, Input, Button, useToast } from "@chakra-ui/react";
+import { useState } from "react";
 import {
     BAR, PIE, GRAPH, TIMELINE, TABLE, BIG_NUMBER,
     EVENTS, EVENTS_AMOUNT, SATISFACTION, SATISFACTION_AVERAGE, REVENUE, REVENUE_AVERAGE,
     PURCHASE, RETOUR, EMAIL, TALK, CALL,
     chartTypes, eventTypes, dataTypes
 } from "../assets/types";
+import { useDashboard } from "../context/DashboardContext";
 
 /* Kleine Notiz an dich selber: Das Diagramm kann aktuell grad nicht ausgewählt werden,
  wahrschienlich weil die Gleichheit von String und Typ aus assets hier nicht richtig geprüft wird.
  Da warst du grade dran, großer :)
  Aber nur beim Erstellen neuer Widgets, beim Editieren von existierenden nicht... huh*/
 /* Also used for editing, if a widget prop is passed */
-const CreateWidgetMenu = ({ widget }) => {
-    const [selectedDataType, setSelectedDataType] = useState();
-    const [selectedChartType, setSelectedChartType] = useState(widget?.diagramType ?? null);
-    const [selectedEventTypes, setSelectedEventTypes] = useState(eventTypes);
+const CreateWidgetMenu = ({ widget, addWidget }) => {
+    const { createWidgetHere } = useDashboard();
+    const toast = useToast();
 
-    /* TBD: Different data and charts available when 1 customer vs. multiple customers */
+    const [selectedDataType, setSelectedDataType] = useState();
+    const [selectedChartType, setSelectedChartType] = useState(widget?.diagramType ?? undefined);
+    const [selectedEventTypes, setSelectedEventTypes] = useState(eventTypes);
+    const [name, setName] = useState("");
+
     const combinations = (dataType) => {
         if (dataType === EVENTS)
             return [TIMELINE, TABLE];
@@ -31,6 +35,19 @@ const CreateWidgetMenu = ({ widget }) => {
             return [PIE];
         if (dataType === REVENUE_AVERAGE)
             return [GRAPH, BAR, BIG_NUMBER];
+    }
+
+    const onCreate = async () => {
+        const widget = await createWidgetHere(name, selectedChartType, selectedDataType);
+
+        addWidget(widget);
+
+        toast({
+            title: "Widget was created",
+            duration: 2000,
+            status: "success",
+            isClosable: true
+        });
     }
 
     return (
@@ -85,6 +102,34 @@ const CreateWidgetMenu = ({ widget }) => {
                     </MenuOptionGroup> : <></>
                 }
             </Flex>
+            {selectedChartType ?
+                <Flex
+                    direction="row"
+                    alignContent="center"
+                    ml={6}
+                    mt={2}
+                    width="95%"
+                    alignItems="center"
+                >
+                    <Heading size="sm" mr={2}>
+                        Name:
+                    </Heading>
+                    <Input
+                        size="sm"
+                        mr={2}
+                        value={name}
+                        onChange={e => setName(e.target.value)}
+                    />
+                    <Button
+                        size="sm"
+                        colorScheme="blue"
+                        mr={2}
+                        onClick={onCreate}
+                    >
+                        Create
+                    </Button>
+                </Flex> : <></>
+            }
         </MenuList>
     );
 };

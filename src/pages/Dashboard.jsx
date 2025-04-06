@@ -1,4 +1,4 @@
-import { SimpleGrid, Flex, Spacer, Button, Icon, Text, useTheme, TagLeftIcon, Select, Tag, Spinner } from "@chakra-ui/react";
+import { SimpleGrid, Flex, Spacer, Button, Icon, Text, useTheme, TagLeftIcon, Select, Tag, Spinner, useToast } from "@chakra-ui/react";
 import { CalendarIcon } from "@chakra-ui/icons"
 import { MdModeEdit } from "react-icons/md";
 import { DashboardContextProvider } from "../context/DashboardContext";
@@ -13,6 +13,7 @@ import { updateDashboard } from "../actions/dashboards";
 
 const Dashboard = () => {
     const navigate = useNavigate();
+    const toast = useToast();
 
     const { widget } = useTheme();
     const { user } = useUser();
@@ -87,6 +88,12 @@ const Dashboard = () => {
         setCurrent(newCurrent);
         setShowEditModal(false);
         fetchDashboard();
+        toast({
+            title: "Changes were saved",
+            status: "success",
+            duration: 2000,
+            isClosable: true
+        })
     }
 
     return (
@@ -97,6 +104,7 @@ const Dashboard = () => {
                     time={current.time}
                     name={current.name}
                     widgets={current.widgets}
+                    id={id}
                 >
                     <DashboardEditModal isOpen={showEditModal} onClose={() => setShowEditModal(false)} onEdit={onEdit} />
                     <Flex mb={2}>

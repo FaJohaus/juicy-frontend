@@ -182,7 +182,7 @@ const PreviewWrapper = ({ widget }) => {
             case "EmailEvent":
                 return ["Customer", "Date", "Rating"];
             case "CallEvent":
-                return ["Customer", "Date", "Rating"];
+                return ["Customer", "Date", "Duration", "Rating"];
             case "KaufEvent":
                 return ["Customer", "Date", "Rating"];
             case "RetourEvent":

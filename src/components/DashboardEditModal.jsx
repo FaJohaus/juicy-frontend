@@ -77,6 +77,10 @@ const DashboardEditModal = ({ isOpen, onClose, onEdit }) => {
         setDeletedWidgets(deletedWidgets.push(id));
     }
 
+    const addWidget = (widget) => {
+        setWidgetList([...widgetList, widget]);
+    }
+
     return (
         <Modal isOpen={isOpen} onClose={onClose}>
             <ModalOverlay />
@@ -161,7 +165,7 @@ const DashboardEditModal = ({ isOpen, onClose, onEdit }) => {
                                         height={9}
                                         width="200px"
                                     />
-                                    <CreateWidgetMenu />
+                                    <CreateWidgetMenu addWidget={addWidget} />
                                 </Menu>
                             </Flex>
                         </CardBody>
