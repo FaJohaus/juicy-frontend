@@ -123,10 +123,10 @@ const Dashboard = () => {
                     <DashboardCreateModal isOpen={showCreateModal} onClose={() => setShowCreateModal(false)} onCreate={onCreate} />
                     <Flex mb={2}>
                         {/* LEFT SIDE */}
-                        <Tag mr={1}>
+                        <Tag mr={1} height={8} minWidth="200px">
                             <TagLeftIcon as={CalendarIcon} />
                             <Text>
-                                Time: {current.time.start.substring(0, 10)} - {current.time.end.substring(0, 10)}
+                                {current.time.start.substring(0, 10)} - {current.time.end.substring(0, 10)}
                             </Text>
                         </Tag>
                         <CustomerBadges />
@@ -159,6 +159,7 @@ const Dashboard = () => {
                             leftIcon={<Icon as={MdModeEdit} />}
                             size="sm"
                             onClick={() => setShowEditModal(true)}
+                            minW="60px"
                         >
                             <Text fontWeight="normal">Edit</Text>
                         </Button>

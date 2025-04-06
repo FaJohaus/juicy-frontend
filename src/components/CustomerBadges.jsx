@@ -1,65 +1,24 @@
 import { useDashboard } from "../context/DashboardContext";
-import { Tag, TagLeftIcon, Text } from "@chakra-ui/react";
+import { Box, Tag, TagLeftIcon, Text, Tooltip } from "@chakra-ui/react";
 import { FaCircle } from "react-icons/fa";
+import { truncateText } from "../utils";
 
 const CustomerBadges = () => {
     const { chartColors, dashboardCustomers } = useDashboard();
 
     return (
-        <>
+        <Box width="100%">
             {dashboardCustomers.map((c, i) => {
                 return (
-                    <Tag m={1} key={i}>
-                        <TagLeftIcon as={FaCircle} color={chartColors[i]} />
-                        <Text color={chartColors[i]}>{c.name}</Text>
-                    </Tag>
+                    <Tooltip key={i} label={c.name}>
+                        <Tag m={1}>
+                            <TagLeftIcon as={FaCircle} color={chartColors[i]} />
+                            <Text color={chartColors[i]}>{truncateText(c.name, 10)}</Text>
+                        </Tag>
+                    </Tooltip>
                 )
             })}
-            {/* <Tag m={1} >
-                <TagLeftIcon as={FaCircle} color="red" />
-                <Text >ALARAM SUPER LANGE NAME!!</Text>
-            </Tag>
-            <Tag m={1} >
-                <TagLeftIcon as={FaCircle} color="red" />
-                <Text >ALARAM SUPER LANGE NAME!!</Text>
-            </Tag>
-            <Tag m={1} >
-                <TagLeftIcon as={FaCircle} color="red" />
-                <Text >ALARAM SUPER LANGE NAME!!</Text>
-            </Tag>
-            <Tag m={1} >
-                <TagLeftIcon as={FaCircle} color="red" />
-                <Text >ALARAM SUPER LANGE NAME!!</Text>
-            </Tag>
-            <Tag m={1} >
-                <TagLeftIcon as={FaCircle} color="red" />
-                <Text >ALARAM SUPER LANGE NAME!!</Text>
-            </Tag>
-            <Tag m={1} >
-                <TagLeftIcon as={FaCircle} color="red" />
-                <Text >ALARAM SUPER LANGE NAME!!</Text>
-            </Tag>
-            <Tag m={1} >
-                <TagLeftIcon as={FaCircle} color="red" />
-                <Text >ALARAM SUPER LANGE NAME!!</Text>
-            </Tag>
-            <Tag m={1} >
-                <TagLeftIcon as={FaCircle} color="red" />
-                <Text >ALARAM SUPER LANGE NAME!!</Text>
-            </Tag>
-            <Tag m={1} >
-                <TagLeftIcon as={FaCircle} color="red" />
-                <Text >ALARAM SUPER LANGE NAME!!</Text>
-            </Tag>
-            <Tag m={1} >
-                <TagLeftIcon as={FaCircle} color="red" />
-                <Text >ALARAM SUPER LANGE NAME!!</Text>
-            </Tag>
-            <Tag m={1} >
-                <TagLeftIcon as={FaCircle} color="red" />
-                <Text >ALARAM SUPER LANGE NAME!!</Text>
-            </Tag> */}
-        </>
+        </Box>
     );
 };
 
