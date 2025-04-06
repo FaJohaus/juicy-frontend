@@ -27,14 +27,14 @@ const CustomTimelineNode = ({ variant, data: { hasNext, hasPrev, hasSub, hasMain
 
     return (
         <>
-            <NodeToolbar isVisible offset={2}>
-                <Box /* backgroundColor="whiteAlpha.800" rounded={10} px={2} */>
+            <NodeToolbar isVisible offset={-7}>
+                <Box backgroundColor="whiteAlpha.800" rounded={10}>
                     {/* <Text fontSize="sm" as="b">{label}</Text> */}
-                    <Text fontSize="sm">{date}</Text>
+                    <Text fontSize="sm" textAlign="right" width="105%">{date.replace("-", "/").replace("-", "/")}</Text>
                 </Box>
             </NodeToolbar >
-            <Circle size={8} bgColor="gray.900">
-                <Circle size={7} bgColor="gray.300">
+            <Circle size={7} bgColor="gray.900">
+                <Circle size={6} bgColor="gray.300">
                     <Icon as={icon()} />
                     {hasSub ?
                         <Handle

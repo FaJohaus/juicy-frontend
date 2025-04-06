@@ -11,7 +11,8 @@ export const getWidget = async id => {
 }
 
 export const queryEvents = async (customerID, time) => {
-    const res = await api.get(`/events/?CustomerID=${customerID}&startdate=${time.start}&enddate=${time.end}`);
+    /* const res = await api.get(`/events/?CustomerID=${customerID}&startdate=${time.start}&enddate=${time.end}`); */
+    const res = await api.get(`/events/?CustomerID=${customerID}`);
 
     return res.data;
 }
