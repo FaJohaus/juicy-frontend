@@ -16,22 +16,6 @@ import { useDashboard } from "../../context/DashboardContext";
 const PreviewWrapper = ({ widget }) => {
     const { time, dashboardCustomers } = useDashboard();
 
-    /* const [widget, setWidget] = useState();
-
-    useEffect(() => {
-        const fetchWidget = async () => {
-            try {
-                const data = await getWidget(id);
-
-                setWidget(data);
-            } catch (e) {
-                console.error(`Error fetching widget ${id}:`, e);
-            }
-        }
-
-        fetchWidget();
-    }, [id]); */
-
     /* ------ EXAMPLE DATA ----- */
 
     const pieChartData = [
@@ -154,20 +138,65 @@ const PreviewWrapper = ({ widget }) => {
     /* ---------- */
 
     const [timelineData, setTimelineData] = useState();
+    const [tableData, setTableData] = useState();
 
     useEffect(() => {
-        const getTimelineData = async () => {
-            try {
-                const data = await queryEvents(dashboardCustomers[0].id, time);
+        if (/* widget.diagramType === "timeline" */true) {
+            const getTimelineData = async () => {
+                try {
+                    const data = await queryEvents(dashboardCustomers[0].id, time);
 
-                setTimelineData(data);
-            } catch (e) {
-                console.error("Could not get timeline data: ", e);
+                    setTimelineData(data);
+                } catch (e) {
+                    console.error("Could not get timeline data: ", e);
+                }
             }
-        }
 
-        getTimelineData();
+            getTimelineData();
+        } else if (widget.diagramType === "table") {
+            const getTableData = async () => {
+                try {
+                    const data = await queryEvents(dashboardCustomers[0].id, time);
+
+                    setTableData(data);
+                } catch (e) {
+                    console.error("Could not get timeline data: ", e);
+                }
+            }
+
+            getTableData();
+        }
     }, [dashboardCustomers]);
+
+    const getTableData = (type) => {
+        const data = timelineData.filter(event => event.__t === type);
+
+        switch (type) {
+            case "TalkEvent":
+                return data.map(e => [e.CustomerId, e.Date.substring(0, 10), e.Duration, e.rating]);
+            default:
+                return null;
+        }
+    }
+
+    const getTableColumns = (type) => {
+        switch (type) {
+            case "TalkEvent":
+                return ["Customer", "Date", "Duration", "Rating"];
+            case "EmailEvent":
+                return ["Customer", "Date", "Rating"];
+            case "CallEvent":
+                return ["Customer", "Date", "Rating"];
+            case "KaufEvent":
+                return ["Customer", "Date", "Rating"];
+            case "RetourEvent":
+                return ["Customer", "Date", "Rating"];
+            case "StornoEvent":
+                return ["Customer", "Date", "Rating"];
+            default:
+                return null;
+        }
+    }
 
     const getPreview = () => {
         switch (widget.view.diagramType) {
@@ -180,7 +209,11 @@ const PreviewWrapper = ({ widget }) => {
             case "timeline":
                 return <TimelinePreview title={widget.view.name} data={timelineData ?? []} />;
             case "table":
-                return <TablePreview title={widget.view.name} data={demoRows} columns={columnNames} />
+                return <TablePreview
+                    title={widget.view.name}
+                    data={timelineData ? getTableData(widget.view.description) : []}
+                    columns={timelineData ? getTableColumns(widget.view.description) : []}
+                />
             case "big number":
                 return <PreviewCard title="TBD" />
             default:

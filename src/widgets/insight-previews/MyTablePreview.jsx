@@ -9,9 +9,9 @@ const TablePreview = ({ title, columns, data }) => {
                 <Table size="sm">
                     <Thead
                         key={columns}
-                        position="sticky" // Make the header sticky
-                        top={0} // Stick to the top of the container
-                        zIndex={1} // Ensure it stays above the body rows
+                        position="sticky"
+                        top={0}
+                        zIndex={1}
                         bg="gray.200"
                     >
                         <Tr>
@@ -23,9 +23,9 @@ const TablePreview = ({ title, columns, data }) => {
                     <Tbody>
                         {data.map((row, index) => (
                             <Tr key={index} bg={index % 2 === 0 ? "white" : "gray.100"}>
-                                <Td>{row.name}</Td>
-                                <Td>{row.age}</Td>
-                                <Td>{row.email}</Td>
+                                {row.map((value, i) => (
+                                    <Td key={i}>{value}</Td>
+                                ))}
                             </Tr>
                         ))}
                     </Tbody>
