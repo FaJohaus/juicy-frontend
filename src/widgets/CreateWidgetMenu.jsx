@@ -39,10 +39,21 @@ const CreateWidgetMenu = ({ widget, addWidget, closeMenu }) => {
     }
 
     const onCreate = async () => {
+        const getDescription = () => {
+            if (selectedDataType === EVENTS && selectedChartType === TABLE)
+                return translateEventNames(selectedEventType);
+            else if (selectedChartType === BAR && selectedDataType === EVENTS_AMOUNT) {
+                return `${selectedDataType}-${translateEventNames(selectedEventType)}`
+            }
+            else {
+                return selectedDataType;
+            }
+        }
+
         const widget = await createWidgetHere(
             name,
             selectedChartType,
-            (selectedDataType === EVENTS && selectedChartType === TABLE) ? translateEventNames(selectedEventType) : selectedDataType
+            getDescription()
         );
 
         addWidget(widget);

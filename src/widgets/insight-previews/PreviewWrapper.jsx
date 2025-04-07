@@ -158,10 +158,10 @@ const PreviewWrapper = ({ widget }) => {
             getTableData();
         } else if (widget.view.diagramType === "bar" && widget.view.description === "satisfaction") {
             setBarChartData(dashboardCustomers.map(c => ({ "name": c.name, "value": c.satisfaction })));
-        } else if (widget.view.diagramType === "bar" && widget.view.description === "events (amount)") {
+        } else if (widget.view.diagramType === "bar" && widget.view.description.startsWith("events (amount)")) {
             const getBarData = async () => {
                 try {
-                    const data = await getEventCount(dashboardCustomers, time);
+                    const data = await getEventCount(dashboardCustomers, time, widget.view.description.split("-")[1]);
 
                     setBarChartData(data);
                     console.log(data)
