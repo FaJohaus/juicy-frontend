@@ -27,13 +27,14 @@ const PreviewCard = ({ children, title, doubleWidth = false, doubleHeight = fals
                 >
                     <Text>{title}</Text>
                     {additionalFooter ? additionalFooter() : <></>}
-                    <IconButton
+                    {/* <IconButton
                         icon={<ExternalLinkIcon />}
                         variant='ghost'
                         size="sm"
                         rounded={4}
                         onClick={() => alert("Bald kommt hier eine Insight")}
-                    />
+                    /> */}
+                    <div></div>
                 </Flex>
             </CardFooter>
         </Card >

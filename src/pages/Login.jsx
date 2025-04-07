@@ -22,10 +22,6 @@ const Login = () => {
         }
     }
 
-    /*     useEffect(() => {
-            if (user) navigate("/dashboard/0");
-        }, []); */
-
     return (
         <Center
             bgColor="gray.200"
@@ -40,7 +36,7 @@ const Login = () => {
                 <JuciyLogo />
                 <Heading>Login</Heading>
                 <form onSubmit={onLogin}>
-                    <FormControl isInvalid={error}>
+                    <FormControl isInvalid={error} isRequired>
                         <Stack spacing={5}>
                             <Box>
                                 <FormLabel>Email address</FormLabel>
@@ -65,7 +61,7 @@ const Login = () => {
                             >
                                 Login
                             </Button>
-                            <Link color="blue.700" onClick={() => navigate("/pricing")}>
+                            <Link color="blue.700" onClick={() => navigate("/signup")}>
                                 Not so juicy customer satisfaction?
                                 <br />
                                 Elevate your customer journeys - start here!

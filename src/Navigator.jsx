@@ -6,6 +6,7 @@ import Automation from "./pages/Automation";
 import Settings from "./pages/Settings";
 import Login from "./pages/Login";
 import { useUser } from "./context/UserContext";
+import Signup from "./pages/Signup";
 
 const WithNavbar = () => (
     <Navbar>
@@ -23,7 +24,7 @@ const Navigator = () => (
     <Routes>
         {/* PUBLIC ROUTES */}
         <Route path="/login" element={<Login />} />
-        <Route path="/pricing" element={<div>Hier stehen dann tolle Preise</div>} />
+        <Route path="/signup" element={<Signup />} />
         {/* PRIVATE ROUTES */}
         <Route element={<PrivateRoute />}>
             {/* ROUTES WITH NAVBAR */}
