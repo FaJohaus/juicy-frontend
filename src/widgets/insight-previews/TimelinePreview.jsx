@@ -7,6 +7,7 @@ import PreviewCard from "./PreviewCard";
 import { MailNode, CallNode, PurchaseNode, RetourNode, VisitNode } from '../../components/timeline/CustomTimelineNode';
 import CustomTimelineEdge from '../../components/timeline/CustomTimelineEdge';
 import { transformTimeLineData as transformData } from '../../utils/timeline';
+import { useDashboard } from '../../context/DashboardContext';
 
 /* TBD:
     - Entscheiden, ob es immer doubleheight, vllt. sogar triplewidth sein soll oder erst dynamisch wenn Graph zu groß wird
@@ -16,8 +17,9 @@ import { transformTimeLineData as transformData } from '../../utils/timeline';
 
     Wenn der Baum maximal Teife 4 hat macht doubleHeight eigentlich keinen Sinn...
 */
-const TimelinePreview = ({ title, data }) => {
+const TimelinePreview = ({ title, data, customer, setCustomer }) => {
     const { widget } = useTheme();
+    const { dashboardCustomers } = useDashboard();
 
     const [nodes, setNodes, onNodesChange] = useNodesState([]);
     const [edges, setEdges, onEdgesChange] = useEdgesState([]);
@@ -113,10 +115,28 @@ const TimelinePreview = ({ title, data }) => {
             </>
         );
     };
-    /* TBD: Set Bounds for horizontal scroll */
+
+    const getCustomerDropdown = () => {
+        return (
+            <Select
+                size="sm"
+                width="300px"
+                mr={2}
+                variant="filled"
+                value={customer}
+                onChange={(e) => setCustomer(e.target.value)}
+            >
+                {dashboardCustomers.map((c) => (
+                    <option key={c.id} value={c.id}>
+                        {c.name}
+                    </option>
+                ))}
+            </Select>
+        );
+    }
 
     return (
-        <PreviewCard title={title} doubleWidth /* doubleHeight */>
+        <PreviewCard title={title} doubleWidth /* doubleHeight */ additionalFooter={getCustomerDropdown}>
             <Box
                 width="100vw"
                 minWidth={widget.baseMinWidth * 2}

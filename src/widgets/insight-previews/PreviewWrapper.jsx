@@ -111,6 +111,7 @@ const PreviewWrapper = ({ widget }) => {
     /* ---------- */
 
     const [timelineData, setTimelineData] = useState();
+    const [timelineCust, setTimelineCust] = useState(dashboardCustomers[0].id);
     const [tableData, setTableData] = useState();
 
     /* Get widget data */
@@ -118,7 +119,7 @@ const PreviewWrapper = ({ widget }) => {
         if (widget.view.diagramType === "timeline") {
             const getTimelineData = async () => {
                 try {
-                    const data = await queryEvents(dashboardCustomers[0].id, time);
+                    const data = await queryEvents(timelineCust, time);
 
                     setTimelineData(data);
                 } catch (e) {
@@ -155,7 +156,7 @@ const PreviewWrapper = ({ widget }) => {
 
             getTableData();
         }
-    }, [dashboardCustomers]);
+    }, [dashboardCustomers, timelineCust]);
 
     const getTableColumns = (type) => {
         switch (type) {
@@ -183,7 +184,12 @@ const PreviewWrapper = ({ widget }) => {
             case "graph":
                 return <LineChartPreview title={widget.view.name} data={lineChartData} />;
             case "timeline":
-                return <TimelinePreview title={widget.view.name} data={timelineData ?? []} />;
+                return <TimelinePreview
+                    title={widget.view.name}
+                    data={timelineData ?? []}
+                    customer={timelineCust}
+                    setCustomer={setTimelineCust}
+                />;
             case "table":
                 return <TablePreview
                     title={widget.view.name}

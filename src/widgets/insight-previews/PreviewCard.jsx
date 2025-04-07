@@ -1,7 +1,7 @@
 import { Card, CardBody, CardFooter, Center, Divider, Text, Flex, IconButton, useTheme } from "@chakra-ui/react";
 import { ExternalLinkIcon } from "@chakra-ui/icons";
 
-const PreviewCard = ({ children, title, doubleWidth = false, doubleHeight = false }) => {
+const PreviewCard = ({ children, title, doubleWidth = false, doubleHeight = false, additionalFooter }) => {
     const { widget } = useTheme();
     const height = widget.baseHeight * (doubleHeight ? 2 : 1);
 
@@ -26,6 +26,7 @@ const PreviewCard = ({ children, title, doubleWidth = false, doubleHeight = fals
                     w="100%"
                 >
                     <Text>{title}</Text>
+                    {additionalFooter ? additionalFooter() : <></>}
                     <IconButton
                         icon={<ExternalLinkIcon />}
                         variant='ghost'
