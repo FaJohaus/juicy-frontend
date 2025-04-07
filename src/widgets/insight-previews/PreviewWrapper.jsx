@@ -4,7 +4,7 @@ import PieChartPreview from "./PieChartPreview";
 import LineChartPreview from "./LineChartPreview";
 import TimelinePreview from "./TimelinePreview";
 import TablePreview from "./MyTablePreview";
-import { getEventCount, queryEvents, queryEventsAdvanced } from "../../actions/widgets";
+import { getEventCount, getRevenues, queryEvents, queryEventsAdvanced } from "../../actions/widgets";
 
 import { useEffect, useState } from "react";
 import { useDashboard } from "../../context/DashboardContext";
@@ -114,6 +114,7 @@ const PreviewWrapper = ({ widget }) => {
     const [timelineCust, setTimelineCust] = useState(dashboardCustomers[0].id);
     const [tableData, setTableData] = useState();
     const [barChartData, setBarChartData] = useState([]);
+    const [pieData, setPieData] = useState([]);
 
     /* Get widget data */
     useEffect(() => {
@@ -164,9 +165,21 @@ const PreviewWrapper = ({ widget }) => {
                     const data = await getEventCount(dashboardCustomers, time, widget.view.description.split("-")[1]);
 
                     setBarChartData(data);
-                    console.log(data)
                 } catch (e) {
                     console.error("Could not get bar chart data: ", e);
+                }
+            }
+
+            getBarData();
+        } else if (widget.view.diagramType === "pie" && widget.view.description === "revenue") {
+            const getBarData = async () => {
+                try {
+                    console.log(dashboardCustomers, time)
+                    const data = await getRevenues(dashboardCustomers, time);
+
+                    setPieData(data);
+                } catch (e) {
+                    console.error("Could not get pie chart data: ", e);
                 }
             }
 
@@ -196,7 +209,7 @@ const PreviewWrapper = ({ widget }) => {
             case "bar":
                 return <BarChartPreview title={widget.view.name} data={barChartData} />;
             case "pie":
-                return <PieChartPreview title={widget.view.name} data={pieChartData} />;
+                return <PieChartPreview title={widget.view.name} data={pieData} />;
             case "graph":
                 return <LineChartPreview title={widget.view.name} data={lineChartData} />;
             case "timeline":

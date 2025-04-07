@@ -21,6 +21,7 @@ export const transformTimeLineData = (data) => {
             case "CallEvent":
                 return "call"
             case "KaufEvent":
+            case "Kauf":
                 return "purchase"
             case "RetourEvent":
                 return "retour"

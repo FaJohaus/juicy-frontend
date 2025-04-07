@@ -89,11 +89,11 @@ const DashboardEditModal = ({ isOpen, onClose, onEdit }) => {
                 <ModalCloseButton />
                 <ModalHeader textAlign="center">
                     {name}
-                    <IconButton
+                    {/* <IconButton
                         icon={<MdModeEdit />}
                         variant="ghost"
                         rounded={100}
-                    />
+                    /> */}
                 </ModalHeader>
                 <ModalBody>
                     {/* TOP MENU */}

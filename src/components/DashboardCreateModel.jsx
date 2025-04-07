@@ -23,13 +23,24 @@ import { useUser } from "../context/UserContext";
 const DashboardCreateModal = ({ isOpen, onClose, onCreate }) => {
     const [name, setName] = useState("");
     const [selectedCustomers, setSelectedCustomers] = useState([]);
+    const [startDate, setStartDate] = useState(""); // State for start date
+    const [endDate, setEndDate] = useState(""); // State for end date
 
     const { user } = useUser();
 
     const handleCreate = () => {
-        onCreate(name, selectedCustomers);
+        onCreate(
+            name,
+            selectedCustomers,
+            {
+                start: new Date(startDate).toISOString().split("T")[0] + "T00:00:00.000Z",
+                end: new Date(endDate).toISOString().split("T")[0] + "T23:59:59.999Z"
+            }
+        );
         setName("");
         setSelectedCustomers([]);
+        setStartDate("");
+        setEndDate("");
         onClose();
     };
 
@@ -47,7 +58,7 @@ const DashboardCreateModal = ({ isOpen, onClose, onCreate }) => {
                             onChange={(e) => setName(e.target.value)}
                         />
                     </FormControl>
-                    <FormControl>
+                    <FormControl mb={4}>
                         <FormLabel>Select Customers</FormLabel>
                         <Menu closeOnSelect={false}>
                             <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
@@ -67,6 +78,22 @@ const DashboardCreateModal = ({ isOpen, onClose, onCreate }) => {
                                 </MenuOptionGroup>
                             </MenuList>
                         </Menu>
+                    </FormControl>
+                    <FormControl mb={4}>
+                        <FormLabel>Time span</FormLabel>
+                        <Input
+                            type="date"
+                            placeholder="Start Date"
+                            value={startDate}
+                            onChange={(e) => setStartDate(e.target.value)}
+                            mb={2}
+                        />
+                        <Input
+                            type="date"
+                            placeholder="End Date"
+                            value={endDate}
+                            onChange={(e) => setEndDate(e.target.value)}
+                        />
                     </FormControl>
                 </ModalBody>
                 <ModalFooter>

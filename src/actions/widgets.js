@@ -57,12 +57,26 @@ export const createWidget = async (name, diagramtype, customers, dashboardID, de
 }
 
 export const getEventCount = async (customers, time, type) => {
-    let _data = []
+    let _data = [];
 
     const fetchPerUser = async (c) => {
         const { data } = await api.get(`/events/count?enddate=${time.end}&CustomerID=${c.id}&startdate=${time.start}&type=${type ?? ""}`);
 
-        _data.push({ name: c.name, value: data.count });
+        _data.push({ name: c.name, value: data.count ?? 0 });
+    }
+
+    await Promise.all(customers.map(fetchPerUser));
+
+    return _data;
+}
+
+export const getRevenues = async (customers, time) => {
+    let _data = [];
+
+    const fetchPerUser = async (c) => {
+        const { data } = await api.get(`events/revenue?CustomerID=${c.id}&startdate=${time.start}&enddate=${time.end}`);
+
+        _data.push({ name: c.name, value: data.revenue ?? 0 });
     }
 
     await Promise.all(customers.map(fetchPerUser));

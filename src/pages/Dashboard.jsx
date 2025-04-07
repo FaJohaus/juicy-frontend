@@ -98,9 +98,9 @@ const Dashboard = () => {
         })
     };
 
-    const onCreate = async (name, customers) => {
+    const onCreate = async (name, customers, time) => {
         try {
-            const id = await createDashboard(name, customers);
+            const id = await createDashboard(name, customers, time);
 
             await refetchUser();
             navigate(`/dashboard/${id}`);
