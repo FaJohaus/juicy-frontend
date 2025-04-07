@@ -20,7 +20,7 @@ const LineChartPreview = ({ title, maxVal, data }) => {
                         contentStyle={{ zIndex: 1 }}
                         wrapperStyle={{ zIndex: 1 }}
                     />
-                    {/* <Legend style={{ marginLeft: 20 }} /> */}
+                    <Legend style={{ marginLeft: 20 }} />
                     {Object.keys(data[0]).splice(1).map((customer, i) => (
                         <Line
                             type="linear"

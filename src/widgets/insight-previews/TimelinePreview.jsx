@@ -72,15 +72,6 @@ const TimelinePreview = ({ title, data, customer, setCustomer }) => {
             return () => observer.disconnect();
         }, []);
 
-        /* useEffect(() => {
-            const onResize = () => fitView(fitViewOptions);
-
-            window.addEventListener('resize', onResize);
-
-            return () => window.removeEventListener('resize', onResize);
-        }, []); */
-
-
         // To adjust the slider when the user scrolls the viewport
         useEffect(() => {
             if (x > PADDINGX) {
@@ -136,11 +127,11 @@ const TimelinePreview = ({ title, data, customer, setCustomer }) => {
     }
 
     return (
-        <PreviewCard title={title} doubleWidth /* doubleHeight */ additionalFooter={getCustomerDropdown}>
+        <PreviewCard title={title} doubleWidth additionalFooter={getCustomerDropdown}>
             <Box
                 width="100vw"
                 minWidth={widget.baseMinWidth * 2}
-                height={widget.baseHeight /* * 2  */ - 80}
+                height={widget.baseHeight - 80}
                 m={-4}
             >
                 <ReactFlowProvider>
@@ -168,16 +159,6 @@ const TimelinePreview = ({ title, data, customer, setCustomer }) => {
                         draggable={false}
                     />
                 </ReactFlowProvider>
-                {/* <Box position="relative" overflow="visible">
-                    <Select
-                        size="sm"
-                        width="300px"
-                        mr={2}
-                        variant="filled"
-                        zIndex={10}
-                        position="absolute"
-                    ></Select>
-                </Box> */}
             </Box>
         </PreviewCard>
     );

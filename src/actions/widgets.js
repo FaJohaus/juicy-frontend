@@ -74,9 +74,9 @@ export const getRevenues = async (customers, time) => {
     let _data = [];
 
     const fetchPerUser = async (c) => {
-        const { data } = await api.get(`events/revenue?CustomerID=${c.id}&startdate=${time.start}&enddate=${time.end}`);
+        const { data } = await api.get(`/events/revenue?CustomerID=${c.id}&startdate=${time.start}&enddate=${time.end}`);
 
-        _data.push({ name: c.name, value: data.revenue ?? 10 });
+        _data.push({ name: c.name, value: data.revenue ?? 0 });
     }
 
     await Promise.all(customers.map(fetchPerUser));

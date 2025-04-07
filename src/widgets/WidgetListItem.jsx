@@ -38,7 +38,7 @@ const WidgetListItem = ({ widget, onMove, onDelete }) => {
                 </Text>
             </Box>
             <Box>
-                <Menu closeOnSelect={false} placement="right">
+                {/* <Menu closeOnSelect={false} placement="right">
                     <MenuButton
                         as={IconButton}
                         variant="ghost"
@@ -47,7 +47,7 @@ const WidgetListItem = ({ widget, onMove, onDelete }) => {
                         icon={<MdModeEdit />}
                     />
                     <CreateWidgetMenu widget={widget} />
-                </Menu>
+                </Menu> */}
                 <IconButton
                     variant="ghost"
                     size="sm"

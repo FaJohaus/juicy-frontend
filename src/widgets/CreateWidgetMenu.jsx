@@ -1,7 +1,7 @@
 import { Flex, MenuList, MenuItemOption, MenuOptionGroup, Heading, Input, Button, useToast } from "@chakra-ui/react";
 import { useState } from "react";
 import {
-    BAR, PIE, GRAPH, TIMELINE, TABLE/* , BIG_NUMBER */,
+    BAR, PIE, GRAPH, TIMELINE, TABLE, BIG_NUMBER,
     EVENTS, EVENTS_AMOUNT, SATISFACTION, SATISFACTION_AVERAGE, REVENUE, REVENUE_AVERAGE,
     PURCHASE, RETOUR, EMAIL, TALK, CALL,
     chartTypes, eventTypes, dataTypes
@@ -9,11 +9,6 @@ import {
 import { useDashboard } from "../context/DashboardContext";
 import { translateEventNames } from "../utils";
 
-/* Kleine Notiz an dich selber: Das Diagramm kann aktuell grad nicht ausgewählt werden,
- wahrschienlich weil die Gleichheit von String und Typ aus assets hier nicht richtig geprüft wird.
- Da warst du grade dran, großer :)
- Aber nur beim Erstellen neuer Widgets, beim Editieren von existierenden nicht... huh*/
-/* Also used for editing, if a widget prop is passed */
 const CreateWidgetMenu = ({ widget, addWidget, closeMenu }) => {
     const { createWidgetHere } = useDashboard();
     const toast = useToast();
@@ -27,15 +22,15 @@ const CreateWidgetMenu = ({ widget, addWidget, closeMenu }) => {
         if (dataType === EVENTS)
             return [TIMELINE, TABLE];
         if (dataType === EVENTS_AMOUNT)
-            return [GRAPH, BAR/* , BIG_NUMBER */];
+            return [/* GRAPH,  */BAR/* , BIG_NUMBER */];
         if (dataType === SATISFACTION)
-            return [GRAPH, BAR/* , BIG_NUMBER */];
-        if (dataType === SATISFACTION_AVERAGE)
-            return [GRAPH, BAR/* , BIG_NUMBER */];
+            return [/* GRAPH,  */BAR/* , BIG_NUMBER */];
+        /* if (dataType === SATISFACTION_AVERAGE)
+            return [GRAPH, BAR, BIG_NUMBER]; */
         if (dataType === REVENUE)
             return [PIE];
-        if (dataType === REVENUE_AVERAGE)
-            return [GRAPH, BAR/* , BIG_NUMBER */];
+        /* if (dataType === REVENUE_AVERAGE)
+            return [GRAPH, BAR, BIG_NUMBER]; */
     }
 
     const onCreate = async () => {
