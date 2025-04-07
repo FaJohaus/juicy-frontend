@@ -81,7 +81,8 @@ const UserProvider = ({ children }) => {
                 return {
                     name: `${c.Name.First} ${c.Name.Last}`,
                     email: c.Email,
-                    id: c._id
+                    id: c._id,
+                    satisfaction: c.Data?.Satisfaction ?? 0
                 }
             });
         } catch (e) {

@@ -26,26 +26,26 @@ const PreviewWrapper = ({ widget }) => {
         { name: 'Customer E', value: 150 },
     ];
 
-    const barChartData = [
+    const barChartDataOld = [
         {
             name: "Customer A",
-            value1: 6,
+            value: 6,
         },
         {
             name: "Customer B",
-            value1: 6,
+            value: 6,
         },
         {
             name: "Customer C",
-            value1: 7,
+            value: 7,
         },
         {
             name: "Customer D",
-            value1: 1,
+            value: 1,
         },
         {
             name: "Customer E",
-            value1: 8
+            value: 8
         }
     ];
 
@@ -113,6 +113,7 @@ const PreviewWrapper = ({ widget }) => {
     const [timelineData, setTimelineData] = useState();
     const [timelineCust, setTimelineCust] = useState(dashboardCustomers[0].id);
     const [tableData, setTableData] = useState();
+    const [barChartData, setBarChartData] = useState([]);
 
     /* Get widget data */
     useEffect(() => {
@@ -155,6 +156,9 @@ const PreviewWrapper = ({ widget }) => {
             }
 
             getTableData();
+        } else if (widget.view.diagramType === "bar" && widget.view.description === "satisfaction") {
+            console.log(dashboardCustomers)
+            setBarChartData(dashboardCustomers.map(c => ({ "name": c.name, "value": c.satisfaction })));
         }
     }, [dashboardCustomers, timelineCust]);
 

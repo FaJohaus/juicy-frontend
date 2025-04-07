@@ -27,14 +27,14 @@ const BarChartPreview = ({ data, title, maxVal }) => {
                     />
                     <YAxis
                         domain={[0, maxVal ?? 'auto']}
-                        ticks={[...new Set([...data.map(o => o.value1), maxVal])]}
+                        ticks={[...new Set([...data.map(o => o.value), maxVal])]}
                         interval={0}
                     />
                     <Tooltip
                         contentStyle={{ zIndex: 1 }}
                         wrapperStyle={{ zIndex: 1 }}
                     />
-                    <Bar dataKey="value1" isAnimationActive={false}>
+                    <Bar dataKey="value" isAnimationActive={false}>
                         {data.map((_, i) => (
                             <Cell key={`cell-${i}`} fill={chartColors[i]} />
                         ))}
