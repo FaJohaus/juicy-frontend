@@ -1,4 +1,4 @@
-import { Flex, Spacer, Avatar, Button, Center, IconButton, Text, Menu, MenuButton, MenuList, MenuItem, MenuDivider, Box } from "@chakra-ui/react";
+import { Flex, Spacer, Avatar, Button, Center, WrapItem, Text, Menu, MenuButton, MenuList, MenuItem, MenuDivider, Box } from "@chakra-ui/react";
 import { ChevronDownIcon, BellIcon } from "@chakra-ui/icons";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -6,12 +6,14 @@ import pageTitles from '../assets/pageTitles.json'
 import Sidebar from "./Sidebar";
 import LogoutModal from "./LogoutModal";
 import { getDashboard } from "../actions/dashboards";
+import { useUser } from "../context/UserContext";
 
 const Navbar = ({ children }) => {
     const NAVBAR_HEIGHT = "55px";
 
     const navigate = useNavigate();
     const location = useLocation();
+    const { user } = useUser();
 
     const [pageTitle, setPageTitle] = useState("");
     const [showLogoutModal, setShowLogoutModal] = useState(false);
@@ -70,19 +72,23 @@ const Navbar = ({ children }) => {
                                     w={20}
                                     rounded={100}
                                 >
-                                    <Avatar
-                                        src="https://i.pinimg.com/736x/ca/78/3f/ca783fbe94d559e23dc9b7dcc4065a42.jpg"
-                                        boxSize={7}
-                                    />
+
+                                    <WrapItem>
+                                        <Avatar
+                                            name={`${user.name.First} ${user.name.Last}`}
+                                            backgroundColor="orange.300"
+                                            size="sm"
+                                        />
+                                    </WrapItem>
                                 </MenuButton>
                                 <MenuList>
-                                    <MenuItem>
+                                    {/* <MenuItem>
                                         Account
                                     </MenuItem>
                                     <MenuItem onClick={() => navigate('/settings')}>
                                         Settings
                                     </MenuItem>
-                                    <MenuDivider />
+                                    <MenuDivider /> */}
                                     <MenuItem textColor="red" onClick={() => setShowLogoutModal(true)}>
                                         Log out
                                     </MenuItem>

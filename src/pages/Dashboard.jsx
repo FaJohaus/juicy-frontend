@@ -25,6 +25,7 @@ const Dashboard = () => {
     const [customers, setCustomers] = useState();
     const [showEditModal, setShowEditModal] = useState(false);
     const [showCreateModal, setShowCreateModal] = useState(false);
+    const [isFirst, setIsFirst] = useState(false)
 
     /* EFFECTS WHEN ID CHANGES */
     useEffect(() => {
@@ -33,7 +34,7 @@ const Dashboard = () => {
         if (id === "0") {
             // => user has no dashboard yet
             if (!user.dashboards[0]) {
-                // guide user to create first dashboard or something idgaf
+                setIsFirst(true);
             } else {
                 navigate(`/dashboard/${user.dashboards[0]}`);
             }
@@ -111,7 +112,26 @@ const Dashboard = () => {
 
     return (
         <>
-            {!(current && customers) ? <Spinner /> :
+            {!(current && customers) ? (isFirst ? <>
+                <DashboardCreateModal
+                    isOpen={showCreateModal}
+                    onClose={() => setShowCreateModal(false)}
+                    onCreate={() => {
+                        setIsFirst(false);
+                        onCreate();
+                    }}
+                />
+                <Flex direction="row">
+                    <IconButton
+                        as={SmallAddIcon}
+                        size="sm"
+                        mr={2}
+                        onClick={() => setShowCreateModal(true)}
+                    />
+                    <Text>{"← Create your first Dashboard!"}</Text>
+                </Flex>
+
+            </> : <Spinner />) :
                 <DashboardContextProvider
                     dashboardCustomers={customers}
                     time={current.time}

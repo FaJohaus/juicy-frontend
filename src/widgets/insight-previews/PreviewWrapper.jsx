@@ -174,7 +174,6 @@ const PreviewWrapper = ({ widget }) => {
         } else if (widget.view.diagramType === "pie" && widget.view.description === "revenue") {
             const getBarData = async () => {
                 try {
-                    console.log(dashboardCustomers, time)
                     const data = await getRevenues(dashboardCustomers, time);
 
                     setPieData(data);
