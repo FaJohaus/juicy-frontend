@@ -23,8 +23,8 @@ import { useUser } from "../context/UserContext";
 const DashboardCreateModal = ({ isOpen, onClose, onCreate }) => {
     const [name, setName] = useState("");
     const [selectedCustomers, setSelectedCustomers] = useState([]);
-    const [startDate, setStartDate] = useState(""); // State for start date
-    const [endDate, setEndDate] = useState(""); // State for end date
+    const [startDate, setStartDate] = useState("");
+    const [endDate, setEndDate] = useState("");
 
     const { user } = useUser();
 

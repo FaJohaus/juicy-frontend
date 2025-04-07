@@ -1,7 +1,7 @@
 import {
     Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalFooter, ModalCloseButton, Menu,
     MenuList, Flex, Card, MenuButton, Button, MenuOptionGroup, MenuItemOption, CardBody, Heading,
-    IconButton
+    IconButton, FormControl, FormLabel, Input, Text
 } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import { ChevronDownIcon, SmallAddIcon } from "@chakra-ui/icons";
@@ -18,9 +18,11 @@ const DashboardEditModal = ({ isOpen, onClose, onEdit }) => {
 
     const [widgetList, setWidgetList] = useState([...widgets]);
     const [customerList, setCustomerList] = useState(dashboardCustomers.map(c => c.id));
-    const [timespan, setTimespan] = useState();
     const [changes, setChanges] = useState({});
     const [showCreateMenu, setShowCreateMenu] = useState(false);
+
+    const [startDate, setStartDate] = useState(time.start.substring(0, 10));
+    const [endDate, setEndDate] = useState(time.end.substring(0, 10));
 
     useEffect(() => {
         if (!isOpen) setWidgetList([...widgets]);
@@ -31,13 +33,15 @@ const DashboardEditModal = ({ isOpen, onClose, onEdit }) => {
     }, [dashboardCustomers]);
 
     /* -------------------- SAVING CHANGES ------------------ */
-    /* useEffect(() => {
-        if (time === timespan) return;
-
+    useEffect(() => {
         const _changes = JSON.parse(JSON.stringify(changes));
-        _changes.time = timespan;
+        _changes.time = {
+            start: new Date(startDate).toISOString().split("T")[0] + "T00:00:00.000Z",
+            end: new Date(endDate).toISOString().split("T")[0] + "T23:59:59.999Z"
+        };
+
         setChanges(_changes);
-    }, [timespan]); */
+    }, [startDate, endDate]);
 
     useEffect(() => {
         if (JSON.stringify(widgets) === JSON.stringify(widgetList)) return;
@@ -98,28 +102,22 @@ const DashboardEditModal = ({ isOpen, onClose, onEdit }) => {
                 <ModalBody>
                     {/* TOP MENU */}
                     <Flex justify="space-between" px={20}>
-                        <Menu >
-                            <MenuButton as={Button} rightIcon={<ChevronDownIcon />} width="50%" mr={5}>
-                                Select Time
-                            </MenuButton>
-                            <MenuList>
-                                <MenuOptionGroup
-                                    defaultValue='current'
-                                    type='radio'
-                                    value={timespan}
-                                    onChange={(value) => setTimespan(value)}
-                                >
-                                    <MenuItemOption value="current">
-                                        {time.start.substring(0, 10)} - {time.end.substring(0, 10)}
-                                    </MenuItemOption>
-                                    <MenuItemOption value="last week">Last Week</MenuItemOption>
-                                    <MenuItemOption value="last quarter">Last Quarter</MenuItemOption>
-                                    <MenuItemOption value="last month">Last Month</MenuItemOption>
-                                    <MenuItemOption value="last year">Last Year</MenuItemOption>
-                                    <MenuItemOption value="custom">Custom Time</MenuItemOption>
-                                </MenuOptionGroup>
-                            </MenuList>
-                        </Menu>
+                        <FormControl mb={4} mr={4}>
+                            <FormLabel>Select Timespan</FormLabel>
+                            <Input
+                                type="date"
+                                placeholder="Start Date"
+                                value={startDate}
+                                onChange={(e) => setStartDate(e.target.value)}
+                                mb={2}
+                            />
+                            <Input
+                                type="date"
+                                placeholder="End Date"
+                                value={endDate}
+                                onChange={(e) => setEndDate(e.target.value)}
+                            />
+                        </FormControl>
 
                         <Menu closeOnSelect={false}>
                             <MenuButton as={Button} rightIcon={<ChevronDownIcon />} width="50%">
