@@ -61,7 +61,7 @@ const Navbar = ({ children }) => {
                         <Spacer />
                         {/* RIGHT SIDE */}
                         <Center>
-                            <IconButton icon={<BellIcon boxSize={5} />} variant='ghost' rounded={100} />
+                            {/* <IconButton icon={<BellIcon boxSize={5} />} variant='ghost' rounded={100} /> */}
                             <Menu gutter={7}>
                                 <MenuButton
                                     as={Button}

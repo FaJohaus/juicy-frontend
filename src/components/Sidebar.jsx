@@ -24,7 +24,7 @@ const Sidebar = () => {
             link: "/",
             icon: VscHome
         },
-        {
+        /* {
             title: pageTitles["insights"],
             link: "/insights",
             icon: VscGraph
@@ -33,7 +33,7 @@ const Sidebar = () => {
             title: pageTitles["automation"],
             link: "/automation",
             icon: VscServerProcess
-        }
+        } */
     ]
 
     return (

@@ -4,7 +4,7 @@ import PieChartPreview from "./PieChartPreview";
 import LineChartPreview from "./LineChartPreview";
 import TimelinePreview from "./TimelinePreview";
 import TablePreview from "./MyTablePreview";
-import { queryEvents, queryEventsAdvanced } from "../../actions/widgets";
+import { getEventCount, queryEvents, queryEventsAdvanced } from "../../actions/widgets";
 
 import { useEffect, useState } from "react";
 import { useDashboard } from "../../context/DashboardContext";
@@ -157,8 +157,20 @@ const PreviewWrapper = ({ widget }) => {
 
             getTableData();
         } else if (widget.view.diagramType === "bar" && widget.view.description === "satisfaction") {
-            console.log(dashboardCustomers)
             setBarChartData(dashboardCustomers.map(c => ({ "name": c.name, "value": c.satisfaction })));
+        } else if (widget.view.diagramType === "bar" && widget.view.description === "events (amount)") {
+            const getBarData = async () => {
+                try {
+                    const data = await getEventCount(dashboardCustomers, time);
+
+                    setBarChartData(data);
+                    console.log(data)
+                } catch (e) {
+                    console.error("Could not get bar chart data: ", e);
+                }
+            }
+
+            getBarData();
         }
     }, [dashboardCustomers, timelineCust]);
 
