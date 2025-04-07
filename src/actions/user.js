@@ -22,7 +22,7 @@ export const getUser = async () => {
 export const createUser = async (creds) => {
 
     console.log(creds)
-    const res = await api.post('api/users/user', creds);
+    const res = await api.post('/users/user', creds);
 
     return res.data;
 }
