@@ -11,8 +11,6 @@ export const transformTimeLineData = (data) => {
     let x = 0;
     let y = 0;
 
-    console.log(data)
-
     const edges = [];
     const nodes = [];
 

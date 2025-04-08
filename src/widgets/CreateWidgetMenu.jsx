@@ -27,8 +27,8 @@ const CreateWidgetMenu = ({ widget, addWidget, closeMenu }) => {
             return [/* GRAPH,  */BAR/* , BIG_NUMBER */];
         /* if (dataType === SATISFACTION_AVERAGE)
             return [GRAPH, BAR, BIG_NUMBER]; */
-        if (dataType === REVENUE)
-            return [PIE];
+        /* if (dataType === REVENUE)
+            return [PIE]; */
         /* if (dataType === REVENUE_AVERAGE)
             return [GRAPH, BAR, BIG_NUMBER]; */
     }
