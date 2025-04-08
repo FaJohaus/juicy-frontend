@@ -85,8 +85,8 @@ const TimelinePreview = ({ title, data, customer, setCustomer }) => {
 
         return (
             <>
-                <ReactFlow {...props} ref={containerRef} panOnScroll={width > containerWidth} />
-                {(width > containerWidth) && (
+                <ReactFlow {...props} ref={containerRef} panOnScroll={width + 50 > containerWidth} />
+                {(width + 50 > containerWidth) && (
                     <Center>
                         <Slider
                             focusThumbOnChange={false}

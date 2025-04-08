@@ -88,7 +88,7 @@ const DashboardEditModal = ({ isOpen, onClose, onEdit }) => {
         <Modal isOpen={isOpen} onClose={onClose}>
             <ModalOverlay />
             <ModalContent
-                maxW="85vw"
+                maxW="70vw"
             >
                 <ModalCloseButton />
                 <ModalHeader textAlign="center">

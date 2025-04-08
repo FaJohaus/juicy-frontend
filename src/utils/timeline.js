@@ -1,3 +1,5 @@
+import { truncateText } from ".";
+
 /**
  * Transforms the data for the timeline widget and insight for reactflow
  * Expects a sorted array, where each event is followed by all it's subevents and then it's nextevents 
@@ -8,6 +10,8 @@
 export const transformTimeLineData = (data) => {
     let x = 0;
     let y = 0;
+
+    console.log(data)
 
     const edges = [];
     const nodes = [];
@@ -40,7 +44,7 @@ export const transformTimeLineData = (data) => {
                 y: y
             },
             data: {
-                label: n._id,
+                label: `Rating: ${n.rating ?? "?"}`,
                 date: n.Date.substring(0, 10),
                 hasNext: !!n.nextevent,
                 hasPrev: !!n.previousevent,
