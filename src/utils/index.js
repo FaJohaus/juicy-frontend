@@ -29,6 +29,8 @@ export const translateEventNames = (name) => {
         return "TalkEvent";
     if (name === CALL)
         return "CallEvent";
+    else
+        return "";
 }
 
 export const divideTimespan = (timespan) => {

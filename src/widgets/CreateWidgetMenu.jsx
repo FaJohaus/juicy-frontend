@@ -35,10 +35,12 @@ const CreateWidgetMenu = ({ widget, addWidget, closeMenu }) => {
 
     const onCreate = async () => {
         const getDescription = () => {
+            const translated = translateEventNames(selectedEventType);
+
             if (selectedDataType === EVENTS && selectedChartType === TABLE)
-                return translateEventNames(selectedEventType);
-            else if (selectedChartType === BAR && selectedDataType === EVENTS_AMOUNT) {
-                return `${selectedDataType}-${translateEventNames(selectedEventType)}`
+                return translated === "KaufEvent" ? "Kauf" : translated;
+            else if (selectedDataType === EVENTS_AMOUNT) {
+                return `${selectedDataType}-${translated === "KaufEvent" ? "Kauf" : translated}`
             }
             else {
                 return selectedDataType;

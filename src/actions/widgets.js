@@ -72,9 +72,21 @@ export const createWidget = async (name, diagramtype, customers, dashboardID, de
 } */
 
 export const getEventCount = async (customers, time, type) => {
-    let events = await queryEventsAdvanced(customers, time, type);
+    let data = [];
 
-    return events.length;
+    const fetchPerUser = async (customer) => {
+        try {
+            const events = await queryEventsAdvanced([customer.id], time, type);
+
+            data.push({ name: customer.name, value: events.length });
+        } catch (e) {
+            throw e;
+        }
+    }
+
+    await Promise.all(customers.map(fetchPerUser));
+
+    return data;
 }
 
 /* export const getRevenues = async (customers, time) => {

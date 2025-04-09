@@ -49,8 +49,6 @@ const PreviewWrapper = ({ widget }) => {
         }
     ];
 
-    // TBD: "Abtastrate" dynamisch nach Zeitintervall und verfügbarem Screenplatz anpassen
-    // TBD: Methode schreiben, die die echten Daten in diese scheiss Form hier überträgt
     const lineChartDataOld = [
         {
             "name": "KW 21",
@@ -115,7 +113,7 @@ const PreviewWrapper = ({ widget }) => {
     const [tableData, setTableData] = useState();
     const [barChartData, setBarChartData] = useState([]);
     const [pieData, setPieData] = useState([]);
-    const [lineChartData, setLineChartData] = useState([]);
+    const [lineChartData, setLineChartData] = useState();
 
     /* Get widget data */
     useEffect(() => {
@@ -197,41 +195,34 @@ const PreviewWrapper = ({ widget }) => {
             }
 
             getBarData();
-        } else if (widget.view.diagramType === "graph" && widget.view.description === "events (amount)") {
+        } else if (widget.view.diagramType === "graph" && widget.view.description.startsWith("events (amount)")) {
             const fetchLineChartData = async () => {
                 try {
-                    if (!dashboardCustomers || !timelineCust || !widget.view.description) return;
+                    const timeSpans = divideTimespan(time);
 
-                    // Divide the timeline into 5 equal time spans
-                    const timeSpans = divideTimespan(timelineCust);
+                    const data = [];
 
-                    const lineChartData = [];
-
-                    // Fetch data for each time span
                     for (let i = 0; i < timeSpans.length; i++) {
                         const timeSpan = timeSpans[i];
-                        const data = await getEventCount(
+                        const _data = await getEventCount(
                             dashboardCustomers,
                             timeSpan,
-                            /* widget.view.description.split("-")[1] */
+                            widget.view.description.split("-")[1]
                         );
 
-                        console.log(data);
-                        // Create an object for the current time span
-                        const timeSpanData = {
-                            name: `Span ${i + 1}`, // You can replace this with a more meaningful name
-                        };
+                        const timeSpanData = {};
 
-                        // Add each customer's data to the object
-                        dashboardCustomers.forEach((customer) => {
-                            timeSpanData[customer.name] = data[customer.id] || null;
+
+                        timeSpanData.name = `${timeSpan.start.substring(2, 7).replaceAll("-", "/")}-${timeSpan.end.substring(2, 7).replaceAll("-", "/")}`
+
+                        _data.forEach(cust => {
+                            timeSpanData[cust.name] = cust.value;
                         });
 
-                        lineChartData.push(timeSpanData);
+                        data.push(timeSpanData);
                     }
 
-                    // Set the line chart data
-                    setLineChartData(lineChartData);
+                    setLineChartData(data);
                 } catch (e) {
                     console.error("Error fetching line chart data: ", e);
                 }
@@ -264,7 +255,7 @@ const PreviewWrapper = ({ widget }) => {
             case "pie":
                 return <PieChartPreview title={widget.view.name} data={pieData} />;
             case "graph":
-                return <LineChartPreview title={widget.view.name} data={lineChartData} />;
+                return <LineChartPreview title={widget.view.name} data={lineChartData ?? [{ "name": "loading..." }]} />;
             case "timeline":
                 return <TimelinePreview
                     title={widget.view.name}
