@@ -10,9 +10,14 @@ const LineChartPreview = ({ title, maxVal, data }) => {
     return (
         <PreviewCard title={title}>
             <ResponsiveContainer height={widget.baseHeight - 80}>
-                <LineChart data={data} style={{ marginLeft: -20 }}>
+                <LineChart data={data} style={{ marginLeft: 0 }}>
                     <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="name" />
+                    <XAxis
+                        dataKey="name"
+                        tick={{ fontSize: 13, angle: -10, textAnchor: "end" }}
+                        interval={0}
+                        dx={5}
+                    />
                     <YAxis
                         domain={[0, maxVal ?? 'auto']}
                     />
@@ -20,7 +25,7 @@ const LineChartPreview = ({ title, maxVal, data }) => {
                         contentStyle={{ zIndex: 1 }}
                         wrapperStyle={{ zIndex: 1 }}
                     />
-                    <Legend style={{ marginLeft: 20 }} />
+                    {/* <Legend style={{ marginLeft: 20 }} /> */}
                     {Object.keys(data[0]).splice(1).map((customer, i) => (
                         <Line
                             type="linear"
@@ -33,7 +38,7 @@ const LineChartPreview = ({ title, maxVal, data }) => {
                     ))}
                 </LineChart>
             </ResponsiveContainer>
-        </PreviewCard >
+        </PreviewCard>
     );
 }
 
