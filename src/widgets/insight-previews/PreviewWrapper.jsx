@@ -161,7 +161,7 @@ const PreviewWrapper = ({ widget }) => {
     const getPreview = () => {
         switch (widget.view.diagramType) {
             case "bar":
-                return <BarChartPreview title={widget.view.name} data={barChartData} />;
+                return <BarChartPreview title={widget.view.name} data={barChartData} maxVal={widget.view.description === "satisfaction" ? 10 : undefined} />;
             case "pie":
                 return <PieChartPreview title={widget.view.name} data={pieData} />;
             case "graph":

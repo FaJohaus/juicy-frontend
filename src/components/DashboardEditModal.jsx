@@ -20,6 +20,7 @@ const DashboardEditModal = ({ isOpen, onClose, onEdit }) => {
     const [customerList, setCustomerList] = useState(dashboardCustomers.map(c => c.id));
     const [changes, setChanges] = useState({});
     const [showCreateMenu, setShowCreateMenu] = useState(false);
+    const [hasCustomerListChanged, setHasCustomerListChanged] = useState(false);
 
     const [startDate, setStartDate] = useState(time.start.substring(0, 10));
     const [endDate, setEndDate] = useState(time.end.substring(0, 10));
@@ -52,7 +53,7 @@ const DashboardEditModal = ({ isOpen, onClose, onEdit }) => {
     }, [widgetList]);
 
     useEffect(() => {
-        if (JSON.stringify(dashboardCustomers.map(c => c.id)) === JSON.stringify(customerList)) return;
+        if (!hasCustomerListChanged || (JSON.stringify(dashboardCustomers.map(c => c.id)) === JSON.stringify(customerList))) return;
 
         const _changes = JSON.parse(JSON.stringify(changes));
         _changes.customers = customerList;
@@ -127,7 +128,10 @@ const DashboardEditModal = ({ isOpen, onClose, onEdit }) => {
                                 <MenuOptionGroup
                                     type='checkbox'
                                     value={customerList}
-                                    onChange={(value) => setCustomerList(value)}
+                                    onChange={(value) => {
+                                        setHasCustomerListChanged(true)
+                                        setCustomerList(value)
+                                    }}
                                 >
                                     {user.customers.map(c =>
                                         <MenuItemOption value={c.id} key={c.id}>{c.name}</MenuItemOption>

@@ -33,7 +33,7 @@ export const chartTypes = [
 export const dataTypes = [
     EVENTS,
     EVENTS_AMOUNT,
-    /* SATISFACTION, */
+    SATISFACTION,
     /* SATISFACTION_AVERAGE, */
     REVENUE,
     /* REVENUE_AVERAGE, */
