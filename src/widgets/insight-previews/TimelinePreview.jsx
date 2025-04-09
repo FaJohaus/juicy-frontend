@@ -76,8 +76,8 @@ const TimelinePreview = ({ title, data, customer, setCustomer }) => {
         useEffect(() => {
             if (x > PADDINGX) {
                 if (x !== PADDINGX) setViewport({ x: PADDINGX });
-            } else if (x < rightBound) {
-                if (x !== rightBound) setViewport({ x: rightBound });
+            } else if (x < rightBound - 100) {
+                if (x !== rightBound - 100) setViewport({ x: rightBound });
             } else {
                 setSlider(x);
             }
