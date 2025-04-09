@@ -147,7 +147,7 @@ const PreviewWrapper = ({ widget }) => {
                             case "KaufEvent":
                             case "RetourEvent":
                             case "StornoEvent":
-                                return data.map(e => [truncateText(dashboardCustomers.find(c => c.id === e.CustomerID).name, 10), e.Date.substring(0, 10), (e.Kaufpreis ? `${e.Kaufpreis / 100} €` : ""), e.rating]);
+                                return data.map(e => [truncateText(dashboardCustomers.find(c => c.id === e.CustomerID).name, 10), e.Date.substring(0, 10), (e.Kaufpreis ? `${e.Kaufpreis} €` : ""), e.rating]);
                             default:
                                 return [];
                         }
@@ -174,13 +174,25 @@ const PreviewWrapper = ({ widget }) => {
 
             getBarData();
         } else if (widget.view.diagramType === "pie" && widget.view.description === "revenue") {
-            const getBarData = async () => {
+            const getPieData = async () => {
                 try {
                     const data = await getRevenues(dashboardCustomers, time);
 
                     setPieData(data);
                 } catch (e) {
                     console.error("Could not get pie chart data: ", e);
+                }
+            }
+
+            getPieData();
+        } else if (widget.view.diagramType === "bar" && widget.view.description === "revenue") {
+            const getBarData = async () => {
+                try {
+                    const data = await getRevenues(dashboardCustomers, time);
+
+                    setBarChartData(data);
+                } catch (e) {
+                    console.error("Could not get bar chart data: ", e);
                 }
             }
 
