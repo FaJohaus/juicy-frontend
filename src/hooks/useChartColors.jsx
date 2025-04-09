@@ -11,13 +11,11 @@ const useChartColors = (amount) => {
 
     const baseColors = ["blue", "purple", "pink", "red", "orange", "yellow", "green", "teal", "cyan"];
 
-    return useMemo(() => {
-        return [...Array(amount)].map((_, i) => {
-            if (amount <= baseColors.length) return theme.colors[baseColors[i]][500];
+    return [...Array(amount)].map((_, i) => {
+        if (amount <= baseColors.length) return theme.colors[baseColors[i]][500];
 
-            return theme.colors[baseColors[i % baseColors.length]][Math.ceil(i / baseColors.length) * 200 + 100];
-        });
-    }, [amount]);
+        return theme.colors[baseColors[i % baseColors.length]][Math.ceil(i / baseColors.length) * 200 + 100];
+    });
 };
 
 export default useChartColors;

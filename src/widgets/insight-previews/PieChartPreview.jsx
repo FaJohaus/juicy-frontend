@@ -2,6 +2,7 @@ import { PieChart, Pie, ResponsiveContainer, Cell, Tooltip, Legend } from "recha
 import PreviewCard from "./PreviewCard";
 import { useDashboard } from "../../context/DashboardContext";
 import { useTheme } from "@chakra-ui/react";
+import { useEffect } from "react";
 
 /**
  * 
@@ -13,6 +14,10 @@ import { useTheme } from "@chakra-ui/react";
 const PieChartPreview = ({ data, title }) => {
     const { chartColors } = useDashboard();
     const { widget } = useTheme();
+
+    useEffect(() => {
+        console.info("New chart colors");
+    }, [chartColors])
 
     const RADIAN = Math.PI / 180;
     const percentageLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent }) => {

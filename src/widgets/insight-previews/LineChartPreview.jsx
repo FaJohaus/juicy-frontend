@@ -1,4 +1,5 @@
 import PreviewCard from "./PreviewCard";
+import { useEffect } from "react";
 import { LineChart, ResponsiveContainer, CartesianGrid, YAxis, XAxis, Legend, Tooltip, Line } from "recharts";
 import { useDashboard } from "../../context/DashboardContext";
 import { useTheme } from "@chakra-ui/react";
@@ -6,6 +7,10 @@ import { useTheme } from "@chakra-ui/react";
 const LineChartPreview = ({ title, maxVal, data }) => {
     const { chartColors } = useDashboard();
     const { widget } = useTheme();
+
+    useEffect(() => {
+        console.info("New chart colors");
+    }, [chartColors])
 
     return (
         <PreviewCard title={title}>

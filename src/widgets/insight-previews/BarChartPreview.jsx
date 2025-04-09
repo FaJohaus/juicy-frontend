@@ -3,11 +3,16 @@ import { BarChart, CartesianGrid, XAxis, YAxis, Bar, ResponsiveContainer, Toolti
 import { truncateText } from "../../utils";
 import { useDashboard } from "../../context/DashboardContext";
 import { useTheme } from "@chakra-ui/react";
+import { useEffect } from "react";
 
 /* TBD: Determine fix number of bars at which this widget becomes a 'double sized' */
 const BarChartPreview = ({ data, title, maxVal }) => {
     const { chartColors } = useDashboard();
     const { widget } = useTheme();
+
+    useEffect(() => {
+        console.info("New chart colors");
+    }, [chartColors])
 
     return (
         <PreviewCard title={title}>
