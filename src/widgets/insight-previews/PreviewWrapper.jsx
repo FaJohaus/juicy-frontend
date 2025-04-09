@@ -8,7 +8,7 @@ import { getEventCount, getRevenues, queryEvents, queryEventsAdvanced } from "..
 
 import { useEffect, useState } from "react";
 import { useDashboard } from "../../context/DashboardContext";
-import { truncateText } from "../../utils";
+import { divideTimespan, truncateText } from "../../utils";
 
 /**
  * Takes a widget id, fetches its data and renders the right preview componenet based on its widget-type
@@ -51,7 +51,7 @@ const PreviewWrapper = ({ widget }) => {
 
     // TBD: "Abtastrate" dynamisch nach Zeitintervall und verfügbarem Screenplatz anpassen
     // TBD: Methode schreiben, die die echten Daten in diese scheiss Form hier überträgt
-    const lineChartData = [
+    const lineChartDataOld = [
         {
             "name": "KW 21",
             "Customer A": 5,
@@ -115,6 +115,7 @@ const PreviewWrapper = ({ widget }) => {
     const [tableData, setTableData] = useState();
     const [barChartData, setBarChartData] = useState([]);
     const [pieData, setPieData] = useState([]);
+    const [lineChartData, setLineChartData] = useState([]);
 
     /* Get widget data */
     useEffect(() => {
@@ -133,13 +134,14 @@ const PreviewWrapper = ({ widget }) => {
         } else if (widget.view.diagramType === "table") {
             const getTableData = async () => {
                 try {
-                    const data = await queryEventsAdvanced(dashboardCustomers.map(c => c.id), time, [widget.view.description]);
+                    const type = widget.view.description === "KaufEvent" ? "Kauf" : widget.view.description
+                    const data = await queryEventsAdvanced(dashboardCustomers.map(c => c.id), time, [type]);
 
                     setTableData(() => {
                         switch (widget.view.description) {
                             case "TalkEvent":
                             case "CallEvent":
-                                return data.map(e => [truncateText(dashboardCustomers.find(c => c.id === e.CustomerID).name, 10), e.Date.substring(0, 10), `${e.Duration} min`, e.rating]);
+                                return data.map(e => [truncateText(dashboardCustomers.find(c => c.id === e.CustomerID).name, 10), e.Date.substring(0, 10), `${e.Duration ?? "?"} min`, e.rating]);
                             case "EmailEvent":
                                 return data.map(e => [truncateText(dashboardCustomers.find(c => c.id === e.CustomerID).name, 10), e.Date.substring(0, 10), truncateText(e.Subject, 12), e.rating]);
                             case "KaufEvent":
@@ -183,6 +185,46 @@ const PreviewWrapper = ({ widget }) => {
             }
 
             getBarData();
+        } else if (widget.view.diagramType === "graph" && widget.view.description === "events (amount)") {
+            const fetchLineChartData = async () => {
+                try {
+                    if (!dashboardCustomers || !timelineCust || !widget.view.description) return;
+
+                    // Divide the timeline into 5 equal time spans
+                    const timeSpans = divideTimespan(timelineCust);
+
+                    const lineChartData = [];
+
+                    // Fetch data for each time span
+                    for (let i = 0; i < timeSpans.length; i++) {
+                        const timeSpan = timeSpans[i];
+                        const data = await getEventCount(
+                            dashboardCustomers,
+                            timeSpan,
+                            /* widget.view.description.split("-")[1] */
+                        );
+
+                        console.log(data);
+                        // Create an object for the current time span
+                        const timeSpanData = {
+                            name: `Span ${i + 1}`, // You can replace this with a more meaningful name
+                        };
+
+                        // Add each customer's data to the object
+                        dashboardCustomers.forEach((customer) => {
+                            timeSpanData[customer.name] = data[customer.id] || null;
+                        });
+
+                        lineChartData.push(timeSpanData);
+                    }
+
+                    // Set the line chart data
+                    setLineChartData(lineChartData);
+                } catch (e) {
+                    console.error("Error fetching line chart data: ", e);
+                }
+            };
+            fetchLineChartData()
         }
     }, [dashboardCustomers, timelineCust]);
 

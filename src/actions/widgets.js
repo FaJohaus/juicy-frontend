@@ -1,4 +1,5 @@
 import api from "../api";
+import { PURCHASE, RETOUR } from "../assets/types";
 
 export const getWidget = async id => {
     /* const res = await api.get(`/dashboards/widgets?id=${id}`);
@@ -56,7 +57,7 @@ export const createWidget = async (name, diagramtype, customers, dashboardID, de
     return res.data;
 }
 
-export const getEventCount = async (customers, time, type) => {
+/* export const getEventCount = async (customers, time, type) => {
     let _data = [];
 
     const fetchPerUser = async (c) => {
@@ -68,9 +69,15 @@ export const getEventCount = async (customers, time, type) => {
     await Promise.all(customers.map(fetchPerUser));
 
     return _data;
+} */
+
+export const getEventCount = async (customers, time, type) => {
+    let events = await queryEventsAdvanced(customers, time, type);
+
+    return events.length;
 }
 
-export const getRevenues = async (customers, time) => {
+/* export const getRevenues = async (customers, time) => {
     let _data = [];
 
     const fetchPerUser = async (c) => {
@@ -82,4 +89,25 @@ export const getRevenues = async (customers, time) => {
     await Promise.all(customers.map(fetchPerUser));
 
     return _data;
+} */
+
+/* needs customers as object with name and id */
+export const getRevenues = async (customers, time) => {
+    const purchases = await queryEventsAdvanced(customers.map(c => c.id), time, "Kauf");
+    const retours = await queryEventsAdvanced(customers.map(c => c.id), time, RETOUR);
+
+    let data = [];
+
+    customers.forEach(cust => {
+        const plus = purchases.filter(p => p.CustomerID === cust.id).map(p => p.Kaufpreis).reduce((total, current) => {
+            return total + current;
+        }, 0);
+        const minus = retours.filter(p => p.CustomerID === cust.id).map(p => p.Kaufpreis).reduce((total, current) => {
+            return total + current;
+        }, 0);
+
+        data.push({ name: cust.name, value: (plus - minus) });
+    });
+
+    return data;
 }

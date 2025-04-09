@@ -35,7 +35,7 @@ export const dataTypes = [
     EVENTS_AMOUNT,
     SATISFACTION,
     /* SATISFACTION_AVERAGE, */
-    /*     REVENUE, */
+    REVENUE,
     /* REVENUE_AVERAGE, */
 ];
 
