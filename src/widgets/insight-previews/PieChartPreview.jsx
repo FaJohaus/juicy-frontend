@@ -47,11 +47,11 @@ const PieChartPreview = ({ data, title }) => {
                         contentStyle={{ zIndex: 1 }}
                         wrapperStyle={{ zIndex: 1 }}
                     />
-                    {/* <Legend
+                    <Legend
                         layout="vertical"
                         align="right"
                         verticalAlign="middle"
-                    /> */}
+                    />
                 </PieChart>
             </ResponsiveContainer>
         </PreviewCard>

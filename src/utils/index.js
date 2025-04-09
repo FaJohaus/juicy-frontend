@@ -41,10 +41,10 @@ export const divideTimespan = (timespan) => {
 
     const totalDuration = endDate - startDate;
 
-    const subDuration = totalDuration / 5;
+    const subDuration = totalDuration / 6;
 
     const result = [];
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 6; i++) {
         const subStart = new Date(startDate.getTime() + i * subDuration);
         const subEnd = new Date(startDate.getTime() + (i + 1) * subDuration);
         result.push({
