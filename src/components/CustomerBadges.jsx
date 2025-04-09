@@ -2,9 +2,14 @@ import { useDashboard } from "../context/DashboardContext";
 import { Box, Tag, TagLeftIcon, Text, Tooltip } from "@chakra-ui/react";
 import { FaCircle } from "react-icons/fa";
 import { truncateText } from "../utils";
+import { useEffect } from "react";
 
 const CustomerBadges = () => {
     const { chartColors, dashboardCustomers } = useDashboard();
+
+    useEffect(() => {
+        console.info("New Colors and customers")
+    }, [chartColors, dashboardCustomers]);
 
     return (
         <Box width="100%">
