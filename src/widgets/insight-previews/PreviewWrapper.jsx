@@ -16,98 +16,6 @@ import { divideTimespan, truncateText } from "../../utils";
 const PreviewWrapper = ({ widget }) => {
     const { time, dashboardCustomers } = useDashboard();
 
-    /* ------ EXAMPLE DATA ----- */
-
-    const pieChartData = [
-        { name: 'Customer A', value: 400 },
-        { name: 'Customer B', value: 300 },
-        { name: 'Customer C', value: 300 },
-        { name: 'Customer D', value: 200 },
-        { name: 'Customer E', value: 150 },
-    ];
-
-    const barChartDataOld = [
-        {
-            name: "Customer A",
-            value: 6,
-        },
-        {
-            name: "Customer B",
-            value: 6,
-        },
-        {
-            name: "Customer C",
-            value: 7,
-        },
-        {
-            name: "Customer D",
-            value: 1,
-        },
-        {
-            name: "Customer E",
-            value: 8
-        }
-    ];
-
-    const lineChartDataOld = [
-        {
-            "name": "KW 21",
-            "Customer A": 5,
-            "Customer B": 6,
-            "Customer C": 7,
-            "Customer D": 2,
-            "Customer E": null
-        },
-        {
-            "name": "KW 22",
-            "Customer A": 5.5,
-            "Customer B": 4,
-            "Customer C": 8,
-            "Customer D": 1,
-            "Customer E": null
-        },
-        {
-            "name": "KW 24",
-            "Customer A": 4,
-            "Customer B": 6,
-            "Customer C": 8,
-            "Customer D": 1.5,
-            "Customer E": 5
-        },
-        {
-            "name": "KW 24",
-            "Customer A": 6,
-            "Customer B": 6,
-            "Customer C": 7,
-            "Customer D": 1,
-            "Customer E": 8
-        },
-    ];
-
-    const timelineDataOld = [
-        { "_id": "647b9f1e1c4a1a001f1e1a01", "subevent": "647b9f1e1c4a1a001f1e1a02", "nextevent": "647b9f1e1c4a1a001f1e1a03", "previousevent": null, "__t": "EmailEvent", "Date": "2024-06-01T12:30:00.000Z", "CustomerID": "67f15e10bfb2d86b66a3459b" },
-        { "_id": "647b9f1e1c4a1a001f1e1a02", "subevent": null, "nextevent": null, "previousevent": null, "__t": "CallEvent", "Date": "2024-06-05T14:45:00.000Z", "CustomerID": "67f15e10bfb2d86b66a3459b" },
-        { "_id": "647b9f1e1c4a1a001f1e1a03", "subevent": "647b9f1e1c4a1a001f1e1a04", "nextevent": "647b9f1e1c4a1a001f1e1a08", "previousevent": "647b9f1e1c4a1a001f1e1a01", "__t": "RetourEvent", "Date": "2024-07-10T09:15:00.000Z", "CustomerID": "67f15e10bfb2d86b66a3459b" },
-        { "_id": "647b9f1e1c4a1a001f1e1a04", "subevent": "647b9f1e1c4a1a001f1e1a06", "nextevent": null, "previousevent": null, "__t": "TalkEvent", "Date": "2024-08-01T16:00:00.000Z", "CustomerID": "67f15e10bfb2d86b66a3459b" },
-        { "_id": "647b9f1e1c4a1a001f1e1a06", "subevent": "647b9f1e1c4a1a001f1e1a07", "nextevent": null, "previousevent": null, "__t": "EmailEvent", "Date": "2024-09-15T11:20:00.000Z", "CustomerID": "67f15e10bfb2d86b66a3459b" },
-        { "_id": "647b9f1e1c4a1a001f1e1a07", "subevent": null, "nextevent": null, "previousevent": null, "__t": "CallEvent", "Date": "2024-10-10T13:50:00.000Z", "CustomerID": "67f15e10bfb2d86b66a3459b" },
-        { "_id": "647b9f1e1c4a1a001f1e1a08", "subevent": null, "nextevent": "647b9f1e1c4a1a001f1e1a09", "previousevent": "647b9f1e1c4a1a001f1e1a03", "__t": "KaufEvent", "Date": "2024-11-20T08:00:00.000Z", "CustomerID": "67f15e10bfb2d86b66a3459b" },
-        { "_id": "647b9f1e1c4a1a001f1e1a09", "subevent": "647b9f1e1c4a1a001f1e1a10", "nextevent": null, "previousevent": "647b9f1e1c4a1a001f1e1a08", "__t": "RetourEvent", "Date": "2024-12-05T10:10:00.000Z", "CustomerID": "67f15e10bfb2d86b66a3459b" },
-        { "_id": "647b9f1e1c4a1a001f1e1a10", "subevent": "647b9f1e1c4a1a001f1e1a11", "nextevent": null, "previousevent": null, "__t": "TalkEvent", "Date": "2025-01-15T15:30:00.000Z", "CustomerID": "67f15e10bfb2d86b66a3459b" },
-        { "_id": "647b9f1e1c4a1a001f1e1a11", "subevent": null, "nextevent": null, "previousevent": null, "__t": "EmailEvent", "Date": "2025-02-20T12:00:00.000Z", "CustomerID": "67f15e10bfb2d86b66a3459b" },
-        { "_id": "647b9f1e1c4a1a001f1e1a12", "subevent": null, "nextevent": null, "previousevent": null, "__t": "EmailEvent", "Date": "2025-03-25T09:40:00.000Z", "CustomerID": "67f15e10bfb2d86b66a3459b" },
-
-        /* { "_id": "647b9f1e1c4a1a001f1e1a13", "subevent": null, "nextevent": null, "previousevent": null, "__t": "EmailEvent", "Date": "2025-03-25T09:40:00.000Z", "CustomerID": "67f15e10bfb2d86b66a3459b" },
-        { "_id": "647b9f1e1c4a1a001f1e1a14", "subevent": null, "nextevent": null, "previousevent": null, "__t": "EmailEvent", "Date": "2025-03-25T09:40:00.000Z", "CustomerID": "67f15e10bfb2d86b66a3459b" },
-        { "_id": "647b9f1e1c4a1a001f1e1a15", "subevent": null, "nextevent": null, "previousevent": null, "__t": "EmailEvent", "Date": "2025-03-25T09:40:00.000Z", "CustomerID": "67f15e10bfb2d86b66a3459b" },
-        { "_id": "647b9f1e1c4a1a001f1e1a16", "subevent": null, "nextevent": null, "previousevent": null, "__t": "EmailEvent", "Date": "2025-03-25T09:40:00.000Z", "CustomerID": "67f15e10bfb2d86b66a3459b" },
-        { "_id": "647b9f1e1c4a1a001f1e1a17", "subevent": null, "nextevent": null, "previousevent": null, "__t": "EmailEvent", "Date": "2025-03-25T09:40:00.000Z", "CustomerID": "67f15e10bfb2d86b66a3459b" },
-        { "_id": "647b9f1e1c4a1a001f1e1a18", "subevent": null, "nextevent": null, "previousevent": null, "__t": "EmailEvent", "Date": "2025-03-25T09:40:00.000Z", "CustomerID": "67f15e10bfb2d86b66a3459b" },
-        { "_id": "647b9f1e1c4a1a001f1e1a19", "subevent": null, "nextevent": null, "previousevent": null, "__t": "EmailEvent", "Date": "2025-03-25T09:40:00.000Z", "CustomerID": "67f15e10bfb2d86b66a3459b" } */
-    ];
-
-    /* ---------- */
-
     const [timelineData, setTimelineData] = useState();
     const [timelineCust, setTimelineCust] = useState(dashboardCustomers[0].id);
     const [tableData, setTableData] = useState();
@@ -143,6 +51,7 @@ const PreviewWrapper = ({ widget }) => {
                             case "EmailEvent":
                                 return data.map(e => [truncateText(dashboardCustomers.find(c => c.id === e.CustomerID).name, 10), e.Date.substring(0, 10), truncateText(e.Subject, 12), e.rating]);
                             case "KaufEvent":
+                            case "Kauf":
                             case "RetourEvent":
                             case "StornoEvent":
                                 return data.map(e => [truncateText(dashboardCustomers.find(c => c.id === e.CustomerID).name, 10), e.Date.substring(0, 10), (e.Kaufpreis ? `${e.Kaufpreis} €` : ""), e.rating]);
@@ -240,6 +149,7 @@ const PreviewWrapper = ({ widget }) => {
             case "CallEvent":
                 return ["Customer", "Date", "Duration", "Rating"];
             case "KaufEvent":
+            case "Kauf":
             case "RetourEvent":
             case "StornoEvent":
                 return ["Customer", "Date", "Value", "Rating"];
